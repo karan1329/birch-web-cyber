@@ -10,9 +10,12 @@
     "deploy": "sst deploy --stage production"
   },
   "dependencies": {
+    "framer-motion": "^12.38.0",
+    "geist": "^1.7.0",
     "next": "16.2.6",
     "react": "19.2.4",
-    "react-dom": "19.2.4"
+    "react-dom": "19.2.4",
+    "resend": "^6.12.3"
   },
   "devDependencies": {
     "sst": "^3",

@@ -1,26 +1,276 @@
 @import "tailwindcss";
 
+/* =====================================================================
+   Birchlogic design tokens
+   Dark is default (no class). Light is :root.light.
+   Every paired var lives below · every color used in components reads
+   from one of these.
+   ===================================================================== */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* surfaces · ink shades from page bg → cards → deeper cards */
+  --bl-ink: #0A0A0C;
+  --bl-ink-rgb: 10, 10, 12;
+  --bl-ink2: #101015;
+  --bl-ink3: #16161D;
+
+  /* foreground tiers */
+  --bl-fg: #EDEDEF;
+  --bl-fg2: rgba(237, 237, 239, 0.62);
+  --bl-fg3: rgba(237, 237, 239, 0.36);
+
+  /* dividers */
+  --bl-rule: rgba(255, 255, 255, 0.08);
+  --bl-rule2: rgba(255, 255, 255, 0.16);
+
+  /* inverted contrast surface (Engagement section) · flips on theme */
+  --bl-bone: #F2EFE8;
+  --bl-bone-fg: #0A0A0C;
+  --bl-bone-fg2: rgba(10, 10, 12, 0.62);
+  --bl-bone-fg3: rgba(10, 10, 12, 0.45);
+  --bl-bone-rule: rgba(10, 10, 12, 0.12);
+
+  /* nav surface */
+  --bl-nav-bg-rest: rgba(10, 10, 12, 0.50);
+  --bl-nav-bg-scrolled: rgba(10, 10, 12, 0.78);
+
+  /* neon · tweakable; default lime */
+  --bl-neon: #CDF36C;
+  --bl-neon-rgb: 205, 243, 108;
+
+  /* spacing / sizing */
+  --bl-max-width: 1240px;
+  --bl-page-pad: clamp(24px, 5vw, 80px);
+  --bl-section-gap: clamp(80px, 10vw, 140px);
+  --bl-nav-h: 60px;
+  --bl-top-offset: var(--bl-nav-h);
 }
+
+:root.light {
+  --bl-ink: #F5F1E8;
+  --bl-ink-rgb: 245, 241, 232;
+  --bl-ink2: #EDE8D9;
+  --bl-ink3: #E4DDC9;
+
+  --bl-fg: #0A0A0C;
+  --bl-fg2: rgba(10, 10, 12, 0.65);
+  --bl-fg3: rgba(10, 10, 12, 0.42);
+
+  --bl-rule: rgba(10, 10, 12, 0.10);
+  --bl-rule2: rgba(10, 10, 12, 0.18);
+
+  --bl-bone: #0A0A0C;
+  --bl-bone-fg: #EDEDEF;
+  --bl-bone-fg2: rgba(237, 237, 239, 0.62);
+  --bl-bone-fg3: rgba(237, 237, 239, 0.45);
+  --bl-bone-rule: rgba(255, 255, 255, 0.10);
+
+  --bl-nav-bg-rest: rgba(245, 241, 232, 0.55);
+  --bl-nav-bg-scrolled: rgba(245, 241, 232, 0.85);
+}
+
+/* =====================================================================
+   Tailwind v4 @theme · expose tokens as utility classes
+   ===================================================================== */
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-ink: var(--bl-ink);
+  --color-ink-2: var(--bl-ink2);
+  --color-ink-3: var(--bl-ink3);
+  --color-fg: var(--bl-fg);
+  --color-fg-2: var(--bl-fg2);
+  --color-fg-3: var(--bl-fg3);
+  --color-rule: var(--bl-rule);
+  --color-rule-2: var(--bl-rule2);
+  --color-bone: var(--bl-bone);
+  --color-bone-fg: var(--bl-bone-fg);
+  --color-bone-fg-2: var(--bl-bone-fg2);
+  --color-bone-fg-3: var(--bl-bone-fg3);
+  --color-bone-rule: var(--bl-bone-rule);
+  --color-neon: var(--bl-neon);
+
+  --font-sans: var(--font-geist-sans), "Inter", -apple-system, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), "JetBrains Mono", monospace;
+
+  --container-bl: 1240px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* =====================================================================
+   Base
+   ===================================================================== */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  background: var(--bl-ink);
+  color: var(--bl-fg);
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bl-ink);
+  color: var(--bl-fg);
+  font-family: var(--font-sans);
+  font-size: 17px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+::selection {
+  background: var(--bl-neon);
+  color: var(--bl-ink);
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--bl-rule2);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--bl-fg3); }
+
+button {
+  font-family: inherit;
+  color: inherit;
+}
+
+input, textarea, select {
+  font-family: inherit;
+  color: inherit;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* =====================================================================
+   Keyframes
+   ===================================================================== */
+
+@keyframes bl-ticker-move {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@keyframes bl-pulse-dot {
+  0%, 100% { opacity: 0.45; transform: scale(1); }
+  50%      { opacity: 0.9;  transform: scale(1.25); }
+}
+
+@keyframes bl-pulse-line {
+  0%, 100% { opacity: 0.3; }
+  50%      { opacity: 1; }
+}
+
+@keyframes bl-fade-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* =====================================================================
+   Utility shorthands
+   ===================================================================== */
+
+.bl-container {
+  width: 100%;
+  max-width: var(--bl-max-width);
+  margin-inline: auto;
+  padding-inline: var(--bl-page-pad);
+}
+
+.bl-mono {
+  font-family: var(--font-mono);
+  letter-spacing: 0.04em;
+}
+
+.bl-num {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Email link hover used on pages that must stay server components (cannot
+   carry inline JS event handlers). Mirrors the inline-style fallback. */
+.bl-email-link:hover {
+  color: var(--bl-neon) !important;
+  border-bottom-color: var(--bl-neon) !important;
+}
+
+/* =====================================================================
+   Responsive utilities
+   Inline styles set the desktop layout; these classes override at narrow
+   breakpoints. Use !important because they override inline-style grids.
+   ===================================================================== */
+
+/* Grid children need explicit min-width: 0 so a max-content child (e.g.
+   the client marquee track) cannot force its grid cell to grow wider
+   than the parent column. Without this, max-content content blows out
+   the page horizontally on small screens. */
+.bl-stack-md > *,
+.bl-stack-sm > *,
+.bl-footer-grid > * {
+  min-width: 0;
+}
+
+/* Tablet / large mobile: 2-column body grids stack at 880px */
+@media (max-width: 880px) {
+  .bl-stack-md {
+    grid-template-columns: 1fr !important;
+    row-gap: clamp(40px, 6vw, 64px) !important;
+  }
+  /* Sticky right-rail items become static so they sit below the body
+     rather than floating in an empty column. */
+  .bl-stack-sticky-md {
+    position: static !important;
+    top: auto !important;
+  }
+}
+
+/* Phone: tighter 2-cols stack, footer 4-col collapses to 2-col */
+@media (max-width: 720px) {
+  .bl-stack-sm {
+    grid-template-columns: 1fr !important;
+    row-gap: clamp(24px, 5vw, 40px) !important;
+  }
+  .bl-footer-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 32px !important;
+  }
+}
+
+/* Small phone: footer 1-col + tighter page padding */
+@media (max-width: 480px) {
+  :root {
+    --bl-page-pad: 22px;
+  }
+  .bl-footer-grid {
+    grid-template-columns: 1fr !important;
+    gap: 28px !important;
+  }
+  /* Marquee tracks at smaller font / tighter gaps */
+  .bl-marquee-track {
+    gap: 28px !important;
+  }
+}
+
+/* Hero CTA: allow the long discovery-call label to soften padding on
+   very narrow phones so the button still fits inside the page padding. */
+@media (max-width: 420px) {
+  .bl-mag-button {
+    padding: 14px 20px !important;
+    font-size: 13px !important;
+    gap: 8px !important;
+  }
 }
