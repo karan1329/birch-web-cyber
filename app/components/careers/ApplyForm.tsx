@@ -96,17 +96,17 @@ export function ApplyForm({ role }: { role: Role }) {
           <TextField
             name="name"
             label="Full name"
-            placeholder="Karan Bhandari"
             required
-            autoComplete="name"
+            autoComplete="off"
           />
           <TextField
             name="email"
             type="email"
+            inputMode="email"
             label="Email"
             placeholder="you@domain.com"
             required
-            autoComplete="email"
+            autoComplete="off"
           />
         </div>
 
@@ -117,16 +117,19 @@ export function ApplyForm({ role }: { role: Role }) {
           <TextField
             name="linkedin"
             type="url"
+            inputMode="url"
             label="LinkedIn URL"
             placeholder="https://www.linkedin.com/in/..."
             required
+            autoComplete="off"
           />
           <TextField
             name="phone"
             type="tel"
+            inputMode="tel"
             label="Phone (optional)"
             placeholder="+91 XXXXX XXXXX"
-            autoComplete="tel"
+            autoComplete="off"
           />
         </div>
       </section>

@@ -92,15 +92,13 @@ export function ContactForm() {
         <TextField
           name="firstName"
           label="First name"
-          placeholder="Karan"
           required
-          autoComplete="given-name"
+          autoComplete="off"
         />
         <TextField
           name="lastName"
           label="Last name"
-          placeholder="Bhandari"
-          autoComplete="family-name"
+          autoComplete="off"
         />
       </div>
 
@@ -111,16 +109,16 @@ export function ContactForm() {
         <TextField
           name="email"
           type="email"
+          inputMode="email"
           label="Work email"
           placeholder="you@company.com"
           required
-          autoComplete="email"
+          autoComplete="off"
         />
         <TextField
           name="company"
           label="Company"
-          placeholder="Acme Corp"
-          autoComplete="organization"
+          autoComplete="off"
         />
       </div>
 

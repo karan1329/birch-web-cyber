@@ -34,7 +34,12 @@ const TURNSTILE_SECRET =
 // birchlogic.com is verified on Resend; the From MUST be on that domain.
 // onboarding@resend.dev (sandbox) would cap delivery to the account owner.
 const MAIL_FROM = process.env.MAIL_FROM ?? "Birchlogic <noreply@birchlogic.com>";
-const MAIL_TO = process.env.MAIL_TO ?? "hi@birchlogic.com";
+// MAIL_TO is a comma-separated list. Every submission is delivered to all of
+// these inboxes (Resend accepts an array of recipients).
+const MAIL_TO = (process.env.MAIL_TO ?? "hi@birchlogic.com")
+  .split(",")
+  .map((addr) => addr.trim())
+  .filter(Boolean);
 
 const resend = process.env.RESEND_API_KEY
   ? new Resend(process.env.RESEND_API_KEY)
@@ -79,6 +84,23 @@ async function sendMail(args: { subject: string; text: string; replyTo?: string 
   });
 }
 
+// ─── Field validation ─────────────────────────────────────────────────────
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+function isEmail(v: string): boolean {
+  return EMAIL_RE.test(v);
+}
+function isHttpUrl(v: string): boolean {
+  try {
+    const u = new URL(v);
+    return u.protocol === "http:" || u.protocol === "https:";
+  } catch {
+    return false;
+  }
+}
+function phoneDigitCount(v: string): number {
+  return v.replace(/\D/g, "").length;
+}
+
 export type ActionResult = { ok: true } | { ok: false; error: string };
 
 // ─────────────────────────────────────────────────────────────────────────
@@ -116,6 +138,10 @@ export async function submitContact(formData: FormData): Promise<ActionResult> {
       ok: false,
       error: "Name, work email and message are required.",
     };
+  }
+
+  if (!isEmail(payload.email)) {
+    return { ok: false, error: "Please enter a valid work email address." };
   }
 
   const fullName = [payload.firstName, payload.lastName].filter(Boolean).join(" ");
@@ -194,6 +220,22 @@ export async function submitApplication(
       ok: false,
       error: "Name, email and LinkedIn URL are required.",
     };
+  }
+
+  if (!isEmail(payload.email)) {
+    return { ok: false, error: "Please enter a valid email address." };
+  }
+  if (!isHttpUrl(payload.linkedin)) {
+    return {
+      ok: false,
+      error: "Please paste a full LinkedIn URL, including https://.",
+    };
+  }
+  if (payload.phone) {
+    const digits = phoneDigitCount(payload.phone);
+    if (digits < 7 || digits > 15) {
+      return { ok: false, error: "Please enter a valid phone number." };
+    }
   }
 
   const questions = ROLE_QUESTIONS[roleSlug];

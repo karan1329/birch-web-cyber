@@ -31,6 +31,14 @@ export default $config({
         MAIL_FROM: process.env.MAIL_FROM ?? "Birchlogic <noreply@birchlogic.com>",
         MAIL_TO: process.env.MAIL_TO ?? "hi@birchlogic.com",
       },
+      // Invalidate the whole CloudFront distribution on every deploy and wait
+      // for it to finish. The statically-rendered pages are served with a long
+      // s-maxage, so without a full invalidation a redeploy can keep serving the
+      // previous build's HTML (and its stale JS chunk references) from the edge.
+      invalidation: {
+        paths: "all",
+        wait: true,
+      },
     });
   },
 });
