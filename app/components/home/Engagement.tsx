@@ -1,10 +1,8 @@
 "use client";
 
-import Link from "next/link";
-import { useState } from "react";
 import { Anchor } from "../primitives/Anchor";
 import { SplitText } from "../primitives/SplitText";
-import { useTilt } from "../hooks/useTilt";
+import { TiltCard } from "../primitives/TiltCard";
 
 type Tier = { tier: string; label: string; meta: string; body: string };
 
@@ -75,7 +73,7 @@ export function Engagement() {
           }}
         >
           {TIERS.map((t, i) => (
-            <TiltCard key={i} tier={t} />
+            <TierCard key={i} tier={t} />
           ))}
         </div>
       </div>
@@ -83,47 +81,11 @@ export function Engagement() {
   );
 }
 
-function TiltCard({ tier }: { tier: Tier }) {
-  const ref = useTilt<HTMLDivElement>(10);
-  const [hov, setHov] = useState(false);
-
+function TierCard({ tier }: { tier: Tier }) {
   return (
-    <Link
-      href="/services"
-      style={{ display: "block", textDecoration: "none", color: "inherit" }}
-    >
-      <div
-        ref={ref}
-        onPointerEnter={() => setHov(true)}
-        onPointerLeave={() => setHov(false)}
-        style={{ cursor: "pointer", perspective: 1200 }}
-      >
-        <div
-          data-tilt-inner
-          style={{
-            position: "relative",
-            background: "var(--bl-ink)",
-            color: "var(--bl-fg)",
-            borderRadius: 24,
-            padding: "clamp(28px, 3vw, 44px)",
-            minHeight: 420,
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-between",
-            overflow: "hidden",
-            boxShadow: hov
-              ? "0 32px 80px rgba(10,10,12,0.28), 0 0 0 1px rgba(10,10,12,0.08)"
-              : "0 12px 32px rgba(10,10,12,0.10), 0 0 0 1px rgba(10,10,12,0.06)",
-            transition: "box-shadow 0.4s ease",
-            willChange: "transform",
-          }}
-        >
-          <div
-            data-tilt-glare
-            aria-hidden="true"
-            style={{ position: "absolute", inset: 0, pointerEvents: "none" }}
-          />
-
+    <TiltCard href="/services" max={10} minHeight={420}>
+      {(hov) => (
+        <>
           {/* Huge background number */}
           <div
             aria-hidden="true"
@@ -249,8 +211,8 @@ function TiltCard({ tier }: { tier: Tier }) {
               </span>
             </div>
           </div>
-        </div>
-      </div>
-    </Link>
+        </>
+      )}
+    </TiltCard>
   );
 }

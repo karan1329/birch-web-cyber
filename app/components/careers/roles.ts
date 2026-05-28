@@ -154,7 +154,7 @@ export const ROLE_QUESTIONS: Record<RoleSlug, ApplyQuestion[]> = {
       id: "q2",
       label: "Tell us about a no-reply you turned into a conversation.",
       placeholder:
-        "What was the unlock? The follow-up, the channel, the angle, the timing — whatever it was, we want the specifics.",
+        "What was the unlock? The follow-up, the channel, the angle, the timing; whatever it was, we want the specifics.",
     },
     {
       id: "q3",

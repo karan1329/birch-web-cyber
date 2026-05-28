@@ -156,12 +156,14 @@ Sections of home (in order): Hero · ClientMarquee · Thesis · HowWeWork (2-col
 ## Commands
 
 ```bash
-npm run dev      # next dev (Turbopack default)
+npm run dev      # sst dev · runs the Next dev server (Turbopack) + SST live AWS dev
 npm run build    # next build
 npm run lint     # eslint
+npm run deploy   # sst deploy --stage production
 ```
 
-Dev server runs at http://localhost:3000.
+Dev server runs at http://localhost:3000. `sst dev` wraps `next dev`, so it
+needs AWS credentials; for a pure local UI loop without AWS, `npx next dev` works.
 
 ## Theme + neon switching
 

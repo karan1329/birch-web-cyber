@@ -133,7 +133,7 @@ export function ContactForm() {
       <TextArea
         name="message"
         label="What is in your way?"
-        placeholder="A US enterprise customer is asking for SOC2 with teeth. We have a regulator's letter on the desk. We acquired a company and inherited a security stack we cannot defend. Be specific — the more concrete the blocker, the more useful the call."
+        placeholder="A US enterprise customer is asking for SOC2 with teeth. We have a regulator's letter on the desk. We acquired a company and inherited a security stack we cannot defend. Be specific. The more concrete the blocker, the more useful the call."
         rows={6}
         required
         hint="Plain prose is fine. We do not need a brief."

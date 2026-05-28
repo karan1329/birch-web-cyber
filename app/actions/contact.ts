@@ -48,9 +48,9 @@ const resend = process.env.RESEND_API_KEY
 async function verifyTurnstile(
   token: string,
 ): Promise<{ ok: boolean; reason: string }> {
-  // TEMP DIAGNOSTIC: `reason` is surfaced in the user-facing error so we can
-  // tell apart an empty token (widget/domain issue) from a server secret issue
-  // from a Cloudflare rejection. Remove once the prod verify path is confirmed.
+  // `reason` is logged server-side by callers to tell apart an empty token
+  // (widget/domain issue) from a missing server secret from a Cloudflare
+  // rejection. It is never surfaced to the user.
   if (!token) return { ok: false, reason: "no-token-from-widget" };
   if (!TURNSTILE_SECRET) return { ok: false, reason: "server-missing-secret" };
   try {
@@ -129,9 +129,10 @@ export async function submitContact(formData: FormData): Promise<ActionResult> {
   const token = String(formData.get("cf-turnstile-response") ?? "");
   const verify = await verifyTurnstile(token);
   if (!verify.ok) {
+    console.warn("[turnstile] verification failed:", verify.reason);
     return {
       ok: false,
-      error: `Could not verify the form. Please refresh and try again. (code: ${verify.reason})`,
+      error: "Could not verify the form. Please refresh and try again.",
     };
   }
 
@@ -199,9 +200,10 @@ export async function submitApplication(
   const token = String(formData.get("cf-turnstile-response") ?? "");
   const verify = await verifyTurnstile(token);
   if (!verify.ok) {
+    console.warn("[turnstile] verification failed:", verify.reason);
     return {
       ok: false,
-      error: `Could not verify the form. Please refresh and try again. (code: ${verify.reason})`,
+      error: "Could not verify the form. Please refresh and try again.",
     };
   }
 
@@ -262,7 +264,7 @@ export async function submitApplication(
   if (firstRequired && !firstRequired.answer) {
     return {
       ok: false,
-      error: "Please answer the first question — it is the load-bearing one.",
+      error: "Please answer the first question. It is the load-bearing one.",
     };
   }
 
