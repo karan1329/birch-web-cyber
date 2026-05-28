@@ -45,8 +45,14 @@ const resend = process.env.RESEND_API_KEY
   ? new Resend(process.env.RESEND_API_KEY)
   : null;
 
-async function verifyTurnstile(token: string): Promise<boolean> {
-  if (!token) return false;
+async function verifyTurnstile(
+  token: string,
+): Promise<{ ok: boolean; reason: string }> {
+  // TEMP DIAGNOSTIC: `reason` is surfaced in the user-facing error so we can
+  // tell apart an empty token (widget/domain issue) from a server secret issue
+  // from a Cloudflare rejection. Remove once the prod verify path is confirmed.
+  if (!token) return { ok: false, reason: "no-token-from-widget" };
+  if (!TURNSTILE_SECRET) return { ok: false, reason: "server-missing-secret" };
   try {
     const body = new URLSearchParams();
     body.append("secret", TURNSTILE_SECRET);
@@ -60,12 +66,17 @@ async function verifyTurnstile(token: string): Promise<boolean> {
         cache: "no-store",
       },
     );
-    const data = (await res.json()) as { success?: boolean };
-    return data.success === true;
+    const data = (await res.json()) as {
+      success?: boolean;
+      "error-codes"?: string[];
+    };
+    if (data.success === true) return { ok: true, reason: "ok" };
+    return {
+      ok: false,
+      reason: (data["error-codes"] ?? ["unknown"]).join("|"),
+    };
   } catch {
-    // Offline / firewall fallback: only the dev test secret is auto-trusted.
-    // Production secrets fail closed on a verify-endpoint outage.
-    return TURNSTILE_SECRET.startsWith("1x");
+    return { ok: false, reason: "verify-request-failed" };
   }
 }
 
@@ -116,11 +127,11 @@ const CONTACT_SUBJECT_LABEL: Record<string, string> = {
 
 export async function submitContact(formData: FormData): Promise<ActionResult> {
   const token = String(formData.get("cf-turnstile-response") ?? "");
-  const human = await verifyTurnstile(token);
-  if (!human) {
+  const verify = await verifyTurnstile(token);
+  if (!verify.ok) {
     return {
       ok: false,
-      error: "Could not verify the form. Please refresh and try again.",
+      error: `Could not verify the form. Please refresh and try again. (code: ${verify.reason})`,
     };
   }
 
@@ -186,11 +197,11 @@ export async function submitApplication(
   formData: FormData,
 ): Promise<ActionResult> {
   const token = String(formData.get("cf-turnstile-response") ?? "");
-  const human = await verifyTurnstile(token);
-  if (!human) {
+  const verify = await verifyTurnstile(token);
+  if (!verify.ok) {
     return {
       ok: false,
-      error: "Could not verify the form. Please refresh and try again.",
+      error: `Could not verify the form. Please refresh and try again. (code: ${verify.reason})`,
     };
   }
 
