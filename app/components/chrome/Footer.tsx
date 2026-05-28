@@ -152,7 +152,7 @@ export function Footer() {
               </a>
             ))}
             <a
-              href="mailto:hello@birchlogic.com"
+              href="mailto:hi@birchlogic.com"
               style={{
                 marginTop: 20,
                 display: "inline-block",
@@ -163,7 +163,7 @@ export function Footer() {
                 textDecoration: "none",
               }}
             >
-              hello@birchlogic.com
+              hi@birchlogic.com
             </a>
           </FooterColumn>
         </div>

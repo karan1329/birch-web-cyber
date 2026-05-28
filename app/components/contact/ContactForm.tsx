@@ -179,25 +179,12 @@ export function ContactForm() {
         style={{
           display: "flex",
           alignItems: "center",
-          justifyContent: "space-between",
+          justifyContent: "flex-end",
           gap: 16,
           marginTop: 8,
           flexWrap: "wrap",
         }}
       >
-        <p
-          style={{
-            margin: 0,
-            fontFamily: "var(--font-mono)",
-            fontSize: 11,
-            letterSpacing: "0.04em",
-            color: "var(--bl-fg3)",
-            maxWidth: 360,
-            lineHeight: 1.5,
-          }}
-        >
-          We respond within four business hours during India hours.
-        </p>
         <SubmitButton status={status} />
       </div>
     </form>
@@ -287,8 +274,8 @@ function SuccessState() {
           maxWidth: 420,
         }}
       >
-        Your note is with the partner team. We respond within four business
-        hours during India hours, with what we would do and in how many weeks.
+        Your note is with the partner team. We reply with what we would do,
+        and in how many weeks.
       </p>
       <p
         style={{
@@ -300,7 +287,7 @@ function SuccessState() {
           textTransform: "uppercase",
         }}
       >
-        If it is an emergency, email hello@birchlogic.com directly.
+        If it is an emergency, email hi@birchlogic.com directly.
       </p>
     </div>
   );

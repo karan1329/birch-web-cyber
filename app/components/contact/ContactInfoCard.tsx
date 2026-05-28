@@ -78,9 +78,8 @@ export function ContactInfoCard() {
             maxWidth: 360,
           }}
         >
-          Tell us what is in your way. We will respond within four business
-          hours during India hours, with what we would do and in how many
-          weeks.
+          Tell us what is in your way. We will reply with what we would do,
+          and in how many weeks.
         </p>
       </header>
 
@@ -93,7 +92,7 @@ export function ContactInfoCard() {
           paddingTop: 4,
         }}
       >
-        <InfoRow label="Email" value="hello@birchlogic.com" href="mailto:hello@birchlogic.com" />
+        <InfoRow label="Email" value="hi@birchlogic.com" href="mailto:hi@birchlogic.com" />
         <InfoRow
           label="LinkedIn"
           value="Karan Bhandari"

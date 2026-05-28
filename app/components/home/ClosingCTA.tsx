@@ -131,8 +131,7 @@ export function ClosingCTA() {
                 e.currentTarget.style.borderColor = "transparent";
               }}
             >
-              Or send Karan a message on LinkedIn. We respond within four
-              business hours.
+              Or send Karan a message on LinkedIn.
             </a>
           </div>
         </Rise>

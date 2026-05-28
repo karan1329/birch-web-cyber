@@ -19,7 +19,7 @@ export default function ContactPage() {
       <InnerHero
         kicker="30 minutes · zero pitch deck"
         title="One conversation. Thirty minutes."
-        subtitle="Bring a specific blocker. We will tell you what we would do, in how many weeks. The form below kicks the thread off; we will follow up within four business hours during India hours to schedule."
+        subtitle="Bring a specific blocker. We will tell you what we would do, in how many weeks. The form below kicks the thread off and we will follow up to schedule."
       />
 
       <section
