@@ -29,7 +29,9 @@ export default $config({
         NEXT_PUBLIC_TURNSTILE_SITE_KEY:
           process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? "0x4AAAAAADV3eER-aGUurFlO",
         MAIL_FROM: process.env.MAIL_FROM ?? "Birchlogic <noreply@birchlogic.com>",
-        MAIL_TO: process.env.MAIL_TO ?? "hi@birchlogic.com",
+        MAIL_TO:
+          process.env.MAIL_TO ??
+          "hi@birchlogic.com,karan@birchlogic.com,jas@birchlogic.com",
       },
       // Invalidate the whole CloudFront distribution on every deploy and wait
       // for it to finish. The statically-rendered pages are served with a long
