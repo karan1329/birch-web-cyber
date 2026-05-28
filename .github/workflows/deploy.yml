@@ -32,3 +32,7 @@ jobs:
 
       - name: Deploy to production
         run: npx sst deploy --stage production
+        env:
+          # Add these under repo (or `production` environment) secrets in GitHub.
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          TURNSTILE_SECRET_KEY: ${{ secrets.TURNSTILE_SECRET_KEY }}

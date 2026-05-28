@@ -31,7 +31,9 @@ import { ROLE_QUESTIONS, getRole, type RoleSlug } from "../components/careers/ro
 const TURNSTILE_SECRET =
   process.env.TURNSTILE_SECRET_KEY ?? "1x0000000000000000000000000000000AA";
 
-const MAIL_FROM = process.env.MAIL_FROM ?? "Birchlogic <onboarding@resend.dev>";
+// birchlogic.com is verified on Resend; the From MUST be on that domain.
+// onboarding@resend.dev (sandbox) would cap delivery to the account owner.
+const MAIL_FROM = process.env.MAIL_FROM ?? "Birchlogic <noreply@birchlogic.com>";
 const MAIL_TO = process.env.MAIL_TO ?? "hi@birchlogic.com";
 
 const resend = process.env.RESEND_API_KEY

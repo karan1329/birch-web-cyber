@@ -6,11 +6,10 @@
 import { Resend } from "resend";
 
 const apiKey = process.env.RESEND_API_KEY;
-const from = process.env.MAIL_FROM ?? "Birchlogic <onboarding@resend.dev>";
-// Sandbox-mode override: until birchlogic.com is verified on Resend, the
-// account can only send to the owner address. Override via SMOKE_TO if you
-// want to send elsewhere once the domain is verified.
-const to = process.env.SMOKE_TO ?? "karanbhandari1329@gmail.com";
+// birchlogic.com is verified on Resend, so the From must be on that domain.
+const from = process.env.MAIL_FROM ?? "Birchlogic <noreply@birchlogic.com>";
+// Default recipient is the real inbox. Override via SMOKE_TO to send elsewhere.
+const to = process.env.SMOKE_TO ?? "hi@birchlogic.com";
 
 if (!apiKey) {
   console.error("RESEND_API_KEY is not set. Aborting.");
