@@ -32,6 +32,7 @@ const SPRINTS: Sprint[] = [
     name: "ISO 42001 Readiness Sprint",
     fixes: "EU customer asked for ISO 42001. You have no AIMS.",
     duration: "4 weeks",
+    href: "/services/iso-42001-readiness",
   },
   {
     name: "Cloud Security Architecture Review",
@@ -62,6 +63,19 @@ const SPRINTS: Sprint[] = [
     name: "MAS TRM Single-Domain Sprint",
     fixes: "One open TRM Domain finding. MAS-fluent partner.",
     duration: "4 weeks",
+    href: "/services/mas-trm-single-domain",
+  },
+  {
+    name: "Notice 658 + TPRM Readiness Sprint",
+    fixes: "Your third-party register, mapped to Notice 658 and the incoming TPRM Guidelines before MAS asks.",
+    duration: "4 to 6 weeks",
+    href: "/services/notice-658-tprm-readiness",
+  },
+  {
+    name: "NIS2 Vendor Questionnaire Engine",
+    fixes: "EU enterprise questionnaires answered in hours, not weeks. Built for SG SaaS with EU pipeline.",
+    duration: "3 weeks + monthly",
+    href: "/services/nis2-vendor-questionnaire",
   },
   {
     name: "Post-Incident 30-Day Hardening",
@@ -76,10 +90,10 @@ const SPRINTS: Sprint[] = [
 ];
 
 /**
- * 12-row sprint ledger. Row 1 (Multi-Framework Compliance) is a real link
- * to its dedicated landing page. Other 11 rows display the same way but
- * are inactive until their copy is written. Hover lights the row with a
- * left neon bar.
+ * Sprint ledger. Rows with `href` link to their dedicated landing pages.
+ * Hover lights the row with a left neon bar. Section heading dropped the
+ * explicit count so we do not need to re-render every time a sprint
+ * lands or retires.
  */
 export function SprintsTable() {
   return (
@@ -94,7 +108,7 @@ export function SprintsTable() {
       }}
     >
       <div className="bl-container" style={{ padding: 0 }}>
-        <Anchor number="04" label="The twelve quick sprints" />
+        <Anchor number="04" label="The quick sprints" />
 
         <h2
           style={{
@@ -104,10 +118,10 @@ export function SprintsTable() {
             lineHeight: 1.02,
             letterSpacing: "-0.03em",
             margin: "0 0 24px",
-            maxWidth: 1000,
+            maxWidth: "var(--bl-heading-wide)",
           }}
         >
-          Twelve quick sprints.
+          Quick sprints.
           <br />
           <span style={{ color: "var(--bl-fg3)" }}>
             One specific thing, fixed in weeks.
@@ -119,7 +133,7 @@ export function SprintsTable() {
             fontSize: "clamp(15px, 1.2vw, 17px)",
             color: "var(--bl-fg2)",
             lineHeight: 1.65,
-            maxWidth: 760,
+            maxWidth: "var(--bl-text-body)",
             margin: "0 0 clamp(48px, 6vw, 80px)",
           }}
         >

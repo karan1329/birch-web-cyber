@@ -61,6 +61,17 @@
   --bl-section-gap: clamp(80px, 10vw, 140px);
   --bl-nav-h: 60px;
   --bl-top-offset: var(--bl-nav-h);
+
+  /* Box-length tokens · canonical widths for headings, body paragraphs,
+     and constrained columns. Replaces a long tail of arbitrary inline
+     `maxWidth: NNN` values (~22 distinct, often differing by 20-40px for
+     no functional reason). Card-tier widths (320-420 region) remain
+     inline because each card is tuned individually. */
+  --bl-heading-wide: 1100px;   /* section H2 + intro paragraph container */
+  --bl-text-wide: 820px;       /* hero subtitles, long-form body */
+  --bl-text-body: 720px;       /* standard body paragraphs */
+  --bl-text-narrow: 640px;     /* dense sections, denser layouts */
+  --bl-text-tight: 480px;      /* tight paragraphs, brief copy */
 }
 
 /* =====================================================================

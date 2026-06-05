@@ -15,7 +15,7 @@ import { NotForSale } from "../components/services/NotForSale";
 export const metadata = {
   title: "Services · Birchlogic",
   description:
-    "Five practices. Three commercial shapes. Twelve productized sprints. Senior-led on every one.",
+    "Five practices. Three commercial shapes. Quick sprints, vCISO, and Fractional Security Office. Senior-led on every one.",
 };
 
 const VCISO_TIERS: [SubTier, SubTier, SubTier] = [
@@ -113,7 +113,7 @@ function ClosingCTASection() {
             lineHeight: 0.98,
             letterSpacing: "-0.04em",
             margin: "0 auto clamp(40px, 5vw, 64px)",
-            maxWidth: 1080,
+            maxWidth: "var(--bl-heading-wide)",
           }}
         >
           <SplitText text="Pricing is on the call," perChar={0.012} />

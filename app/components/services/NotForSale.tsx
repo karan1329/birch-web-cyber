@@ -48,7 +48,7 @@ export function NotForSale() {
                 lineHeight: 1.05,
                 letterSpacing: "-0.025em",
                 margin: 0,
-                maxWidth: 520,
+                maxWidth: "var(--bl-text-tight)",
               }}
             >
               These are all important.
@@ -110,7 +110,7 @@ export function NotForSale() {
                   color: "var(--bl-fg2)",
                   lineHeight: 1.65,
                   margin: 0,
-                  maxWidth: 640,
+                  maxWidth: "var(--bl-text-narrow)",
                 }}
               >
                 We do not run these in-house. We coordinate the best

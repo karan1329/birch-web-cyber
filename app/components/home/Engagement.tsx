@@ -51,7 +51,7 @@ export function Engagement() {
             lineHeight: 0.94,
             letterSpacing: "-0.04em",
             margin: "0 0 clamp(48px, 6vw, 80px)",
-            maxWidth: 1100,
+            maxWidth: "var(--bl-heading-wide)",
             color: "var(--bl-bone-fg)",
           }}
         >

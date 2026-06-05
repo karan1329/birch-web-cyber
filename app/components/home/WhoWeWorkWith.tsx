@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { Anchor } from "../primitives/Anchor";
 import { Rise } from "../primitives/Rise";
 import { SplitText } from "../primitives/SplitText";
@@ -36,7 +37,7 @@ export function WhoWeWorkWith() {
             lineHeight: 1.02,
             letterSpacing: "-0.03em",
             margin: "0 0 clamp(56px, 7vw, 96px)",
-            maxWidth: 1100,
+            maxWidth: "var(--bl-heading-wide)",
           }}
         >
           <SplitText
@@ -70,17 +71,34 @@ export function WhoWeWorkWith() {
                 lineHeight: 1.65,
                 color: "var(--bl-fg2)",
                 margin: 0,
-                maxWidth: 560,
+                maxWidth: "var(--bl-text-narrow)",
               }}
             >
               Founders, CISOs, and CFOs at growth-stage companies and
               regulated mid-caps. The kind of operator whose security program
               has outgrown a single owner but does not yet justify a
-              forty-person CISO office. They come to us when a specific
-              moment arrives: a US enterprise customer asking for SOC2 with
-              teeth, a regulator&rsquo;s letter, the board&rsquo;s first hard
+              forty-person CISO office. RBI-regulated fintechs. SEBI
+              mid-caps. MAS-licensed banks, payment institutions, and capital
+              markets firms. They come to us when a specific moment arrives:
+              a US enterprise customer asking for SOC2 with teeth, a
+              regulator&rsquo;s letter, the board&rsquo;s first hard
               question, the week after an incident, the year before an IPO.
             </p>
+            <Link
+              href="/singapore"
+              style={{
+                display: "inline-block",
+                marginTop: 24,
+                fontFamily: "var(--font-mono)",
+                fontSize: 11,
+                letterSpacing: "0.08em",
+                color: "var(--bl-neon)",
+                textDecoration: "none",
+                textTransform: "uppercase",
+              }}
+            >
+              Singapore practice →
+            </Link>
           </Rise>
 
           <Rise delay={0.1}>

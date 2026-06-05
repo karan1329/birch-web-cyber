@@ -47,7 +47,7 @@ function ClosingCTASection() {
             lineHeight: 0.98,
             letterSpacing: "-0.04em",
             margin: "0 auto clamp(40px, 5vw, 64px)",
-            maxWidth: 1080,
+            maxWidth: "var(--bl-heading-wide)",
           }}
         >
           <SplitText

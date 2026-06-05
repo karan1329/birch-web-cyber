@@ -37,7 +37,7 @@ export function Thesis() {
             lineHeight: 1,
             letterSpacing: "-0.035em",
             margin: "0 0 clamp(56px, 7vw, 96px)",
-            maxWidth: 1080,
+            maxWidth: "var(--bl-heading-wide)",
           }}
         >
           <SplitText text="We were founded on an" perChar={0.012} />
@@ -62,7 +62,7 @@ export function Thesis() {
         >
           {/* Left — argument as prose + footnote */}
           <Rise>
-            <div style={{ maxWidth: 640 }}>
+            <div style={{ maxWidth: "var(--bl-text-narrow)" }}>
               <p style={{ margin: 0 }}>
                 <span
                   style={{

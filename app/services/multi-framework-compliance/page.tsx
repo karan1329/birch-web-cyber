@@ -176,7 +176,7 @@ export default function MultiFrameworkPage() {
                     lineHeight: 1.65,
                     color: "var(--bl-fg2)",
                     margin: 0,
-                    maxWidth: 640,
+                    maxWidth: "var(--bl-text-narrow)",
                   }}
                 >
                   {phase.body}
@@ -285,7 +285,7 @@ function ClosingCTASection() {
             lineHeight: 0.98,
             letterSpacing: "-0.04em",
             margin: "0 auto clamp(32px, 4vw, 48px)",
-            maxWidth: 1080,
+            maxWidth: "var(--bl-heading-wide)",
           }}
         >
           <SplitText text="Talk to us first." perChar={0.014} />
@@ -303,7 +303,7 @@ function ClosingCTASection() {
             fontSize: "clamp(15px, 1.25vw, 18px)",
             color: "var(--bl-fg2)",
             lineHeight: 1.65,
-            maxWidth: 720,
+            maxWidth: "var(--bl-text-body)",
             margin: "0 auto 48px",
           }}
         >

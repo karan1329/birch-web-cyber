@@ -150,7 +150,7 @@ export function ApplyForm({ role }: { role: Role }) {
             fontSize: "clamp(15px, 1.2vw, 17px)",
             lineHeight: 1.65,
             color: "var(--bl-fg2)",
-            maxWidth: 720,
+            maxWidth: "var(--bl-text-body)",
           }}
         >
           Four questions. Be specific. We read every answer ourselves and
@@ -215,7 +215,7 @@ export function ApplyForm({ role }: { role: Role }) {
           <p
             style={{
               margin: 0,
-              maxWidth: 460,
+              maxWidth: "var(--bl-text-tight)",
               fontFamily: "var(--font-mono)",
               fontSize: 11,
               letterSpacing: "0.04em",
@@ -359,7 +359,7 @@ function Preamble() {
         display: "flex",
         flexDirection: "column",
         gap: 16,
-        maxWidth: 720,
+        maxWidth: "var(--bl-text-body)",
       }}
     >
       <span
@@ -569,7 +569,7 @@ function SuccessState() {
           fontSize: "clamp(15px, 1.2vw, 17px)",
           lineHeight: 1.65,
           color: "var(--bl-fg2)",
-          maxWidth: 480,
+          maxWidth: "var(--bl-text-tight)",
         }}
       >
         Your application is in. When we have read it properly, we will reply

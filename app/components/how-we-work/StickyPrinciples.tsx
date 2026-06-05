@@ -277,7 +277,7 @@ export function StickyPrinciples() {
                           lineHeight: 1.6,
                           color: "var(--bl-fg2)",
                           margin: idx === 0 ? "0 0 14px" : 0,
-                          maxWidth: 540,
+                          maxWidth: "var(--bl-text-tight)",
                         }}
                       >
                         {para}

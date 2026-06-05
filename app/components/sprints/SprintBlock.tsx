@@ -52,7 +52,7 @@ export function SprintBlock({
               lineHeight: 1.02,
               letterSpacing: "-0.03em",
               margin: "0 0 clamp(32px, 4vw, 56px)",
-              maxWidth: 1080,
+              maxWidth: "var(--bl-heading-wide)",
               color: inverted ? "var(--bl-bone-fg)" : "var(--bl-fg)",
             }}
           >

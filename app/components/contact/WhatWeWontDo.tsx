@@ -38,7 +38,7 @@ export function WhatWeWontDo() {
                 lineHeight: 1.05,
                 letterSpacing: "-0.025em",
                 margin: 0,
-                maxWidth: 520,
+                maxWidth: "var(--bl-text-tight)",
               }}
             >
               No pitch deck.
@@ -58,7 +58,7 @@ export function WhatWeWontDo() {
                   lineHeight: 1.7,
                   color: "var(--bl-fg2)",
                   margin: "0 0 20px",
-                  maxWidth: 720,
+                  maxWidth: "var(--bl-text-body)",
                 }}
               >
                 We will not send a pitch deck. We will not run through our
@@ -72,7 +72,7 @@ export function WhatWeWontDo() {
                   lineHeight: 1.7,
                   color: "var(--bl-fg2)",
                   margin: "0 0 20px",
-                  maxWidth: 720,
+                  maxWidth: "var(--bl-text-body)",
                 }}
               >
                 If we are a fit, we will send a tightly-scoped proposal within
@@ -87,7 +87,7 @@ export function WhatWeWontDo() {
                   lineHeight: 1.7,
                   color: "var(--bl-fg2)",
                   margin: 0,
-                  maxWidth: 720,
+                  maxWidth: "var(--bl-text-body)",
                 }}
               >
                 If we are not a fit, we will name the firms that are and route

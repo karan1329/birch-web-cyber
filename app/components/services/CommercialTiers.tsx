@@ -61,7 +61,7 @@ export function CommercialTiers() {
             lineHeight: 0.96,
             letterSpacing: "-0.038em",
             margin: "0 0 24px",
-            maxWidth: 1100,
+            maxWidth: "var(--bl-heading-wide)",
             color: "var(--bl-bone-fg)",
           }}
         >
@@ -83,7 +83,7 @@ export function CommercialTiers() {
             fontSize: "clamp(15px, 1.2vw, 17px)",
             color: "var(--bl-bone-fg2)",
             lineHeight: 1.65,
-            maxWidth: 760,
+            maxWidth: "var(--bl-text-body)",
             margin: "0 0 clamp(48px, 6vw, 80px)",
           }}
         >

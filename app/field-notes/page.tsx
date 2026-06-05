@@ -189,7 +189,7 @@ export default function FieldNotesPage() {
               lineHeight: 1.4,
               letterSpacing: "-0.015em",
               color: "var(--bl-fg)",
-              maxWidth: 720,
+              maxWidth: "var(--bl-text-body)",
               margin: "0 auto 14px",
             }}
           >
@@ -200,7 +200,7 @@ export default function FieldNotesPage() {
               fontFamily: "var(--font-sans)",
               fontSize: "clamp(14px, 1.1vw, 16px)",
               color: "var(--bl-fg2)",
-              maxWidth: 640,
+              maxWidth: "var(--bl-text-narrow)",
               margin: "0 auto",
             }}
           >

@@ -66,7 +66,7 @@ export function CRQProof() {
                 lineHeight: 0.98,
                 letterSpacing: "-0.035em",
                 margin: "0 0 32px",
-                maxWidth: 760,
+                maxWidth: "var(--bl-text-body)",
               }}
             >
               <SplitText text="CRQ delivered" perChar={0.012} />
@@ -93,7 +93,7 @@ export function CRQProof() {
                 fontSize: "clamp(15px, 1.2vw, 17px)",
                 color: "var(--bl-fg2)",
                 lineHeight: 1.65,
-                maxWidth: 540,
+                maxWidth: "var(--bl-text-tight)",
                 margin: 0,
               }}
             >

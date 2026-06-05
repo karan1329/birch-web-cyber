@@ -17,7 +17,7 @@ const PHASES = [
   {
     minutes: "Last 5",
     title: "We tell you what we would do, in how many weeks.",
-    body: "We tell you which of our twelve sprints (or which retainer tier, or whether you need FSO) is the right fit. If we are not a fit, we say so and route you elsewhere.",
+    body: "We tell you which of our sprints (or which retainer tier, or whether you need FSO) is the right fit. If we are not a fit, we say so and route you elsewhere.",
   },
 ];
 
@@ -46,7 +46,7 @@ export function WhatToExpect() {
             lineHeight: 1.02,
             letterSpacing: "-0.035em",
             margin: "0 0 32px",
-            maxWidth: 1080,
+            maxWidth: "var(--bl-heading-wide)",
           }}
         >
           We do not run a sales process.
@@ -110,7 +110,7 @@ export function WhatToExpect() {
                         lineHeight: 1.65,
                         color: "var(--bl-fg2)",
                         margin: 0,
-                        maxWidth: 640,
+                        maxWidth: "var(--bl-text-narrow)",
                       }}
                     >
                       {p.body}
@@ -129,7 +129,7 @@ export function WhatToExpect() {
             fontSize: "clamp(14px, 1.15vw, 16px)",
             lineHeight: 1.65,
             color: "var(--bl-fg2)",
-            maxWidth: 720,
+            maxWidth: "var(--bl-text-body)",
           }}
         >
           You do not need to send a brief beforehand. You do not need to sign

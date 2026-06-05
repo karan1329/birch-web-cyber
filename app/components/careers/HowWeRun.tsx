@@ -49,7 +49,7 @@ export function HowWeRun() {
             lineHeight: 1.02,
             letterSpacing: "-0.035em",
             margin: "0 0 clamp(48px, 6vw, 80px)",
-            maxWidth: 1100,
+            maxWidth: "var(--bl-heading-wide)",
           }}
         >
           Built on judgement.

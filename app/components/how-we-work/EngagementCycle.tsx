@@ -59,7 +59,7 @@ export function EngagementCycle() {
             lineHeight: 0.98,
             letterSpacing: "-0.035em",
             margin: "0 0 clamp(48px, 6vw, 80px)",
-            maxWidth: 1000,
+            maxWidth: "var(--bl-heading-wide)",
           }}
         >
           From kickoff through the third board cycle.
@@ -118,7 +118,7 @@ export function EngagementCycle() {
                       lineHeight: 1.6,
                       color: "var(--bl-fg2)",
                       margin: 0,
-                      maxWidth: 620,
+                      maxWidth: "var(--bl-text-narrow)",
                     }}
                   >
                     {phase.body}

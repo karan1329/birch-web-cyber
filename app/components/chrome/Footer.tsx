@@ -6,16 +6,30 @@ const NAV = [
   ["/", "Home"],
   ["/how-we-work", "How We Work"],
   ["/services", "Services"],
+  ["/singapore", "Singapore"],
   ["/field-notes", "Field notes"],
   ["/careers", "Careers"],
   ["/contact", "Contact"],
 ] as const;
 
-type Office = { city: string; country?: string; note?: string };
+type Office = { city: string; country?: string; note?: string; href?: string };
 
 const OFFICES: Office[] = [
   { city: "Delhi", country: "India" },
-  { city: "Singapore", note: "coming soon" },
+  { city: "Singapore", href: "/singapore" },
+];
+
+// Plain list, single middle-dot separators. No links. Geist Mono small.
+const OPERATES_ACROSS = [
+  "RBI",
+  "SEBI",
+  "MAS TRM",
+  "Notice 658",
+  "EU AI Act",
+  "NIS2",
+  "DPDP",
+  "UAE PDPL",
+  "DESC",
 ];
 
 // Only LinkedIn for now. X and GitHub are off until we have an active
@@ -73,7 +87,7 @@ export function Footer() {
               }}
             >
               A senior cybersecurity strategic advisory boutique. Founded in
-              India. Singapore office coming soon.
+              India. Singapore practice open.
             </p>
           </div>
 
@@ -97,39 +111,53 @@ export function Footer() {
           </FooterColumn>
 
           <FooterColumn label="Offices">
-            {OFFICES.map((o) => (
-              <div
-                key={o.city}
-                style={{
-                  fontFamily: "var(--font-sans)",
-                  fontSize: 14,
-                  marginBottom: 10,
-                  color: "var(--bl-fg2)",
-                  display: "flex",
-                  alignItems: "baseline",
-                  gap: 8,
-                  flexWrap: "wrap",
-                }}
-              >
+            {OFFICES.map((o) => {
+              const cityLabel = (
                 <span>
                   {o.city}
                   {o.country ? `, ${o.country}` : ""}
                 </span>
-                {o.note && (
-                  <span
-                    style={{
-                      fontFamily: "var(--font-mono)",
-                      fontSize: 10,
-                      letterSpacing: "0.06em",
-                      color: "var(--bl-neon)",
-                      textTransform: "uppercase",
-                    }}
-                  >
-                    {o.note}
-                  </span>
-                )}
-              </div>
-            ))}
+              );
+              return (
+                <div
+                  key={o.city}
+                  style={{
+                    fontFamily: "var(--font-sans)",
+                    fontSize: 14,
+                    marginBottom: 10,
+                    color: "var(--bl-fg2)",
+                    display: "flex",
+                    alignItems: "baseline",
+                    gap: 8,
+                    flexWrap: "wrap",
+                  }}
+                >
+                  {o.href ? (
+                    <Link
+                      href={o.href}
+                      style={{ color: "inherit", textDecoration: "none" }}
+                    >
+                      {cityLabel}
+                    </Link>
+                  ) : (
+                    cityLabel
+                  )}
+                  {o.note && (
+                    <span
+                      style={{
+                        fontFamily: "var(--font-mono)",
+                        fontSize: 10,
+                        letterSpacing: "0.06em",
+                        color: "var(--bl-neon)",
+                        textTransform: "uppercase",
+                      }}
+                    >
+                      {o.note}
+                    </span>
+                  )}
+                </div>
+              );
+            })}
           </FooterColumn>
 
           <FooterColumn label="Connect">
@@ -166,6 +194,42 @@ export function Footer() {
               hi@birchlogic.com
             </a>
           </FooterColumn>
+        </div>
+
+        {/* Operating-across regulator list. Plain text, no links, single
+            middle-dot separators. Sits above the copyright row. */}
+        <div
+          style={{
+            borderTop: "1px solid var(--bl-rule)",
+            paddingTop: 24,
+            paddingBottom: 24,
+            display: "flex",
+            flexWrap: "wrap",
+            gap: "8px 14px",
+            alignItems: "baseline",
+          }}
+        >
+          <span
+            style={{
+              fontFamily: "var(--font-mono)",
+              fontSize: 10,
+              letterSpacing: "0.18em",
+              textTransform: "uppercase",
+              color: "var(--bl-fg3)",
+            }}
+          >
+            Operating across
+          </span>
+          <span
+            style={{
+              fontFamily: "var(--font-mono)",
+              fontSize: 11,
+              letterSpacing: "0.06em",
+              color: "var(--bl-fg2)",
+            }}
+          >
+            {OPERATES_ACROSS.join(" · ")}
+          </span>
         </div>
 
         <div
@@ -206,7 +270,7 @@ export function Footer() {
               letterSpacing: "0.04em",
             }}
           >
-            Delhi, India · Singapore (coming soon)
+            Delhi · Singapore
           </span>
         </div>
       </div>

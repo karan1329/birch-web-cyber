@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { Anchor } from "../primitives/Anchor";
 import { Rise } from "../primitives/Rise";
 
@@ -7,6 +8,7 @@ type Practice = {
   numeral: string;
   heading: string;
   body: string;
+  crossLink?: { href: string; label: string };
 };
 
 const PRACTICES: Practice[] = [
@@ -24,6 +26,10 @@ const PRACTICES: Practice[] = [
     numeral: "III",
     heading: "Compliance, Privacy and Regulatory.",
     body: "Multi-framework programme design where evidence is collected once and mapped across overlapping regimes. RBI, SEBI, MAS TRM, EU AI Act, NIS2, DPDP, UAE PDPL, DESC. Workflow-built evidence linkage so audit preparation stops being a sprint.",
+    crossLink: {
+      href: "/singapore",
+      label: "Singapore is our lead regulator-led practice. See it here →",
+    },
   },
   {
     numeral: "IV",
@@ -64,7 +70,7 @@ export function PracticesGrid() {
             lineHeight: 0.98,
             letterSpacing: "-0.035em",
             margin: "0 0 24px",
-            maxWidth: 1100,
+            maxWidth: "var(--bl-heading-wide)",
           }}
         >
           Five practices. Each designed around a specific buyer pain,
@@ -79,7 +85,7 @@ export function PracticesGrid() {
             fontSize: "clamp(15px, 1.2vw, 17px)",
             color: "var(--bl-fg2)",
             lineHeight: 1.65,
-            maxWidth: 700,
+            maxWidth: "var(--bl-text-body)",
             margin: "0 0 clamp(56px, 7vw, 96px)",
           }}
         >
@@ -107,7 +113,7 @@ export function PracticesGrid() {
   );
 }
 
-function PracticeRow({ numeral, heading, body }: Practice) {
+function PracticeRow({ numeral, heading, body, crossLink }: Practice) {
   return (
     <li
       style={{
@@ -155,11 +161,27 @@ function PracticeRow({ numeral, heading, body }: Practice) {
             lineHeight: 1.65,
             color: "var(--bl-fg2)",
             margin: 0,
-            maxWidth: 760,
+            maxWidth: "var(--bl-text-body)",
           }}
         >
           {body}
         </p>
+        {crossLink && (
+          <Link
+            href={crossLink.href}
+            style={{
+              display: "inline-block",
+              marginTop: 18,
+              fontFamily: "var(--font-mono)",
+              fontSize: 12,
+              letterSpacing: "0.04em",
+              color: "var(--bl-neon)",
+              textDecoration: "none",
+            }}
+          >
+            {crossLink.label}
+          </Link>
+        )}
       </div>
     </li>
   );

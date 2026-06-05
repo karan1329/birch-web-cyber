@@ -99,7 +99,11 @@ export function ContactInfoCard() {
           external
         />
         <InfoRow label="Office" value="Delhi, India" />
-        <InfoRow label="Singapore" value="Coming soon" muted />
+        <InfoRow
+          label="Singapore"
+          value="Practice open"
+          href="/singapore"
+        />
       </div>
 
       <div

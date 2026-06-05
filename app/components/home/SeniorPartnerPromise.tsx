@@ -47,7 +47,7 @@ export function SeniorPartnerPromise() {
           <blockquote
             style={{
               margin: 0,
-              maxWidth: 1180,
+              maxWidth: "var(--bl-heading-wide)",
               marginInline: "auto",
               textAlign: "center",
               fontFamily: "var(--font-sans)",

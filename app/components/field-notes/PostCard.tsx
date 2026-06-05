@@ -86,7 +86,7 @@ export function FeaturedPostCard({ post }: { post: Post }) {
           lineHeight: 1.65,
           color: "var(--bl-fg2)",
           margin: 0,
-          maxWidth: 640,
+          maxWidth: "var(--bl-text-narrow)",
         }}
       >
         {post.summary}
@@ -180,7 +180,7 @@ export function RecentPostRow({ post }: { post: Post }) {
             lineHeight: 1.55,
             color: "var(--bl-fg2)",
             margin: 0,
-            maxWidth: 720,
+            maxWidth: "var(--bl-text-body)",
           }}
         >
           {post.summary}

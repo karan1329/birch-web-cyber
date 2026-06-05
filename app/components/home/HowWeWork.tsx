@@ -53,7 +53,7 @@ export function HowWeWork() {
             lineHeight: 1,
             letterSpacing: "-0.035em",
             margin: "0 0 clamp(64px, 8vw, 112px)",
-            maxWidth: 1100,
+            maxWidth: "var(--bl-heading-wide)",
           }}
         >
           <SplitText text="Old school in discipline." perChar={0.012} />
@@ -192,7 +192,7 @@ function PrincipleRow({
           letterSpacing: "-0.012em",
           color: "var(--bl-fg)",
           margin: 0,
-          maxWidth: 520,
+          maxWidth: "var(--bl-text-tight)",
         }}
       >
         {lead}

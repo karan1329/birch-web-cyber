@@ -58,7 +58,7 @@ export function SubTierComparison({
             lineHeight: 1,
             letterSpacing: "-0.035em",
             margin: "0 0 20px",
-            maxWidth: 1100,
+            maxWidth: "var(--bl-heading-wide)",
           }}
         >
           <SplitText text={heading} perChar={0.012} />
@@ -71,7 +71,7 @@ export function SubTierComparison({
             fontSize: "clamp(15px, 1.2vw, 17px)",
             color: "var(--bl-fg2)",
             lineHeight: 1.65,
-            maxWidth: 800,
+            maxWidth: "var(--bl-text-wide)",
             margin: "0 0 clamp(48px, 6vw, 80px)",
           }}
         >
@@ -163,7 +163,7 @@ export function SubTierComparison({
               fontSize: 15,
               color: "var(--bl-fg2)",
               lineHeight: 1.65,
-              maxWidth: 800,
+              maxWidth: "var(--bl-text-wide)",
             }}
           >
             {closingNote}

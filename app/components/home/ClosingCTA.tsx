@@ -84,7 +84,7 @@ export function ClosingCTA() {
               fontFamily: "var(--font-sans)",
               fontSize: "clamp(16px, 1.35vw, 19px)",
               color: "var(--bl-fg2)",
-              maxWidth: 700,
+              maxWidth: "var(--bl-text-body)",
               margin: "0 auto 48px",
               lineHeight: 1.65,
             }}

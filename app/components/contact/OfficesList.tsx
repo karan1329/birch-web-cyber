@@ -6,17 +6,18 @@ import { Rise } from "../primitives/Rise";
 type Office = {
   city: string;
   country?: string;
-  status?: "active" | "coming-soon";
+  status?: "active" | "incorporating";
 };
 
 const OFFICES: Office[] = [
   { city: "Delhi", country: "India", status: "active" },
-  { city: "Singapore", status: "coming-soon" },
+  { city: "Singapore", status: "incorporating" },
 ];
 
 /**
- * Office addresses block. Two offices — Delhi (active) and Singapore
- * (opening soon).
+ * Office addresses block. Delhi (active) and Singapore (Pte Ltd
+ * incorporating, MAS-licensed counterparty engagements booked from Delhi
+ * through go-live).
  */
 export function OfficesList() {
   return (
@@ -39,13 +40,13 @@ export function OfficesList() {
             lineHeight: 1.05,
             letterSpacing: "-0.03em",
             margin: "0 0 clamp(48px, 6vw, 80px)",
-            maxWidth: 1080,
+            maxWidth: "var(--bl-heading-wide)",
           }}
         >
           Founded in India.
           <br />
           <span style={{ color: "var(--bl-fg3)" }}>
-            Singapore office coming soon.
+            Singapore practice open.
           </span>
         </h2>
 
@@ -91,7 +92,7 @@ export function OfficesList() {
                   >
                     {o.city}
                   </span>
-                  {o.status === "coming-soon" && (
+                  {o.status === "incorporating" && (
                     <span
                       style={{
                         fontFamily: "var(--font-mono)",
@@ -104,7 +105,7 @@ export function OfficesList() {
                         textTransform: "uppercase",
                       }}
                     >
-                      Coming soon
+                      Incorporating 2026
                     </span>
                   )}
                 </div>
@@ -121,7 +122,7 @@ export function OfficesList() {
                     {o.country}
                   </div>
                 )}
-                {o.status === "coming-soon" && (
+                {o.status === "incorporating" && (
                   <p
                     style={{
                       marginTop: 6,
@@ -131,8 +132,10 @@ export function OfficesList() {
                       color: "var(--bl-fg2)",
                     }}
                   >
-                    Pte Ltd entity in formation. Engagements with MAS-licensed
-                    counterparties booked from the Delhi office until launch.
+                    Pte Ltd incorporating 2026. Through entity go-live,
+                    MAS-licensed counterparty engagements are booked from the
+                    Delhi office under the senior partner who runs them end to
+                    end.
                   </p>
                 )}
               </div>

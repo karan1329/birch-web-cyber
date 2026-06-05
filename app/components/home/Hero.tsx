@@ -105,7 +105,7 @@ export function Hero() {
                 fontSize: "clamp(15px, 1.2vw, 17px)",
                 lineHeight: 1.55,
                 color: "var(--bl-fg2)",
-                maxWidth: 480,
+                maxWidth: "var(--bl-text-tight)",
                 margin: 0,
               }}
             >
