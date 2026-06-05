@@ -1,22 +1,17 @@
-// Runs before React hydrates. Reads stored theme/neon from localStorage and
-// applies them to <html> so a refresh in light + non-default-neon does not
-// flicker dark/lime first. Mirrors the defaults in useTheme.ts.
+// Runs before React hydrates. Reads `bl:theme` from localStorage and applies
+// the matching mode + paired neon to <html> so a refresh in light + burgundy
+// does not flicker dark + lime first. The pairing is locked: dark → lime,
+// light → burgundy. Mirrors the COMBO map in useTheme.ts.
 (function () {
   try {
     var m = localStorage.getItem("bl:theme");
-    var n = localStorage.getItem("bl:neon");
-    if (m === "light") document.documentElement.classList.add("light");
-    if (n) {
-      document.documentElement.style.setProperty("--bl-neon", n);
-      var hex = n.replace("#", "");
-      if (hex.length >= 6) {
-        var rgb = [hex.slice(0, 2), hex.slice(2, 4), hex.slice(4, 6)]
-          .map(function (x) {
-            return parseInt(x, 16);
-          })
-          .join(",");
-        document.documentElement.style.setProperty("--bl-neon-rgb", rgb);
-      }
+    if (m === "light") {
+      document.documentElement.classList.add("light");
+      document.documentElement.style.setProperty("--bl-neon", "#DA3F62");
+      document.documentElement.style.setProperty("--bl-neon-rgb", "218,63,98");
     }
+    // Dark is the default in globals.css (lime), so no boot work needed.
+    // Drop the legacy `bl:neon` key in case a prior release wrote one.
+    localStorage.removeItem("bl:neon");
   } catch (e) {}
 })();

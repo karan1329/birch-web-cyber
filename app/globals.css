@@ -34,6 +34,23 @@
   --bl-nav-bg-rest: rgba(10, 10, 12, 0.50);
   --bl-nav-bg-scrolled: rgba(10, 10, 12, 0.78);
 
+  /* Editorial sections sit between the global mesh canvas and body
+     text. The veil opacity is mode-conditional because the contrast
+     math is asymmetric:
+       - Dark mode: mesh lines are LIGHT on dark and body text is LIGHT
+         on dark — same tone family, low mutual interference, so the
+         veil can sit lighter (mesh stays visible as ambient).
+       - Light mode: mesh lines are DARK on bone and body text is DARK
+         on bone — both compete for the same contrast band, so the
+         veil has to suppress the mesh harder to keep paragraph copy
+         readable.
+     `--bl-ink-rgb` swaps between dark and light, so the veil colour
+     auto-tracks the surface. Only the opacity is overridden below.
+     Hero-style sections (Hero, InnerHero) stay fully transparent so
+     the mesh reads at full strength behind the headline. Bone
+     sections continue to use solid `var(--bl-bone)`. */
+  --bl-section-veil: rgba(var(--bl-ink-rgb), 0.70);
+
   /* neon · tweakable; default lime */
   --bl-neon: #CDF36C;
   --bl-neon-rgb: 205, 243, 108;
@@ -44,6 +61,38 @@
   --bl-section-gap: clamp(80px, 10vw, 140px);
   --bl-nav-h: 60px;
   --bl-top-offset: var(--bl-nav-h);
+}
+
+/* =====================================================================
+   Large-display scaling
+   Base tokens target laptop/desktop up to ~1920px. On QHD (2560px) and
+   4K (3840px) the content sits too small in the middle of the screen;
+   these breakpoints scale the container, page padding, and section
+   rhythm in step so the layout reads at intended density on big panels.
+   ===================================================================== */
+
+@media (min-width: 1920px) {
+  :root {
+    --bl-max-width: 1480px;
+    --bl-page-pad: clamp(56px, 4.5vw, 120px);
+    --bl-section-gap: clamp(120px, 9vw, 200px);
+  }
+}
+
+@media (min-width: 2560px) {
+  :root {
+    --bl-max-width: 1760px;
+    --bl-page-pad: clamp(96px, 4vw, 180px);
+    --bl-section-gap: clamp(180px, 8vw, 280px);
+  }
+}
+
+@media (min-width: 3200px) {
+  :root {
+    --bl-max-width: 2080px;
+    --bl-page-pad: clamp(140px, 3.5vw, 220px);
+    --bl-section-gap: clamp(240px, 8vw, 360px);
+  }
 }
 
 :root.light {
@@ -67,6 +116,11 @@
 
   --bl-nav-bg-rest: rgba(245, 241, 232, 0.55);
   --bl-nav-bg-scrolled: rgba(245, 241, 232, 0.85);
+
+  /* See the veil note in `:root`. Light mode needs a heavier veil
+     because dark mesh lines on bone bg compete directly with the dark
+     body text on the same bone bg. */
+  --bl-section-veil: rgba(var(--bl-ink-rgb), 0.90);
 }
 
 /* =====================================================================
@@ -111,7 +165,10 @@ html {
 }
 
 body {
-  background: var(--bl-ink);
+  /* Transparent so the GlobalMeshBackdrop canvas (z-index 0, fixed to
+     viewport) shows through. The `html` background above remains the
+     ink fallback for any moment the canvas hasn't painted yet. */
+  background: transparent;
   color: var(--bl-fg);
   font-family: var(--font-sans);
   font-size: 17px;
@@ -119,7 +176,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
-  transition: background 0.3s ease, color 0.3s ease;
+  transition: color 0.3s ease;
 }
 
 ::selection {

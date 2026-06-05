@@ -20,7 +20,7 @@ export function Thesis() {
     <section
       style={{
         position: "relative",
-        background: "var(--bl-ink)",
+        background: "var(--bl-section-veil)",
         color: "var(--bl-fg)",
         padding: "clamp(120px, 16vw, 200px) var(--bl-page-pad)",
         overflow: "hidden",

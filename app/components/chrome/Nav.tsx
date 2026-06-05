@@ -8,7 +8,7 @@ import { ThemeSwitcher } from "./ThemeSwitcher";
 const ITEMS: { href: string; label: string }[] = [
   { href: "/how-we-work", label: "How We Work" },
   { href: "/services", label: "Services" },
-  { href: "/blog", label: "Blog" },
+  { href: "/field-notes", label: "Field notes" },
   { href: "/careers", label: "Careers" },
   { href: "/contact", label: "Contact" },
 ];

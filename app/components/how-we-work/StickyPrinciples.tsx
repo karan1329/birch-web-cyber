@@ -77,7 +77,7 @@ export function StickyPrinciples() {
       ref={sectRef}
       style={{
         position: "relative",
-        background: "var(--bl-ink)",
+        background: "var(--bl-section-veil)",
         color: "var(--bl-fg)",
         height: `${total * 85}vh`,
         borderTop: "1px solid var(--bl-rule)",

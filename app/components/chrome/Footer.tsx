@@ -6,7 +6,7 @@ const NAV = [
   ["/", "Home"],
   ["/how-we-work", "How We Work"],
   ["/services", "Services"],
-  ["/blog", "Blog"],
+  ["/field-notes", "Field notes"],
   ["/careers", "Careers"],
   ["/contact", "Contact"],
 ] as const;
@@ -18,10 +18,10 @@ const OFFICES: Office[] = [
   { city: "Singapore", note: "coming soon" },
 ];
 
+// Only LinkedIn for now. X and GitHub are off until we have an active
+// presence on those channels — better to omit than to link to dead handles.
 const SOCIAL = [
-  ["LinkedIn", "https://www.linkedin.com/in/karan-bhandari-0ab161149/"],
-  ["X", "https://x.com/birchlogic"],
-  ["GitHub", "https://github.com/birchlogic"],
+  ["LinkedIn", "https://www.linkedin.com/company/birchlogic/"],
 ] as const;
 
 export function Footer() {

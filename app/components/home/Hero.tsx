@@ -1,7 +1,6 @@
 "use client";
 
 import { useRef } from "react";
-import { MeshCanvas } from "./MeshCanvas";
 import { Rise } from "../primitives/Rise";
 import { SplitText } from "../primitives/SplitText";
 import { MagButton } from "../primitives/MagButton";
@@ -19,47 +18,15 @@ export function Hero() {
       style={{
         position: "relative",
         minHeight: "100vh",
-        background: "var(--bl-ink)",
+        // Transparent so the GlobalMeshBackdrop (mounted in layout.tsx)
+        // shows through the hero. Section bgs below the hero stay solid
+        // and naturally cover the mesh as the user scrolls past.
+        background: "transparent",
         color: "var(--bl-fg)",
         overflow: "hidden",
         paddingTop: "var(--bl-top-offset)",
       }}
     >
-      {/* Canvas mesh */}
-      <div
-        aria-hidden="true"
-        style={{
-          position: "absolute",
-          inset: 0,
-          transform: `translateY(${sp * 80}px) scale(${1 - sp * 0.04})`,
-          opacity: 1 - sp * 0.7,
-          transition: "opacity 0.2s linear",
-        }}
-      >
-        <MeshCanvas />
-        {/* Vignette */}
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            background:
-              "radial-gradient(ellipse at 50% 60%, transparent 0%, rgba(var(--bl-ink-rgb),0.4) 60%, rgba(var(--bl-ink-rgb),0.9) 100%)",
-          }}
-        />
-        {/* Top fade */}
-        <div
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            right: 0,
-            height: 200,
-            background:
-              "linear-gradient(to bottom, rgba(var(--bl-ink-rgb),1) 0%, rgba(var(--bl-ink-rgb),0) 100%)",
-          }}
-        />
-      </div>
-
       {/* Grain */}
       <div
         aria-hidden="true"
@@ -92,7 +59,11 @@ export function Hero() {
           style={{
             fontFamily: "var(--font-sans)",
             fontWeight: 600,
-            fontSize: "clamp(44px, 9vw, 148px)",
+            // Caps allow real growth on QHD/4K monitors. At 1920px the
+            // 9vw track hits ~172px (was capped at 148); at 3840px it
+            // hits 220px (was capped at 148). The base 44px floor for
+            // mobile is unchanged.
+            fontSize: "clamp(44px, 9vw, 220px)",
             lineHeight: 0.9,
             letterSpacing: "-0.045em",
             margin: 0,
@@ -111,7 +82,7 @@ export function Hero() {
             dim
             style={{
               fontWeight: 200,
-              fontSize: "clamp(46px, 9.4vw, 154px)",
+              fontSize: "clamp(46px, 9.4vw, 230px)",
             }}
           />
         </h1>

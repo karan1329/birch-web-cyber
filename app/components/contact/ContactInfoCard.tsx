@@ -1,7 +1,6 @@
 "use client";
 
-const LINKEDIN_URL =
-  "https://www.linkedin.com/in/karan-bhandari-0ab161149/";
+const LINKEDIN_URL = "https://www.linkedin.com/company/birchlogic/";
 
 /**
  * Left-rail card on the /contact form section. Inverted-surface card (always
@@ -95,7 +94,7 @@ export function ContactInfoCard() {
         <InfoRow label="Email" value="hi@birchlogic.com" href="mailto:hi@birchlogic.com" />
         <InfoRow
           label="LinkedIn"
-          value="Karan Bhandari"
+          value="Birchlogic"
           href={LINKEDIN_URL}
           external
         />

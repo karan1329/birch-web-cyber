@@ -24,7 +24,7 @@ export default function ContactPage() {
 
       <section
         style={{
-          background: "var(--bl-ink)",
+          background: "var(--bl-section-veil)",
           color: "var(--bl-fg)",
           padding: "clamp(80px, 12vw, 140px) var(--bl-page-pad)",
         }}

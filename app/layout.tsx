@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import Script from "next/script";
 import { Nav } from "./components/chrome/Nav";
 import { Footer } from "./components/chrome/Footer";
+import { GlobalMeshBackdrop } from "./components/chrome/GlobalMeshBackdrop";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -48,6 +49,9 @@ export default function RootLayout({
     >
       <body>
         <Script src="/no-flash.js" strategy="beforeInteractive" />
+        {/* GlobalMeshBackdrop is first in DOM so later siblings (Nav,
+            main, Footer) paint on top at default z-index. */}
+        <GlobalMeshBackdrop />
         <Nav />
         <main>{children}</main>
         <Footer />

@@ -5,93 +5,59 @@ import { useCallback, useEffect, useState } from "react";
 export type Mode = "dark" | "light";
 
 /**
- * Curated palette · four distinct theme identities × two modes (light/dark).
- * Each swatch defines the single neon accent that drives glow, hover states,
- * active dots, mesh highlights, and CTA fills site-wide.
+ * Locked brand combinations · the accent is not independently selectable.
  *
- *  - Lime     · flagship; modern AI-stack
- *  - Cobalt   · clinical, institutional, financial
- *  - Burgundy · warm, premium, wine-bar luxury
- *  - Bone     · minimalist; no chromatic accent
+ *   dark   →  lime      (#CDF36C)
+ *   light  →  burgundy  (#DA3F62)
  *
- * `description` is shown as a one-liner in the theme picker so the user
- * can read intent at a glance.
+ * Two combos, deliberately. The earlier four-swatch picker (Lime / Cobalt /
+ * Burgundy / Bone) is gone; the brand is dark + lime on the technical
+ * canvas, light + burgundy on the warm canvas.
  */
-export const NEON_SWATCHES = [
-  {
-    hex: "#CDF36C",
-    rgb: "205,243,108",
-    label: "Lime",
-    description: "Modern, technical",
-  },
-  {
-    hex: "#5AA9FF",
-    rgb: "90,169,255",
-    label: "Cobalt",
-    description: "Clinical, institutional",
-  },
-  {
-    hex: "#DA3F62",
-    rgb: "218,63,98",
-    label: "Burgundy",
-    description: "Warm, premium",
-  },
-  {
-    hex: "#EDE9DF",
-    rgb: "237,233,223",
-    label: "Bone",
-    description: "Quiet, monochrome",
-  },
-] as const;
-
-const STORAGE = { mode: "bl:theme", neon: "bl:neon" };
-const DEFAULT_MODE: Mode = "dark";
-const DEFAULT_NEON = NEON_SWATCHES[0].hex;
-
-const hexToRgb = (h: string): string => {
-  const m = h.replace("#", "").match(/.{2}/g);
-  if (!m || m.length < 3) return "205,243,108";
-  return m
-    .slice(0, 3)
-    .map((x) => parseInt(x, 16))
-    .join(",");
+const COMBO: Record<Mode, { hex: string; rgb: string }> = {
+  dark: { hex: "#CDF36C", rgb: "205,243,108" },
+  light: { hex: "#DA3F62", rgb: "218,63,98" },
 };
+
+const STORAGE_KEY = "bl:theme";
+const DEFAULT_MODE: Mode = "dark";
 
 const applyMode = (mode: Mode) => {
   const root = document.documentElement;
   if (mode === "light") root.classList.add("light");
   else root.classList.remove("light");
-};
-
-const applyNeon = (hex: string) => {
-  const root = document.documentElement;
-  const rgb = hexToRgb(hex);
-  root.style.setProperty("--bl-neon", hex);
-  root.style.setProperty("--bl-neon-rgb", rgb);
+  const c = COMBO[mode];
+  root.style.setProperty("--bl-neon", c.hex);
+  root.style.setProperty("--bl-neon-rgb", c.rgb);
 };
 
 /**
- * Theme + neon controller. Reads/writes localStorage, mutates :root.
- * Use once at the chrome level (TweaksPanel) to expose controls; the
- * rest of the tree reads tokens via CSS vars.
+ * Mode controller. Reads/writes `bl:theme` in localStorage and mutates
+ * `:root` with the matching neon CSS vars. Use once at the chrome level
+ * (`ThemeSwitcher`) to expose the toggle; everything else reads the
+ * tokens via CSS.
  */
 export function useTheme() {
   const [mode, setModeState] = useState<Mode>(DEFAULT_MODE);
-  const [neon, setNeonState] = useState<string>(DEFAULT_NEON);
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
+    let m = DEFAULT_MODE;
     try {
-      const m = (localStorage.getItem(STORAGE.mode) as Mode | null) ?? DEFAULT_MODE;
-      const n = localStorage.getItem(STORAGE.neon) ?? DEFAULT_NEON;
-      setModeState(m);
-      setNeonState(n);
-      applyMode(m);
-      applyNeon(n);
+      const stored = localStorage.getItem(STORAGE_KEY);
+      if (stored === "light" || stored === "dark") m = stored;
+      // Old releases also wrote `bl:neon`; we no longer use it. Drop it so
+      // a stale custom accent does not linger across upgrades.
+      localStorage.removeItem("bl:neon");
     } catch {
-      applyMode(DEFAULT_MODE);
-      applyNeon(DEFAULT_NEON);
+      /* localStorage blocked · fall through to defaults */
     }
+    // One-shot localStorage rehydrate on mount; the cascading-render risk
+    // that the react-hooks/set-state-in-effect rule guards against does
+    // not apply here — both setters fire exactly once per session.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setModeState(m);
+    applyMode(m);
     setHydrated(true);
   }, []);
 
@@ -99,17 +65,9 @@ export function useTheme() {
     setModeState(m);
     applyMode(m);
     try {
-      localStorage.setItem(STORAGE.mode, m);
+      localStorage.setItem(STORAGE_KEY, m);
     } catch {}
   }, []);
 
-  const setNeon = useCallback((hex: string) => {
-    setNeonState(hex);
-    applyNeon(hex);
-    try {
-      localStorage.setItem(STORAGE.neon, hex);
-    } catch {}
-  }, []);
-
-  return { mode, neon, setMode, setNeon, hydrated };
+  return { mode, neon: COMBO[mode].hex, setMode, hydrated };
 }

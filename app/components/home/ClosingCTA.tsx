@@ -15,7 +15,7 @@ export function ClosingCTA() {
     <section
       style={{
         position: "relative",
-        background: "var(--bl-ink)",
+        background: "var(--bl-section-veil)",
         color: "var(--bl-fg)",
         padding: "clamp(120px, 16vw, 220px) var(--bl-page-pad)",
         borderTop: "1px solid var(--bl-rule)",

@@ -11,7 +11,7 @@ export function WhatWeWontDo() {
   return (
     <section
       style={{
-        background: "var(--bl-ink)",
+        background: "var(--bl-section-veil)",
         color: "var(--bl-fg)",
         padding: "clamp(100px, 14vw, 180px) var(--bl-page-pad)",
         borderTop: "1px solid var(--bl-rule)",
