@@ -154,16 +154,20 @@ Don't do this until the Vercel deploy is reliably green and the env vars are con
 
 ---
 
-## 9 · Recommended `git config` cleanup
+## 9 · Commit-author email (REQUIRED for Vercel CD — not just cosmetic)
 
-Current commits are tagged with the auto-derived `karan@Karans-MacBook-Pro-2.local` (the machine hostname), which is ugly in the git log on a public-facing-someday repo. One-time fix:
+Vercel **blocks** any git-triggered deployment whose HEAD commit author email is not a verified email on the pushing GitHub account. This is an anti-abuse measure. The machine's auto-derived `karan@Karans-MacBook-Pro-2.local` (hostname placeholder) is not valid, so a push with that author lands in Vercel as a red **"Deployment Blocked — commit author email is not valid"** and never builds.
+
+Fix (repo-local; set once, applies to all future commits in this repo):
 
 ```bash
-git config --global user.name "Karan Bhandari"
-git config --global user.email "<the email you want in commit metadata>"
+git config user.name "Karan Bhandari"
+git config user.email "62919589+karan1329@users.noreply.github.com"
 ```
 
-This affects all future commits machine-wide. Doesn't rewrite history; previous commits stay as they are.
+That `62919589+karan1329@users.noreply.github.com` is GitHub's privacy-preserving noreply address for the `karan1329` account (`62919589` is the account's numeric id). It is always a verified email for the account, so Vercel accepts it without exposing a real inbox. To use a real email instead (e.g. `karan@birchlogic.com`), that address must first be **added and verified** under GitHub → Settings → Emails, or Vercel will block it just the same.
+
+After fixing the config, the bad author only affects commits already made; make one new commit (any change, or `git commit --allow-empty`) so the new HEAD carries the valid author, then push — Vercel builds it. Use `--global` instead of repo-local if you want every repo on the machine fixed.
 
 ---
 
