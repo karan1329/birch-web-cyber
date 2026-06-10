@@ -85,8 +85,8 @@ Vercel doesn't expose a free CLI to do this end-to-end, so the project is create
    - `RESEND_API_KEY` — value from the Birchlogic org GH Actions Production env. Without this, form actions log to console instead of sending email (graceful fallback in `app/actions/contact.ts`).
    - `TURNSTILE_SECRET_KEY` — same source. Without this, every form submission fails the human-check.
    - `NEXT_PUBLIC_TURNSTILE_SITE_KEY` — the public site key. Production value is in `sst.config.ts` defaults: `0x4AAAAAADV3eER-aGUurFlO`. Setting this in Vercel makes the real widget ship in the client bundle; without it, the test widget (always-passes) is used.
-   - `MAIL_FROM` — `Birchlogic <noreply@birchlogic.com>`
-   - `MAIL_TO` — `hi@birchlogic.com`
+   - `MAIL_FROM` — `Birchlogic <noreply@birchlogic.com>` (paste the display name + angle-bracketed address as a single string).
+   - `MAIL_TO` — comma-separated multi-recipient. Current production value: `hi@birchlogic.com,karan@birchlogic.com,jas@birchlogic.com`. `app/actions/contact.ts` splits on commas; no spaces inside the value.
 6. **Deploy**. First build runs `npm ci` + `next build` + uploads `.next`. Takes ~2 minutes.
 7. Verify the deploy: the Vercel preview URL (`<project>.vercel.app`) loads the home page, the mesh canvas paints, the discovery-call link works.
 
