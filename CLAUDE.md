@@ -1,5 +1,7 @@
 @AGENTS.md
 
+> **Deploy paths.** Two production targets ship from `main`: `birchlogic` remote → AWS via SST (`.github/workflows/deploy.yml`), `karan` remote → Vercel CD. `karan` is the primary push target; `birchlogic` stays available. See [docs/personal-deploy.md](docs/personal-deploy.md) for either workflow.
+
 # Birchlogic · senior cybersecurity advisory site
 
 ## What this is
