@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { ThemeSwitcher } from "./ThemeSwitcher";
 
 const ITEMS: { href: string; label: string }[] = [
   { href: "/how-we-work", label: "How We Work" },
@@ -125,7 +124,6 @@ export function Nav() {
         <div
           style={{ display: "flex", alignItems: "center", gap: isMobile ? 12 : 18 }}
         >
-          <ThemeSwitcher />
           {!isMobile && (
             <Link
               href="/contact"

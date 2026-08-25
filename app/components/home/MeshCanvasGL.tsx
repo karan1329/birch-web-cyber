@@ -207,7 +207,7 @@ export function MeshCanvasGL({ onContextLost }: Props = {}) {
 
       // Live theme uniforms. Reads happen before the draw so the frame
       // is internally consistent (no mid-frame colour seam).
-      const neonRaw = rootStyle.getPropertyValue("--bl-neon-rgb").trim();
+      const neonRaw = rootStyle.getPropertyValue("--bl-accent-rgb").trim();
       if (neonRaw) {
         const parts = neonRaw.split(",").map(Number);
         if (
@@ -221,11 +221,9 @@ export function MeshCanvasGL({ onContextLost }: Props = {}) {
           );
         }
       }
-      if (rootEl.classList.contains("light")) {
-        uniforms.uInk.value.set(10 / 255, 10 / 255, 12 / 255);
-      } else {
-        uniforms.uInk.value.set(237 / 255, 237 / 255, 239 / 255);
-      }
+      // Palette is locked to the light beige ground: the mesh ink is always
+      // the warm wine-black (#2A0E18), never the dark-mode bone.
+      uniforms.uInk.value.set(42 / 255, 14 / 255, 24 / 255);
 
       renderer.render(scene, camera);
 

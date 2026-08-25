@@ -104,10 +104,10 @@ export function MeshCanvas2D({
 
       t += 0.0065;
 
-      const rgb = readVar("--bl-neon-rgb", "205,243,108");
-      const isLight =
-        document.documentElement.classList.contains("light");
-      const mesh = isLight ? "10,10,12" : "237,237,239";
+      const rgb = readVar("--bl-accent-rgb", "142,33,64");
+      // Palette is locked to the light beige ground, so the mesh lines are
+      // always the dark wine ink rather than a theme-conditional pair.
+      const mesh = "42,14,24";
 
       const pts: { x: number; y: number; z: number; depth: number; fall: number }[] =
         new Array(cols * rows);

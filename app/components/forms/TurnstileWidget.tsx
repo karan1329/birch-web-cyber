@@ -78,12 +78,9 @@ export function TurnstileWidget({ sitekey, onToken, theme }: Props) {
   useEffect(() => {
     let cancelled = false;
 
-    const resolvedTheme: TurnstileTheme =
-      theme ??
-      (typeof document !== "undefined" &&
-      document.documentElement.classList.contains("light")
-        ? "light"
-        : "dark");
+    // The site palette is locked to the beige/cranberry light ground, so
+    // the widget always renders light unless a caller overrides it.
+    const resolvedTheme: TurnstileTheme = theme ?? "light";
 
     ensureScript().then(() => {
       if (cancelled || !containerRef.current || !window.turnstile) return;

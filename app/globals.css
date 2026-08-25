@@ -1,38 +1,47 @@
 @import "tailwindcss";
 
 /* =====================================================================
-   Birchlogic design tokens
-   Dark is default (no class). Light is :root.light.
-   Every paired var lives below · every color used in components reads
-   from one of these.
+   Birchlogic design tokens · LOCKED PALETTE
+   One palette, no switching: beige paper ground, warm wine-black ink,
+   cranberry accent. Dark mode and the accent picker were removed
+   deliberately — see the design bundle's Rule 1 ("one hue family, no
+   second chroma anywhere"). There is no `.light` class any more; this
+   IS the palette.
+
+   Cranberry values are taken from the `Hero Image C` prototype so the
+   page and the hero canvas share exactly one ground.
    ===================================================================== */
 
 :root {
-  /* surfaces · ink shades from page bg → cards → deeper cards */
-  --bl-ink: #0A0A0C;
-  --bl-ink-rgb: 10, 10, 12;
-  --bl-ink2: #101015;
-  --bl-ink3: #16161D;
+  /* surfaces · paper shades from page bg → cards → deeper wells */
+  --bl-ink: #F1EFE8;
+  --bl-ink-rgb: 241, 239, 232;
+  --bl-ink2: #E8E4D9;
+  --bl-ink3: #DED9CA;
 
-  /* foreground tiers */
-  --bl-fg: #EDEDEF;
-  --bl-fg2: rgba(237, 237, 239, 0.62);
-  --bl-fg3: rgba(237, 237, 239, 0.36);
+  /* the white · elevated surfaces that need to lift off the beige */
+  --bl-paper: #FCFBF8;
+
+  /* foreground tiers · warm wine-black, never neutral grey */
+  --bl-fg: #2A0E18;
+  --bl-fg2: rgba(42, 14, 24, 0.68);
+  --bl-fg3: rgba(42, 14, 24, 0.44);
 
   /* dividers */
-  --bl-rule: rgba(255, 255, 255, 0.08);
-  --bl-rule2: rgba(255, 255, 255, 0.16);
+  --bl-rule: rgba(42, 14, 24, 0.12);
+  --bl-rule2: rgba(42, 14, 24, 0.22);
 
-  /* inverted contrast surface (Engagement section) · flips on theme */
-  --bl-bone: #F2EFE8;
-  --bl-bone-fg: #0A0A0C;
-  --bl-bone-fg2: rgba(10, 10, 12, 0.62);
-  --bl-bone-fg3: rgba(10, 10, 12, 0.45);
-  --bl-bone-rule: rgba(10, 10, 12, 0.12);
+  /* inverted contrast surface (Engagement section) · deep wine, still
+     inside the one hue family rather than a neutral black */
+  --bl-bone: #40101F;
+  --bl-bone-fg: #F1EFE8;
+  --bl-bone-fg2: rgba(241, 239, 232, 0.70);
+  --bl-bone-fg3: rgba(241, 239, 232, 0.48);
+  --bl-bone-rule: rgba(241, 239, 232, 0.16);
 
   /* nav surface */
-  --bl-nav-bg-rest: rgba(10, 10, 12, 0.50);
-  --bl-nav-bg-scrolled: rgba(10, 10, 12, 0.78);
+  --bl-nav-bg-rest: rgba(241, 239, 232, 0.55);
+  --bl-nav-bg-scrolled: rgba(241, 239, 232, 0.88);
 
   /* Editorial sections sit between the global mesh canvas and body
      text. The veil opacity is mode-conditional because the contrast
@@ -49,11 +58,21 @@
      Hero-style sections (Hero, InnerHero) stay fully transparent so
      the mesh reads at full strength behind the headline. Bone
      sections continue to use solid `var(--bl-bone)`. */
-  --bl-section-veil: rgba(var(--bl-ink-rgb), 0.70);
+  --bl-section-veil: rgba(var(--bl-ink-rgb), 0.90);
 
-  /* neon · tweakable; default lime */
-  --bl-neon: #CDF36C;
-  --bl-neon-rgb: 205, 243, 108;
+  /* =================================================================
+     Accent · cranberry. The canonical names are `--bl-accent*`.
+     `--bl-neon*` are kept as aliases only because ~39 components still
+     reference them; they resolve to the same cranberry. Prefer
+     `--bl-accent` in new code and migrate opportunistically.
+     ================================================================= */
+  --bl-accent: #8E2140;
+  --bl-accent-rgb: 142, 33, 64;
+  --bl-accent-deep: #40101F;   /* pressed states, deep wine fills */
+  --bl-accent-bright: #C93A5C; /* hover only */
+
+  --bl-neon: var(--bl-accent);
+  --bl-neon-rgb: var(--bl-accent-rgb);
 
   /* spacing / sizing */
   --bl-max-width: 1240px;
@@ -106,34 +125,6 @@
   }
 }
 
-:root.light {
-  --bl-ink: #F5F1E8;
-  --bl-ink-rgb: 245, 241, 232;
-  --bl-ink2: #EDE8D9;
-  --bl-ink3: #E4DDC9;
-
-  --bl-fg: #0A0A0C;
-  --bl-fg2: rgba(10, 10, 12, 0.65);
-  --bl-fg3: rgba(10, 10, 12, 0.42);
-
-  --bl-rule: rgba(10, 10, 12, 0.10);
-  --bl-rule2: rgba(10, 10, 12, 0.18);
-
-  --bl-bone: #0A0A0C;
-  --bl-bone-fg: #EDEDEF;
-  --bl-bone-fg2: rgba(237, 237, 239, 0.62);
-  --bl-bone-fg3: rgba(237, 237, 239, 0.45);
-  --bl-bone-rule: rgba(255, 255, 255, 0.10);
-
-  --bl-nav-bg-rest: rgba(245, 241, 232, 0.55);
-  --bl-nav-bg-scrolled: rgba(245, 241, 232, 0.85);
-
-  /* See the veil note in `:root`. Light mode needs a heavier veil
-     because dark mesh lines on bone bg compete directly with the dark
-     body text on the same bone bg. */
-  --bl-section-veil: rgba(var(--bl-ink-rgb), 0.90);
-}
-
 /* =====================================================================
    Tailwind v4 @theme · expose tokens as utility classes
    ===================================================================== */
@@ -152,6 +143,11 @@
   --color-bone-fg-2: var(--bl-bone-fg2);
   --color-bone-fg-3: var(--bl-bone-fg3);
   --color-bone-rule: var(--bl-bone-rule);
+  --color-paper: var(--bl-paper);
+  --color-accent: var(--bl-accent);
+  --color-accent-deep: var(--bl-accent-deep);
+  --color-accent-bright: var(--bl-accent-bright);
+  /* legacy alias · resolves to cranberry */
   --color-neon: var(--bl-neon);
 
   --font-sans: var(--font-geist-sans), "Inter", -apple-system, system-ui, sans-serif;
@@ -172,7 +168,7 @@ html {
   scroll-behavior: smooth;
   background: var(--bl-ink);
   color: var(--bl-fg);
-  transition: background 0.3s ease, color 0.3s ease;
+  /* No theme transition · the palette is locked, nothing swaps at runtime. */
 }
 
 body {
@@ -187,7 +183,6 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
-  transition: color 0.3s ease;
 }
 
 ::selection {

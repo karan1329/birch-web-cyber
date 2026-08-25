@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import Script from "next/script";
 import { Nav } from "./components/chrome/Nav";
 import { Footer } from "./components/chrome/Footer";
 import { GlobalMeshBackdrop } from "./components/chrome/GlobalMeshBackdrop";
@@ -28,13 +27,10 @@ export const metadata: Metadata = {
 };
 
 /**
- * `public/no-flash.js` runs before React hydrates. It reads `bl:theme` and
- * `bl:neon` from localStorage and applies them to <html> so a refresh in a
- * non-default theme combo does not flicker dark/lime first.
- *
- * Loaded via next/script with `beforeInteractive`: per Next 16 docs that is
- * the right strategy for critical, pre-hydration boot code. Source must be a
- * file URL, not inline children.
+ * The palette is locked (beige + cranberry, no dark mode), so there is no
+ * pre-hydration theme boot script any more: nothing can flash because
+ * nothing swaps. `public/no-flash.js` and `useTheme`/`ThemeSwitcher` were
+ * removed with the switcher.
  */
 export default function RootLayout({
   children,
@@ -48,7 +44,6 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body>
-        <Script src="/no-flash.js" strategy="beforeInteractive" />
         {/* GlobalMeshBackdrop is first in DOM so later siblings (Nav,
             main, Footer) paint on top at default z-index. */}
         <GlobalMeshBackdrop />
