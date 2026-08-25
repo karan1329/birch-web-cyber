@@ -59,11 +59,19 @@ export function MeshCanvas2D({
     mouse.lx = mouse.tlx = cv.clientWidth * 0.5;
     mouse.ly = mouse.tly = cv.clientHeight * 0.6;
 
+    // Deliberately render BELOW display resolution and let CSS upscale the
+    // buffer with `image-rendering: pixelated`. Same device the hero canvas
+    // uses, so the backdrop and the hero share one dithered language rather
+    // than sitting at two different fidelities.
+    const PIXEL = 3;
+
     const resize = () => {
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      cv.width = cv.clientWidth * dpr;
-      cv.height = cv.clientHeight * dpr;
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      cv.width = Math.max(1, Math.ceil(cv.clientWidth / PIXEL));
+      cv.height = Math.max(1, Math.ceil(cv.clientHeight / PIXEL));
+      // Draw in CSS-pixel coordinates; the transform maps them down into
+      // the small backing store, so none of the geometry math below changes.
+      ctx.setTransform(1 / PIXEL, 0, 0, 1 / PIXEL, 0, 0);
+      ctx.imageSmoothingEnabled = false;
     };
     resize();
     window.addEventListener("resize", resize);
@@ -105,9 +113,9 @@ export function MeshCanvas2D({
       t += 0.0065;
 
       const rgb = readVar("--bl-accent-rgb", "142,33,64");
-      // Palette is locked to the light beige ground, so the mesh lines are
-      // always the dark wine ink rather than a theme-conditional pair.
-      const mesh = "42,14,24";
+      // One hue family: the wireframe is cranberry too, just at a much
+      // lower alpha than the cursor highlight. No second chroma anywhere.
+      const mesh = rgb;
 
       const pts: { x: number; y: number; z: number; depth: number; fall: number }[] =
         new Array(cols * rows);
@@ -154,8 +162,13 @@ export function MeshCanvas2D({
           const a = pts[yi * cols + xi];
           const b = pts[yi * cols + xi + 1];
           if (a.fall < 0.04 || b.fall < 0.04) continue;
-          ctx.strokeStyle = `rgba(${mesh},${a.fall * 0.1})`;
-          ctx.lineWidth = 0.9;
+          // Tuned against the 0.90 `--bl-section-veil` that sits over the
+          // mesh below the hero. If the texture ever needs to read louder,
+          // the veil is the better dial than this alpha.
+          ctx.strokeStyle = `rgba(${mesh},${a.fall * 0.14})`;
+          // In CSS-pixel space; the resize transform divides by PIXEL, so
+          // this lands on ~1 chunky pixel in the backing store.
+          ctx.lineWidth = PIXEL;
           ctx.beginPath();
           ctx.moveTo(a.x, a.y);
           ctx.lineTo(b.x, b.y);
@@ -168,8 +181,13 @@ export function MeshCanvas2D({
           const a = pts[yi * cols + xi];
           const b = pts[(yi + 1) * cols + xi];
           if (a.fall < 0.04 || b.fall < 0.04) continue;
-          ctx.strokeStyle = `rgba(${mesh},${a.fall * 0.1})`;
-          ctx.lineWidth = 0.9;
+          // Tuned against the 0.90 `--bl-section-veil` that sits over the
+          // mesh below the hero. If the texture ever needs to read louder,
+          // the veil is the better dial than this alpha.
+          ctx.strokeStyle = `rgba(${mesh},${a.fall * 0.14})`;
+          // In CSS-pixel space; the resize transform divides by PIXEL, so
+          // this lands on ~1 chunky pixel in the backing store.
+          ctx.lineWidth = PIXEL;
           ctx.beginPath();
           ctx.moveTo(a.x, a.y);
           ctx.lineTo(b.x, b.y);
@@ -238,6 +256,9 @@ export function MeshCanvas2D({
         height: "100%",
         display: "block",
         pointerEvents: "none",
+        // Upscale the deliberately-small backing store into hard-edged
+        // blocks instead of a smooth blur.
+        imageRendering: "pixelated",
       }}
     />
   );

@@ -91,7 +91,12 @@ export function MeshCanvasGL({ onContextLost }: Props = {}) {
       onLostRef.current?.();
       return;
     }
-    renderer.setPixelRatio(Math.min(2, window.devicePixelRatio || 1));
+    // Render BELOW display resolution on purpose. Combined with
+    // `image-rendering: pixelated` on the canvas element, the upscale
+    // gives the same chunky dither as the hero canvas and the 2D backend,
+    // so all three read as one surface. (Cheaper to draw, too.)
+    const PIXEL = 3;
+    renderer.setPixelRatio(1 / PIXEL);
     renderer.setClearColor(0x000000, 0);
 
     const scene = new Scene();
@@ -221,9 +226,10 @@ export function MeshCanvasGL({ onContextLost }: Props = {}) {
           );
         }
       }
-      // Palette is locked to the light beige ground: the mesh ink is always
-      // the warm wine-black (#2A0E18), never the dark-mode bone.
-      uniforms.uInk.value.set(42 / 255, 14 / 255, 24 / 255);
+      // One hue family: the wireframe shares the cranberry accent rather
+      // than introducing a second chroma. Alpha in the shader keeps it far
+      // quieter than the cursor highlight.
+      uniforms.uInk.value.copy(uniforms.uNeon.value);
 
       renderer.render(scene, camera);
 
@@ -301,6 +307,8 @@ export function MeshCanvasGL({ onContextLost }: Props = {}) {
         height: "100%",
         display: "block",
         pointerEvents: "none",
+        // Hard-edged upscale of the sub-resolution buffer set above.
+        imageRendering: "pixelated",
       }}
     />
   );

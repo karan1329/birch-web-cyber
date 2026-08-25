@@ -18,10 +18,11 @@ export function Hero() {
       style={{
         position: "relative",
         minHeight: "100vh",
-        // Transparent so the GlobalMeshBackdrop (mounted in layout.tsx)
-        // shows through the hero. Section bgs below the hero stay solid
-        // and naturally cover the mesh as the user scrolls past.
-        background: "transparent",
+        // Opaque on purpose: the mesh backdrop is kept BELOW the hero so
+        // the hero's own visual is the only thing happening up here. The
+        // fixed mesh canvas (layout.tsx) is covered by this surface and
+        // reads only through the veiled sections further down the page.
+        background: "var(--bl-ink)",
         color: "var(--bl-fg)",
         overflow: "hidden",
         paddingTop: "var(--bl-top-offset)",
