@@ -13,35 +13,36 @@
    ===================================================================== */
 
 :root {
-  /* surfaces · paper shades from page bg → cards → deeper wells */
-  --bl-ink: #F1EFE8;
-  --bl-ink-rgb: 241, 239, 232;
-  --bl-ink2: #E8E4D9;
-  --bl-ink3: #DED9CA;
+  /* surfaces · paper shades from page bg → cards → deeper wells.
+     #F1EEE7 is lifted verbatim from the Cyber one-pagers PDF. */
+  --bl-ink: #F1EEE7;
+  --bl-ink-rgb: 241, 238, 231;
+  --bl-ink2: #E7E3D9;
+  --bl-ink3: #DCD7CA;
 
   /* the white · elevated surfaces that need to lift off the beige */
   --bl-paper: #FCFBF8;
 
-  /* foreground tiers · warm wine-black, never neutral grey */
-  --bl-fg: #2A0E18;
-  --bl-fg2: rgba(42, 14, 24, 0.68);
-  --bl-fg3: rgba(42, 14, 24, 0.44);
+  /* foreground tiers · the one-pager's black + grey ramp, exact */
+  --bl-fg: #121212;
+  --bl-fg2: #545454;
+  --bl-fg3: #A6A6A6;
 
   /* dividers */
-  --bl-rule: rgba(42, 14, 24, 0.12);
-  --bl-rule2: rgba(42, 14, 24, 0.22);
+  --bl-rule: rgba(18, 18, 18, 0.12);
+  --bl-rule2: rgba(18, 18, 18, 0.22);
 
-  /* inverted contrast surface (Engagement section) · deep wine, still
-     inside the one hue family rather than a neutral black */
-  --bl-bone: #40101F;
-  --bl-bone-fg: #F1EFE8;
-  --bl-bone-fg2: rgba(241, 239, 232, 0.70);
-  --bl-bone-fg3: rgba(241, 239, 232, 0.48);
-  --bl-bone-rule: rgba(241, 239, 232, 0.16);
+  /* inverted contrast surface (Engagement section) · near-black, matching
+     how the one-pagers invert. The red stays the accent, not the ground. */
+  --bl-bone: #121212;
+  --bl-bone-fg: #F1EEE7;
+  --bl-bone-fg2: rgba(241, 238, 231, 0.70);
+  --bl-bone-fg3: rgba(241, 238, 231, 0.48);
+  --bl-bone-rule: rgba(241, 238, 231, 0.16);
 
   /* nav surface */
-  --bl-nav-bg-rest: rgba(241, 239, 232, 0.55);
-  --bl-nav-bg-scrolled: rgba(241, 239, 232, 0.88);
+  --bl-nav-bg-rest: rgba(241, 238, 231, 0.55);
+  --bl-nav-bg-scrolled: rgba(241, 238, 231, 0.88);
 
   /* Editorial sections sit between the global mesh canvas and body
      text. The veil opacity is mode-conditional because the contrast
@@ -66,10 +67,10 @@
      reference them; they resolve to the same cranberry. Prefer
      `--bl-accent` in new code and migrate opportunistically.
      ================================================================= */
-  --bl-accent: #8E2140;
-  --bl-accent-rgb: 142, 33, 64;
-  --bl-accent-deep: #40101F;   /* pressed states, deep wine fills */
-  --bl-accent-bright: #C93A5C; /* hover only */
+  --bl-accent: #D4405A;
+  --bl-accent-rgb: 212, 64, 90;
+  --bl-accent-deep: #A32B42;   /* pressed states, deeper fills */
+  --bl-accent-bright: #E35B73; /* hover only */
 
   --bl-neon: var(--bl-accent);
   --bl-neon-rgb: var(--bl-accent-rgb);
@@ -244,6 +245,12 @@ input, textarea, select {
   to   { opacity: 1; transform: translateY(0); }
 }
 
+/* Hero index card · stepped so it reads as a dithered cut, not a fade. */
+@keyframes bl-index-card {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 /* =====================================================================
    Utility shorthands
    ===================================================================== */
@@ -285,6 +292,22 @@ input, textarea, select {
 .bl-stack-sm > *,
 .bl-footer-grid > * {
   min-width: 0;
+}
+
+/* Hero split · a 54% column of canvas is unreadable on a narrow screen,
+   so below 960px the type stacks above a fixed-height visual band. */
+@media (max-width: 960px) {
+  .bl-hero-split {
+    grid-template-columns: 1fr !important;
+    min-height: 0 !important;
+  }
+  .bl-hero-panel {
+    padding-right: var(--bl-page-pad) !important;
+    padding-bottom: clamp(36px, 7vw, 56px) !important;
+  }
+  .bl-hero-visual {
+    height: clamp(300px, 52vh, 460px);
+  }
 }
 
 /* Tablet / large mobile: 2-column body grids stack at 880px */

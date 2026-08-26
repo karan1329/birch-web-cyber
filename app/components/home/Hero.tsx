@@ -1,113 +1,108 @@
 "use client";
 
-import { useRef } from "react";
 import { Rise } from "../primitives/Rise";
 import { SplitText } from "../primitives/SplitText";
 import { MagButton } from "../primitives/MagButton";
-import { useScrollProgress } from "../hooks/useScrollProgress";
+import { HeroVisual } from "./HeroVisual";
 
-const GRAIN_SVG = `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/><feColorMatrix values='0 0 0 0 0.93 0 0 0 0 0.93 0 0 0 0 0.94 0 0 0 0.025 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>")`;
-
+/**
+ * Landing hero · asymmetric split.
+ *
+ * Left 46% is the conversion panel (all type and the CTA). Right 54% is
+ * the visual, full-bleed to the panel edge with a hard cut: no border,
+ * no radius, no shadow, no inner margin. Per the Axiom teardown in the
+ * design bundle, that hard join is the point — the image is a window in
+ * the page, not a picture placed on it.
+ *
+ * The section is opaque so the global mesh backdrop stays strictly below
+ * the hero and the visual is the only event above the fold.
+ *
+ * Below 960px the split collapses: type first, visual beneath it at a
+ * fixed height, because a 54% column of canvas is unreadable on a phone.
+ */
 export function Hero() {
-  const heroRef = useRef<HTMLElement | null>(null);
-  const sp = useScrollProgress(heroRef);
-
   return (
     <section
-      ref={heroRef}
       style={{
         position: "relative",
-        minHeight: "100vh",
-        // Opaque on purpose: the mesh backdrop is kept BELOW the hero so
-        // the hero's own visual is the only thing happening up here. The
-        // fixed mesh canvas (layout.tsx) is covered by this surface and
-        // reads only through the veiled sections further down the page.
         background: "var(--bl-ink)",
         color: "var(--bl-fg)",
-        overflow: "hidden",
         paddingTop: "var(--bl-top-offset)",
       }}
     >
-      {/* Grain */}
       <div
-        aria-hidden="true"
+        className="bl-hero-split"
         style={{
-          position: "absolute",
-          inset: 0,
-          pointerEvents: "none",
-          opacity: 0.55,
-          backgroundImage: GRAIN_SVG,
-          mixBlendMode: "overlay",
-        }}
-      />
-
-      {/* Content */}
-      <div
-        style={{
-          position: "relative",
-          zIndex: 2,
+          display: "grid",
+          gridTemplateColumns: "46fr 54fr",
           minHeight: "calc(100vh - var(--bl-top-offset))",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          padding: "0 var(--bl-page-pad) clamp(60px, 8vh, 100px)",
-          maxWidth: "var(--bl-max-width)",
-          width: "100%",
-          margin: "0 auto",
         }}
       >
-        <h1
-          style={{
-            fontFamily: "var(--font-sans)",
-            fontWeight: 600,
-            // Caps allow real growth on QHD/4K monitors. At 1920px the
-            // 9vw track hits ~172px (was capped at 148); at 3840px it
-            // hits 220px (was capped at 148). The base 44px floor for
-            // mobile is unchanged.
-            fontSize: "clamp(44px, 9vw, 220px)",
-            lineHeight: 0.9,
-            letterSpacing: "-0.045em",
-            margin: 0,
-            color: "var(--bl-fg)",
-          }}
-        >
-          <SplitText text="Cybersecurity," delay={0.15} perChar={0.018} />
-          <br />
-          {/* Second line: Geist Thin (200) at a slightly larger size so the
-              thin glyphs hit the same horizontal extent as the heavy line
-              above. Matched whitespace footprint, deliberate weight contrast. */}
-          <SplitText
-            text="done seriously."
-            delay={0.45}
-            perChar={0.018}
-            dim
-            style={{
-              fontWeight: 200,
-              fontSize: "clamp(46px, 9.4vw, 230px)",
-            }}
-          />
-        </h1>
-
+        {/* ---- conversion panel ---------------------------------- */}
         <div
-          className="bl-stack-sm"
+          className="bl-hero-panel"
           style={{
-            marginTop: "clamp(56px, 8vw, 96px)",
-            display: "grid",
-            gridTemplateColumns: "minmax(220px, 1fr) auto",
-            gap: "32px 48px",
-            alignItems: "end",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            minWidth: 0,
+            padding:
+              "clamp(48px, 6vw, 88px) clamp(32px, 4vw, 64px) clamp(48px, 6vw, 88px) var(--bl-page-pad)",
           }}
         >
+          <Rise delay={0.05} y={12}>
+            <p
+              style={{
+                fontFamily: "var(--font-mono)",
+                fontWeight: 600,
+                fontSize: 10.5,
+                letterSpacing: "0.18em",
+                textTransform: "uppercase",
+                color: "var(--bl-accent)",
+                margin: 0,
+              }}
+            >
+              Senior cybersecurity advisory · Delhi + Singapore
+            </p>
+          </Rise>
+
+          <h1
+            style={{
+              fontFamily: "var(--font-sans)",
+              fontWeight: 600,
+              fontSize: "clamp(38px, 4.4vw, 76px)",
+              lineHeight: 0.98,
+              letterSpacing: "-0.038em",
+              margin: "clamp(18px, 2vw, 26px) 0 0",
+              color: "var(--bl-fg)",
+            }}
+          >
+            <SplitText text="Cybersecurity," delay={0.15} perChar={0.018} />
+            <br />
+            {/* Thin weight at a hair larger size so the light glyphs hit the
+                same horizontal extent as the heavy line above. */}
+            <SplitText
+              text="done seriously."
+              delay={0.45}
+              perChar={0.018}
+              dim
+              style={{
+                fontWeight: 200,
+                fontSize: "clamp(40px, 4.6vw, 80px)",
+              }}
+            />
+          </h1>
+
           <Rise delay={0.8} y={16}>
             <p
               style={{
                 fontFamily: "var(--font-sans)",
                 fontWeight: 400,
-                fontSize: "clamp(15px, 1.2vw, 17px)",
+                fontSize: "clamp(15px, 1.15vw, 17px)",
                 lineHeight: 1.55,
                 color: "var(--bl-fg2)",
-                maxWidth: "var(--bl-text-tight)",
-                margin: 0,
+                maxWidth: "44ch",
+                margin: "clamp(20px, 2.4vw, 30px) 0 0",
               }}
             >
               We run senior-led security programs for growth-stage companies
@@ -115,42 +110,46 @@ export function Hero() {
               internal AI workbench.
             </p>
           </Rise>
+
           <Rise delay={0.95} y={16}>
-            <MagButton href="/contact">Book a 30-minute discovery call</MagButton>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "clamp(16px, 2vw, 24px)",
+                flexWrap: "wrap",
+                marginTop: "clamp(26px, 3vw, 38px)",
+              }}
+            >
+              <MagButton href="/contact">
+                Book a 30-minute discovery call
+              </MagButton>
+              <a
+                href="https://www.linkedin.com/in/karan-bhandari-0ab161149/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bl-email-link"
+                style={{
+                  fontFamily: "var(--font-sans)",
+                  fontSize: 13.5,
+                  fontWeight: 500,
+                  color: "var(--bl-fg2)",
+                  textDecoration: "none",
+                  borderBottom: "1px solid var(--bl-rule2)",
+                  paddingBottom: 2,
+                  transition: "color 0.2s ease, border-color 0.2s ease",
+                }}
+              >
+                or message Karan on LinkedIn
+              </a>
+            </div>
           </Rise>
         </div>
-      </div>
 
-      {/* Scroll cue */}
-      <div
-        aria-hidden="true"
-        style={{
-          position: "absolute",
-          bottom: 24,
-          left: "50%",
-          transform: "translateX(-50%)",
-          zIndex: 2,
-          opacity: Math.max(0, 1 - sp * 3),
-          fontFamily: "var(--font-mono)",
-          fontSize: 10,
-          color: "var(--bl-fg3)",
-          letterSpacing: "0.16em",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: 8,
-        }}
-      >
-        <span>SCROLL</span>
-        <span
-          style={{
-            display: "inline-block",
-            width: 1,
-            height: 32,
-            background: "linear-gradient(to bottom, var(--bl-neon), transparent)",
-            animation: "bl-pulse-line 2s ease-in-out infinite",
-          }}
-        />
+        {/* ---- visual · full bleed, hard cut ---------------------- */}
+        <div className="bl-hero-visual" style={{ minWidth: 0, minHeight: 0 }}>
+          <HeroVisual />
+        </div>
       </div>
     </section>
   );

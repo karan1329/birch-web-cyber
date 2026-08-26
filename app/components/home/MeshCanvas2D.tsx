@@ -112,7 +112,7 @@ export function MeshCanvas2D({
 
       t += 0.0065;
 
-      const rgb = readVar("--bl-accent-rgb", "142,33,64");
+      const rgb = readVar("--bl-accent-rgb", "212,64,90");
       // One hue family: the wireframe is cranberry too, just at a much
       // lower alpha than the cursor highlight. No second chroma anywhere.
       const mesh = rgb;
