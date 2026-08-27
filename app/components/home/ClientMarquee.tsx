@@ -33,16 +33,14 @@ export function ClientMarquee({ variant = "inline" }: Props) {
 
   return (
     <div
-      style={{ display: "flex", flexDirection: "column", gap: hero ? 16 : 12 }}
+      style={{ display: "flex", flexDirection: "column", gap: hero ? 10 : 12 }}
     >
       {hero && (
         <span
           style={{
-            fontFamily: "var(--font-mono)",
-            fontWeight: 600,
-            fontSize: 10,
-            letterSpacing: "0.2em",
-            textTransform: "uppercase",
+            fontFamily: "var(--font-sans)",
+            fontWeight: 400,
+            fontSize: 13.5,
             color: "var(--bl-fg3)",
           }}
         >
@@ -101,7 +99,7 @@ function LogoRow({
               alignItems: "center",
               justifyContent: "center",
               flexShrink: 0,
-              height: "clamp(34px, 3.2vw, 48px)",
+              height: "clamp(30px, 2.7vw, 40px)",
             }}
           >
             {/* Plain img: small transparent PNGs from /public. next/image's

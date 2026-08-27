@@ -91,15 +91,16 @@ export function Thesis() {
                     color: "var(--bl-fg2)",
                   }}
                 >
-                  {/* HP-2 · the "mechanics of failure" sentence and its list
-                      moved to /how-we-work under principle three, where the
-                      argument already had a natural home. The footnote below
-                      stays here. */}
-                  The companies that survive serious adversaries and the
-                  companies that get hollowed out look indistinguishable on
-                  paper. What separates them is orientation: whether security
-                  is a practice the company follows or a product category it
-                  bought once and forgot. The orientation of the company is.
+                  Every year this industry sells more tools, and every year
+                  the breach reports list the same six causes they have
+                  listed since 2008: stolen credentials, a misconfigured
+                  cloud, identity mistakes, personal accounts, a third party
+                  with too much access, and someone getting phished on an
+                  ordinary Tuesday. The tools were never the problem. What
+                  separates the companies that survive from the companies
+                  that get hollowed out is whether the team actually
+                  practises security, or whether it is just a checklist and
+                  a procurement exercise.
                 </span>
               </p>
 

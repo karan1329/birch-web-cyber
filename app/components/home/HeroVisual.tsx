@@ -218,7 +218,7 @@ export function HeroVisual({
           const vig = 1 - 0.55 * (cxn * cxn + cyn * cyn);
           const i2 = y * bw + x;
           lightM[i2] = f;
-          scene[i2] = (0.08 + 0.34 * f * streak) * Math.max(0.3, vig);
+          scene[i2] = (0.05 + 0.72 * f * streak) * Math.max(0.35, vig);
         }
       }
 
@@ -259,17 +259,17 @@ export function HeroVisual({
       hits = [];
 
       // ---- the stack ----------------------------------------------
-      const cx = bw * 0.47;
-      const cy = bh * 0.56 + (reduced ? 0 : Math.sin(t * 0.55) * 3);
+      const cx = bw * 0.56;
+      const cy = bh * 0.54 + (reduced ? 0 : Math.sin(t * 0.55) * 3);
       const ang = reduced ? 0 : Math.sin(t * 0.35) * 0.04;
       const c = Math.cos(ang);
       const sn = Math.sin(ang);
-      // The composition used to size purely off buffer WIDTH (bw * 0.5),
-      // which was fine in a wide panel but left the drawer marooned in a
-      // field of red once the column narrowed to 44% and grew taller.
-      // Size off whichever dimension is the real constraint so the scene
-      // fills its panel at any proportion.
-      const fw = Math.min(bw * 0.74, bh * 0.9);
+      // Authored composition from the prototype. These are tuned to the
+      // artwork's own 900x760 proportions — do NOT re-derive them to fit a
+      // different box. The panel is given the right aspect ratio instead
+      // (see Hero.tsx); that is what keeps the scene reading as a drawer
+      // rather than a white mass with colliding tabs.
+      const fw = bw * 0.72;
       const fh = fw * 0.3;
       const dvx = -fw * 0.26;
       const dvy = -fw * 0.14;

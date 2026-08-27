@@ -38,8 +38,12 @@ export function Hero() {
         style={{
           position: "relative",
           display: "grid",
-          gridTemplateColumns: "56fr 44fr",
-          minHeight: "calc(100vh - var(--bl-top-offset) - 132px)",
+          gridTemplateColumns: "50fr 50fr",
+          // Row height comes from the copy column's content. Both columns
+          // stretch to that one row, so the cranberry panel and the logo
+          // strip END ON THE SAME LINE by construction rather than by
+          // matching numbers that drift the moment the copy changes.
+          minHeight: 0,
         }}
       >
         {/* ---- conversion panel ---------------------------------- */}
@@ -54,7 +58,7 @@ export function Hero() {
             justifyContent: "center",
             minWidth: 0,
             padding:
-              "clamp(48px, 6vw, 88px) clamp(32px, 4vw, 64px) clamp(48px, 6vw, 88px) var(--bl-page-pad)",
+              "clamp(36px, 3.6vw, 56px) clamp(32px, 4vw, 64px) 0 var(--bl-page-pad)",
           }}
         >
           <h1
@@ -138,11 +142,17 @@ export function Hero() {
 
           {/* The strip sits at the FOOT of the panel, separated from the
               CTA by real space, so the headline keeps the centre. */}
-          <Rise delay={1.1} y={12}>
+          <Rise delay={1.1} y={12} style={{ marginTop: "auto" }}>
             <div
               style={{
-                marginTop: "clamp(64px, 9vw, 128px)",
+                // Pinned to the foot of the panel. The column's bottom
+                // padding is 0, so the last logo row IS the bottom edge and
+                // the cranberry panel beside it ends on the same line.
+                marginTop: "auto",
                 paddingTop: "clamp(20px, 2.4vw, 32px)",
+                // Zero: the last logo row IS the bottom edge, so the
+                // cranberry panel beside it ends on exactly that line.
+                paddingBottom: 0,
                 borderTop: "1px solid var(--bl-rule)",
               }}
             >
@@ -152,7 +162,13 @@ export function Hero() {
         </div>
 
         {/* ---- visual · full bleed, hard cut ---------------------- */}
-        <div className="bl-hero-visual" style={{ minWidth: 0, minHeight: 0 }}>
+        <div
+          className="bl-hero-visual"
+          style={{
+            minWidth: 0,
+            minHeight: 0,
+          }}
+        >
           <HeroVisual />
         </div>
 
