@@ -2,17 +2,19 @@ import { InnerHero } from "../components/primitives/InnerHero";
 import { Anchor } from "../components/primitives/Anchor";
 import { Rise } from "../components/primitives/Rise";
 import { CategoryPills } from "../components/field-notes/CategoryPills";
+import { pageMeta } from "../lib/seo";
 import {
   FeaturedPostCard,
   RecentPostRow,
   type Post,
 } from "../components/field-notes/PostCard";
 
-export const metadata = {
-  title: "Field notes · Birchlogic",
+export const metadata = pageMeta({
+  title: "Field notes",
   description:
-    "Practical, second-hand cybersecurity knowledge from real engagements. Long-form pieces, technical reference, and the occasional rant.",
-};
+    "Field notes on serious cybersecurity. We publish opinions that are load-bearing, and nothing that is not.",
+  path: "/field-notes",
+});
 
 /**
  * Field notes are deliberately practitioner-grade. Each post is drawn from a

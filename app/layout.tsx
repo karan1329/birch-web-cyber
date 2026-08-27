@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { Nav } from "./components/chrome/Nav";
 import { Footer } from "./components/chrome/Footer";
 import { GlobalMeshBackdrop } from "./components/chrome/GlobalMeshBackdrop";
+import { SITE_URL } from "./lib/seo";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -17,13 +18,34 @@ const geistMono = Geist_Mono({
   weight: ["400", "500"],
 });
 
+const ROOT_DESCRIPTION =
+  "Senior cybersecurity advisory boutique. Founded in India, delivering across six countries. Old school in discipline. Cutting edge in execution.";
+
+/**
+ * Root defaults only. Every route sets its own title/description/Open Graph
+ * via `pageMeta` in app/lib/seo.ts — Next does not deep-merge `openGraph`,
+ * so a route that omits it would inherit this homepage card wholesale.
+ */
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "Birchlogic · Cybersecurity, done seriously.",
     template: "%s",
   },
-  description:
-    "Senior cybersecurity advisory boutique. Founded in India, delivering across six countries. Old school in discipline. Cutting edge in execution.",
+  description: ROOT_DESCRIPTION,
+  openGraph: {
+    type: "website",
+    siteName: "Birchlogic",
+    title: "Birchlogic · Cybersecurity, done seriously.",
+    description: ROOT_DESCRIPTION,
+    url: SITE_URL,
+    locale: "en_GB",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Birchlogic · Cybersecurity, done seriously.",
+    description: ROOT_DESCRIPTION,
+  },
 };
 
 /**

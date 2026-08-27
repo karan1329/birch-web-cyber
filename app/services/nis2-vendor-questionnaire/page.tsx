@@ -3,16 +3,18 @@ import { InnerHero } from "../../components/primitives/InnerHero";
 import { MagButton } from "../../components/primitives/MagButton";
 import { Rise } from "../../components/primitives/Rise";
 import { SplitText } from "../../components/primitives/SplitText";
+import { pageMeta } from "../../lib/seo";
 import {
   SprintBlock,
   SprintProse,
 } from "../../components/sprints/SprintBlock";
 
-export const metadata = {
-  title: "NIS2 Vendor Questionnaire Engine · Birchlogic",
+export const metadata = pageMeta({
+  title: "NIS2 Vendor Questionnaire Engine",
   description:
-    "EU enterprise NIS2 questionnaires answered in hours, not weeks. Built for Singapore SaaS with EU pipeline. Three-week build, monthly maintenance. Senior partner-led.",
-};
+    "Answer the vendor security questionnaire once. Reuse the evidence across every NIS2 counterparty that asks.",
+  path: "/services/nis2-vendor-questionnaire",
+});
 
 const WEEK_PHASES: { weeks: string; title: string; body: string }[] = [
   {

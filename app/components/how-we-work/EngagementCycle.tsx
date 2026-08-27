@@ -74,30 +74,31 @@ export function EngagementCycle() {
           }}
         >
           {PHASES.map((phase, i) => (
-            <Rise key={i} delay={i * 0.04}>
-              <li
+            <Rise
+              key={i}
+              delay={i * 0.04}
+              as="li"
+              style={{
+                display: "grid",
+                gridTemplateColumns: "minmax(140px, 200px) minmax(260px, 1fr)",
+                gap: "clamp(24px, 4vw, 64px)",
+                padding: "clamp(28px, 3.4vw, 44px) 0",
+                borderBottom: "1px solid var(--bl-rule)",
+                alignItems: "baseline",
+              }}
+            >
+              <span
                 style={{
-                  display: "grid",
-                  gridTemplateColumns:
-                    "minmax(140px, 200px) minmax(260px, 1fr)",
-                  gap: "clamp(24px, 4vw, 64px)",
-                  padding: "clamp(28px, 3.4vw, 44px) 0",
-                  borderBottom: "1px solid var(--bl-rule)",
-                  alignItems: "baseline",
+                  fontFamily: "var(--font-mono)",
+                  fontSize: 12,
+                  letterSpacing: "0.08em",
+                  color: "var(--bl-fg3)",
+                  textTransform: "uppercase",
                 }}
               >
-                <span
-                  style={{
-                    fontFamily: "var(--font-mono)",
-                    fontSize: 12,
-                    letterSpacing: "0.08em",
-                    color: "var(--bl-fg3)",
-                    textTransform: "uppercase",
-                  }}
-                >
-                  {phase.marker}
-                </span>
-                <div>
+                {phase.marker}
+              </span>
+              <div>
                   <h3
                     style={{
                       fontFamily: "var(--font-sans)",
@@ -124,7 +125,6 @@ export function EngagementCycle() {
                     {phase.body}
                   </p>
                 </div>
-              </li>
             </Rise>
           ))}
         </ol>

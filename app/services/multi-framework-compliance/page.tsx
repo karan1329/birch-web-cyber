@@ -2,16 +2,18 @@ import { InnerHero } from "../../components/primitives/InnerHero";
 import { MagButton } from "../../components/primitives/MagButton";
 import { Rise } from "../../components/primitives/Rise";
 import { SplitText } from "../../components/primitives/SplitText";
+import { pageMeta } from "../../lib/seo";
 import {
   SprintBlock,
   SprintProse,
 } from "../../components/sprints/SprintBlock";
 
-export const metadata = {
-  title: "Multi-Framework Compliance Program · Birchlogic",
+export const metadata = pageMeta({
+  title: "Multi-Framework Compliance Program",
   description:
-    "SOC2, ISO 27001, DPDP, HIPAA, ISO 42001, PCI, MAS TRM, NIS2 alignment. Six to eight weeks. One program. One senior partner.",
-};
+    "One program, every framework you need, six to eight weeks. Evidence collected once and mapped across overlapping regimes.",
+  path: "/services/multi-framework-compliance",
+});
 
 const WEEK_PHASES: { weeks: string; title: string; body: string }[] = [
   {

@@ -5,12 +5,14 @@ import { MagButton } from "../components/primitives/MagButton";
 import { RoleCard } from "../components/careers/RoleCard";
 import { HowWeRun } from "../components/careers/HowWeRun";
 import { ROLES } from "../components/careers/roles";
+import { pageMeta } from "../lib/seo";
 
-export const metadata = {
-  title: "Careers · Birchlogic",
+export const metadata = pageMeta({
+  title: "Careers",
   description:
-    "Senior practitioners only. Partner-accountable engagements. The firm is structured around judgement compounding, not junior leverage.",
-};
+    "We hire senior practitioners. Cybersecurity advisory does not scale on leverage, it scales on judgement.",
+  path: "/careers",
+});
 
 export default function CareersPage() {
   return (

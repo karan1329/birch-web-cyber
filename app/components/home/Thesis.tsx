@@ -222,7 +222,7 @@ function FoundingPrincipleCard() {
         }}
       >
         Serious cybersecurity work is not a marketplace problem to be
-        procured. It is a craft problem, to be practiced.
+        procured. It is a craft problem, to be practised.
       </blockquote>
 
       {/* Divider */}

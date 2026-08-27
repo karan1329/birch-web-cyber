@@ -8,6 +8,7 @@ import { Rise } from "../components/primitives/Rise";
 import { SplitText } from "../components/primitives/SplitText";
 import { useCount } from "../components/hooks/useCount";
 import { useInView } from "../components/hooks/useInView";
+
 import {
   CompressionTimeline,
   type CompressionEvent,

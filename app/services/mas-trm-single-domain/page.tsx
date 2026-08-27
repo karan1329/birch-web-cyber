@@ -3,16 +3,18 @@ import { InnerHero } from "../../components/primitives/InnerHero";
 import { MagButton } from "../../components/primitives/MagButton";
 import { Rise } from "../../components/primitives/Rise";
 import { SplitText } from "../../components/primitives/SplitText";
+import { pageMeta } from "../../lib/seo";
 import {
   SprintBlock,
   SprintProse,
 } from "../../components/sprints/SprintBlock";
 
-export const metadata = {
-  title: "MAS TRM Single-Domain Sprint · Birchlogic",
+export const metadata = pageMeta({
+  title: "MAS TRM Single-Domain Sprint",
   description:
-    "One open MAS Technology Risk Management domain finding, closed by a MAS-fluent senior partner in four weeks. Evidence packs MAS reviewers recognise. Supervisor letter response on the same surface.",
-};
+    "One open MAS TRM domain finding, closed on a hard clock. Scoped, evidenced and board-ready.",
+  path: "/services/mas-trm-single-domain",
+});
 
 const WEEK_PHASES: { weeks: string; title: string; body: string }[] = [
   {

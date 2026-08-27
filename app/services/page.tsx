@@ -11,12 +11,14 @@ import {
   type SubTier,
 } from "../components/services/SubTierComparison";
 import { NotForSale } from "../components/services/NotForSale";
+import { pageMeta } from "../lib/seo";
 
-export const metadata = {
-  title: "Services · Birchlogic",
+export const metadata = pageMeta({
+  title: "Services",
   description:
-    "Five practices. Three commercial shapes. Quick sprints, vCISO, and Fractional Security Office. Senior-led on every one.",
-};
+    "Five practices. Three commercial shapes. Quick sprints, vCISO retainer, and Fractional Security Office. Senior-led on every one.",
+  path: "/services",
+});
 
 const VCISO_TIERS: [SubTier, SubTier, SubTier] = [
   {

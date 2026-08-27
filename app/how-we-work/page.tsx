@@ -4,12 +4,14 @@ import { Rise } from "../components/primitives/Rise";
 import { SplitText } from "../components/primitives/SplitText";
 import { StickyPrinciples } from "../components/how-we-work/StickyPrinciples";
 import { EngagementCycle } from "../components/how-we-work/EngagementCycle";
+import { pageMeta } from "../lib/seo";
 
-export const metadata = {
-  title: "How we work · Birchlogic",
+export const metadata = pageMeta({
+  title: "How we work",
   description:
-    "Six principles that decide who we are. Read them before you book a call.",
-};
+    "Six principles that decide who we are. Read them before you book a call. If they fit, we will probably work well together.",
+  path: "/how-we-work",
+});
 
 export default function HowWeWorkPage() {
   return (

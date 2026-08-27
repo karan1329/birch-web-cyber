@@ -1,6 +1,6 @@
 "use client";
 
-import { type ReactNode } from "react";
+import { type CSSProperties, type ElementType, type ReactNode } from "react";
 import { useInView } from "../hooks/useInView";
 
 type Props = {
@@ -10,6 +10,15 @@ type Props = {
   duration?: number;
   className?: string;
   threshold?: number;
+  /**
+   * Element to render. Defaults to a `div`, but a Rise placed directly
+   * inside an `<ol>`/`<ul>` must render the `<li>` itself — an
+   * intervening div makes each item its own single-item list, which
+   * breaks numbering and makes assistive tech announce "1 of 1" for
+   * every row.
+   */
+  as?: ElementType;
+  style?: CSSProperties;
 };
 
 /**
@@ -24,10 +33,12 @@ export function Rise({
   duration = 0.9,
   className,
   threshold = 0.14,
+  as: Tag = "div",
+  style,
 }: Props) {
   const [ref, inView] = useInView<HTMLDivElement>(threshold);
   return (
-    <div
+    <Tag
       ref={ref}
       className={className}
       style={{
@@ -35,9 +46,10 @@ export function Rise({
         transform: inView ? "translateY(0)" : `translateY(${y}px)`,
         transition: `opacity ${duration}s cubic-bezier(0.2,0.7,0.2,1) ${delay}s, transform ${duration}s cubic-bezier(0.2,0.7,0.2,1) ${delay}s`,
         willChange: "transform, opacity",
+        ...style,
       }}
     >
       {children}
-    </div>
+    </Tag>
   );
 }

@@ -6,12 +6,14 @@ import { ContactForm } from "../components/contact/ContactForm";
 import { WhatToExpect } from "../components/contact/WhatToExpect";
 import { WhatWeWontDo } from "../components/contact/WhatWeWontDo";
 import { OfficesList } from "../components/contact/OfficesList";
+import { pageMeta } from "../lib/seo";
 
-export const metadata = {
-  title: "Contact · Birchlogic",
+export const metadata = pageMeta({
+  title: "Contact",
   description:
-    "Bring a specific blocker. We will tell you what we would do, in how many weeks.",
-};
+    "Bring a specific blocker. We will tell you what we would do, in how many weeks. One conversation, thirty minutes.",
+  path: "/contact",
+});
 
 export default function ContactPage() {
   return (

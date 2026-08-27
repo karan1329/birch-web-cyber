@@ -3,16 +3,18 @@ import { InnerHero } from "../../components/primitives/InnerHero";
 import { MagButton } from "../../components/primitives/MagButton";
 import { Rise } from "../../components/primitives/Rise";
 import { SplitText } from "../../components/primitives/SplitText";
+import { pageMeta } from "../../lib/seo";
 import {
   SprintBlock,
   SprintProse,
 } from "../../components/sprints/SprintBlock";
 
-export const metadata = {
-  title: "Notice 658 + TPRM Readiness Sprint · Birchlogic",
+export const metadata = pageMeta({
+  title: "Notice 658 + TPRM Readiness Sprint",
   description:
-    "Your third-party register, mapped to MAS Notice 658 and the incoming TPRM Guidelines before MAS asks. Four to six weeks. Senior MAS-fluent partner. Audit-defensible evidence.",
-};
+    "Third-party registers, outsourcing-grade due diligence and board accountability for MAS-licensed FIs.",
+  path: "/services/notice-658-tprm-readiness",
+});
 
 const WEEK_PHASES: { weeks: string; title: string; body: string }[] = [
   {

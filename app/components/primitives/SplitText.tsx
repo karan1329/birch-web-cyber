@@ -43,6 +43,12 @@ export function SplitText({
     <Tag
       ref={ref}
       className={className}
+      // The glyph spans below are all aria-hidden, so this label is what
+      // carries the accessible name. Per the accname spec, when a heading
+      // computes its name from content it uses a child element's
+      // `aria-label` — so `<h1><SplitText/></h1>` still names correctly
+      // without needing a duplicate text node in the DOM.
+      aria-label={text}
       style={{
         display: "inline-block",
         color: dim ? "var(--bl-fg3)" : undefined,
@@ -117,26 +123,6 @@ export function SplitText({
           </span>
         );
       })}
-      {/* Screen-reader mirror. Glyph spans are aria-hidden so a SR
-          cannot read them; this hidden copy carries the actual text.
-          `user-select: none` prevents text duplication on clipboard. */}
-      <span
-        style={{
-          position: "absolute",
-          width: 1,
-          height: 1,
-          padding: 0,
-          margin: -1,
-          overflow: "hidden",
-          clipPath: "inset(50%)",
-          whiteSpace: "nowrap",
-          border: 0,
-          userSelect: "none",
-          WebkitUserSelect: "none",
-        }}
-      >
-        {text}
-      </span>
     </Tag>
   );
 }

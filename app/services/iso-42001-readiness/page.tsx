@@ -3,6 +3,7 @@ import { InnerHero } from "../../components/primitives/InnerHero";
 import { MagButton } from "../../components/primitives/MagButton";
 import { Rise } from "../../components/primitives/Rise";
 import { SplitText } from "../../components/primitives/SplitText";
+import { pageMeta } from "../../lib/seo";
 import {
   SprintBlock,
   SprintProse,
@@ -13,11 +14,12 @@ import {
  * links. The display name is the MAS-first "MAS AI Governance Sprint";
  * ISO 42001 is the certificate leg for buyers who demand one.
  */
-export const metadata = {
-  title: "MAS AI Governance Sprint · Birchlogic",
+export const metadata = pageMeta({
+  title: "MAS AI Governance Sprint",
   description:
-    "AI risk posture aligned to the MAS AI Risk Management Guidelines and the MindForge Operationalisation Handbook. ISO 42001 readiness where a certificate is demanded. Four weeks. Senior partner-led.",
-};
+    "AI risk integrated into the cyber programme, not bolted next to it. ISO 42001 readiness for regulated institutions.",
+  path: "/services/iso-42001-readiness",
+});
 
 const WEEK_PHASES: { weeks: string; title: string; body: string }[] = [
   {

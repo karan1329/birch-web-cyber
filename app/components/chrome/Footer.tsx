@@ -28,8 +28,6 @@ const OPERATES_ACROSS = [
   "EU AI Act",
   "NIS2",
   "DPDP",
-  "UAE PDPL",
-  "DESC",
 ];
 
 // Only LinkedIn for now. X and GitHub are off until we have an active

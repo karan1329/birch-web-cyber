@@ -4,12 +4,14 @@ import { Anchor } from "../../components/primitives/Anchor";
 import { Rise } from "../../components/primitives/Rise";
 import { ApplyForm } from "../../components/careers/ApplyForm";
 import { getRole, ROLES } from "../../components/careers/roles";
+import { pageMeta } from "../../lib/seo";
 
-export const metadata = {
-  title: "Apply · Birchlogic",
+export const metadata = pageMeta({
+  title: "Apply",
   description:
     "Tell us a real story. Four role-specific questions, no cover letter. Every application lands in Karan's inbox.",
-};
+  path: "/careers/apply",
+});
 
 type SearchParams = Promise<{ role?: string }>;
 
