@@ -192,6 +192,7 @@ const VALID_ROLE_SLUGS = new Set<RoleSlug>([
   "director-client-origination",
   "senior-security-consultant",
   "practice-development-associate",
+  "ai-researcher",
 ]);
 
 export async function submitApplication(

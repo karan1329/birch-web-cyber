@@ -23,7 +23,8 @@ export type Role = {
 export type RoleSlug =
   | "director-client-origination"
   | "senior-security-consultant"
-  | "practice-development-associate";
+  | "practice-development-associate"
+  | "ai-researcher";
 
 export type ApplyQuestion = {
   id: "q1" | "q2" | "q3" | "q4";
@@ -71,7 +72,20 @@ export const ROLES: Role[] = [
       "Comfort working across IST and SGT, with the discipline to research before reaching out.",
       "Bonus: prior exposure to cybersecurity, compliance, fintech, or regulated-industry buying motions.",
     ],
+  },  {
+    slug: "ai-researcher",
+    title: "AI Researcher",
+    location: "India or remote",
+    summary:
+      "For people who want to work on the questions in our library: safety under compression, agentic attack surfaces, what a signature on machine-collected evidence has to mean. You will publish under your own name, against our own standard, and the standard is public so you can read what you are signing up for before you apply.",
+    requirements: [
+      "A research record you can point at: papers, preprints, reproducible repositories, or work inside a lab where the methodology was yours.",
+      "Comfortable with the machinery rather than the API: evaluation design, statistical power, and knowing when a result does not survive its own error bars.",
+      "Willing to publish a negative result, and to have the standard applied to your own work in public.",
+      "Security background is welcome but not required. Rigour is.",
+    ],
   },
+
 ];
 
 /**
@@ -79,6 +93,35 @@ export const ROLES: Role[] = [
  * candidate's judgement, not their LinkedIn highlights.
  */
 export const ROLE_QUESTIONS: Record<RoleSlug, ApplyQuestion[]> = {
+  "ai-researcher": [
+    {
+      id: "q1",
+      label: "Tell us about a result of yours that did not survive scrutiny.",
+      placeholder:
+        "Yours, not someone else's. What did you believe, what broke it, and what did you do once you knew? We care more about this answer than about anything you have published.",
+      required: true,
+    },
+    {
+      id: "q2",
+      label:
+        "Pick one question from our library and tell us how you would attack it.",
+      placeholder:
+        "Safety under compression, agentic attack surfaces, or what a signature on machine-collected evidence has to mean. Method, not vision: what would you measure, against what baseline, and what would falsify you?",
+    },
+    {
+      id: "q3",
+      label:
+        "Where does the current evidence on your area actually run out?",
+      placeholder:
+        "The edge where the literature stops being load-bearing and starts being cited out of habit. Show us you have read to that edge.",
+    },
+    {
+      id: "q4",
+      label: "What would you refuse to publish, and why?",
+      placeholder:
+        "You will publish under your own name against a public standard. Tell us where your line is before we hand you the pen.",
+    },
+  ],
   "director-client-origination": [
     {
       id: "q1",

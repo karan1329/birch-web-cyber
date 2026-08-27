@@ -72,6 +72,13 @@
   --bl-accent-deep: #A32B42;   /* pressed states, deeper fills */
   --bl-accent-bright: #E35B73; /* hover only */
 
+  /* HP-11 · the ONE sanctioned second chroma on the site. The AI Research
+     nav tab is specified to render in its own colour permanently, so it
+     needs a hue that is not cranberry. Deep teal reads as lab/instrument
+     against the beige and does not compete with the accent. Used by the
+     nav tab and nothing else — see the note in Nav.tsx. */
+  --bl-accent-research: #1F6F5C;
+
   --bl-neon: var(--bl-accent);
   --bl-neon-rgb: var(--bl-accent-rgb);
 

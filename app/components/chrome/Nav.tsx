@@ -4,12 +4,23 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
-const ITEMS: { href: string; label: string }[] = [
+/**
+ * HP-11 · nav restructure.
+ *
+ * Contact leaves the tab list — the top-right button carries it alone as
+ * "Book a call". `/start` stays out of the nav (and the footer) entirely;
+ * its only entry points are the homepage founder block and the FSO section.
+ *
+ * AI Research renders in its own colour, permanently, and is the only
+ * coloured item in the nav.
+ */
+const ITEMS: { href: string; label: string; accent?: boolean }[] = [
   { href: "/how-we-work", label: "How We Work" },
   { href: "/services", label: "Services" },
-  { href: "/field-notes", label: "Field notes" },
+  { href: "/field-notes", label: "Field Notes" },
+  { href: "/research", label: "AI Research", accent: true },
   { href: "/careers", label: "Careers" },
-  { href: "/contact", label: "Contact" },
+  { href: "/about", label: "About Us" },
 ];
 
 function useIsMobile() {
@@ -107,7 +118,11 @@ export function Nav() {
                       fontFamily: "var(--font-sans)",
                       fontSize: 13,
                       fontWeight: 500,
-                      color: active ? "var(--bl-neon)" : "var(--bl-fg)",
+                      color: item.accent
+                        ? "var(--bl-accent-research)"
+                        : active
+                          ? "var(--bl-accent)"
+                          : "var(--bl-fg)",
                       textDecoration: "none",
                       transition: "color 0.2s",
                       position: "relative",
@@ -237,7 +252,11 @@ function MobileMenu({
               fontFamily: "var(--font-sans)",
               fontSize: "clamp(32px, 7vw, 48px)",
               fontWeight: 500,
-              color: currentPath === item.href ? "var(--bl-neon)" : "var(--bl-fg)",
+              color: item.accent
+                ? "var(--bl-accent-research)"
+                : currentPath === item.href
+                  ? "var(--bl-accent)"
+                  : "var(--bl-fg)",
               background: "none",
               border: "none",
               borderBottom: "1px solid var(--bl-rule)",

@@ -1,214 +1,133 @@
 import { InnerHero } from "../components/primitives/InnerHero";
 import { Anchor } from "../components/primitives/Anchor";
 import { Rise } from "../components/primitives/Rise";
-import { CategoryPills } from "../components/field-notes/CategoryPills";
+import { FIELD_NOTES, SHELF_INTRO } from "../lib/field-notes";
 import { pageMeta } from "../lib/seo";
-import {
-  FeaturedPostCard,
-  RecentPostRow,
-  type Post,
-} from "../components/field-notes/PostCard";
 
 export const metadata = pageMeta({
-  title: "Field notes",
+  title: "Field Notes",
   description:
-    "Field notes on serious cybersecurity. We publish opinions that are load-bearing, and nothing that is not.",
+    "Five pieces being written now, in order. Nothing publishes here until it is worth your time, which is also why there are five and not thirty.",
   path: "/field-notes",
 });
 
 /**
- * Field notes are deliberately practitioner-grade. Each post is drawn from a
- * real engagement (SOC 2 audit, regulator letter, vCISO retainer review,
- * pentest reread) and written so a CISO, founder, or audit lead can act on it
- * in the same week they read it. No vendor-buzzword filler.
+ * FN-1 · the honest shelf.
+ *
+ * The page used to list five "featured" and four "recent" articles plus a
+ * category rail, none of which were published. That is the most corrosive
+ * thing a diligence surface can do, so the whole listing is gone. What
+ * remains is five greyed, unlinked cards marked "In the works", driven by
+ * app/lib/field-notes.ts.
+ *
+ * There is deliberately not a single anchor tag on these cards.
  */
-const FEATURED: Post[] = [
-  {
-    title: "SOC 2 for founders: the operating manual.",
-    summary:
-      "The piece we wish existed when we ran our first SOC 2. What controls auditors actually open on Day 1, which evidence packets matter, what enterprise customers ask for in the procurement cycle after the report lands.",
-    readTime: "25 min read",
-    category: "Compliance",
-  },
-  {
-    title: "The auditor opens seven documents on Day 1.",
-    summary:
-      "The order matters. Get the first three right and the audit hums; get them wrong and every subsequent control gets re-asked. The seven, ranked, with what each is actually being read for.",
-    readTime: "12 min read",
-    category: "Compliance",
-  },
-  {
-    title: "How to lose a board on cybersecurity in one meeting.",
-    summary:
-      "Four failure patterns we have watched up close. The CRQ-in-dollars-without-context deck. The NIST-IDs-on-screen deck. The two slides that quietly land instead.",
-    readTime: "10 min read",
-    category: "Sales Enablement",
-  },
-  {
-    title: "DPDP Right Answers: what to actually do.",
-    summary:
-      "₹250 crore penalty exposure. Forty-seven pages of rules. Six pages of useful interpretation, the consent-pattern table we run with clients, and the three cross-border clauses that come up in every contract negotiation.",
-    readTime: "18 min read",
-    category: "Privacy",
-  },
-  {
-    title: "The SEBI CSCRF reading list.",
-    summary:
-      "Board cyber maturity attestation, audit-committee briefing, CRQ in rupees. The reference document we hand to every SEBI-regulated CISO we work with, annotated with the three questions a SEBI inspector opens with.",
-    readTime: "22 min read",
-    category: "Regulator",
-  },
-];
-
-const RECENT: Post[] = [
-  {
-    title: "Thirty days before your first SOC 2 audit.",
-    summary:
-      "A week-by-week prep schedule from an audit we ran last quarter. What moves a control from 'exception' to 'qualified' to 'unqualified' and the Wednesday checkpoint that decides it.",
-    readTime: "16 min read",
-  },
-  {
-    title: "vCISO retainer red flags.",
-    summary:
-      "When the retainer is just billable hours dressed up. The four signals you are buying time, not a program, and the contract clauses that flip it back.",
-    readTime: "12 min read",
-  },
-  {
-    title: "The vendor-questionnaire trap.",
-    summary:
-      "How to answer a 200-row security questionnaire from a US enterprise without overcommitting. The four-sentence framing pattern we use on every one and the three rows that sink you if you misread them.",
-    readTime: "15 min read",
-  },
-  {
-    title: "Pentest findings that aren't.",
-    summary:
-      "CVSS inflation, marketing-driven scoring, and the four common 'criticals' that quietly disappear when you ask the next question. Read the report, do not just count the colours.",
-    readTime: "14 min read",
-  },
-  {
-    title: "MAS TRM for India-HQ fintechs entering Singapore.",
-    summary:
-      "Cross-border bridge content for fintechs expanding to SG. The MAS-specific framing that most India-HQ advisors do not teach, and the three Annexes that decide whether you sail through or get sent back for a second review.",
-    readTime: "20 min read",
-  },
-  {
-    title: "AI security questionnaires US enterprises actually ask.",
-    summary:
-      "We have answered hundreds. The patterns. NIST AI RMF, OWASP LLM Top 10, and ISO 42001 inside the same procurement cycle, with the four answers that almost always need a follow-up call before they unblock the deal.",
-    readTime: "18 min read",
-  },
-  {
-    title: "Cryptographic Right Answers: what to use in 2026.",
-    summary:
-      "Post-quantum has arrived; most production stacks have not noticed. A short, opinionated table you can hand to engineering tomorrow.",
-    readTime: "35 min read",
-  },
-];
-
 export default function FieldNotesPage() {
   return (
     <>
       <InnerHero
-        kicker="Field notes"
+        kicker="Field Notes"
         title="Field notes on serious cybersecurity."
-        subtitle="Practical, second-hand knowledge from real engagements. Written by Karan and the team."
+        subtitle="We publish field notes, not marketing content. If we have an opinion that is not load-bearing, we do not publish it."
       />
 
       <section
         style={{
           background: "var(--bl-section-veil)",
           color: "var(--bl-fg)",
-          padding: "clamp(60px, 8vw, 100px) var(--bl-page-pad) 0",
+          padding: "clamp(90px, 12vw, 160px) var(--bl-page-pad)",
+          borderTop: "1px solid var(--bl-rule)",
         }}
       >
         <div className="bl-container" style={{ padding: 0 }}>
+          <Anchor number="01" label="On the shelf" />
+
           <Rise>
-            <CategoryPills />
+            <p
+              style={{
+                fontFamily: "var(--font-sans)",
+                fontSize: "clamp(16px, 1.35vw, 19px)",
+                lineHeight: 1.68,
+                color: "var(--bl-fg2)",
+                maxWidth: "var(--bl-text-wide)",
+                margin: "0 0 clamp(40px, 5vw, 64px)",
+              }}
+            >
+              {SHELF_INTRO}
+            </p>
           </Rise>
-        </div>
-      </section>
 
-      <section
-        style={{
-          background: "var(--bl-section-veil)",
-          color: "var(--bl-fg)",
-          padding: "clamp(60px, 8vw, 100px) var(--bl-page-pad)",
-        }}
-      >
-        <div className="bl-container" style={{ padding: 0 }}>
-          <Anchor number="01" label="Featured" />
-          <div
+          <ol
             style={{
+              listStyle: "none",
+              padding: 0,
+              margin: 0,
               display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-              gap: 20,
+              gap: 1,
+              background: "var(--bl-rule)",
+              border: "1px solid var(--bl-rule)",
             }}
           >
-            {FEATURED.map((p, i) => (
-              <Rise key={i} delay={i * 0.06}>
-                <FeaturedPostCard post={p} />
+            {FIELD_NOTES.map((n, i) => (
+              <Rise
+                key={n.title}
+                as="li"
+                delay={i * 0.04}
+                style={{
+                  background: "var(--bl-ink2)",
+                  padding: "clamp(24px, 3vw, 36px)",
+                  display: "grid",
+                  gridTemplateColumns: "minmax(0, 1fr) auto",
+                  gap: "clamp(16px, 3vw, 40px)",
+                  alignItems: "start",
+                }}
+              >
+                <div style={{ minWidth: 0 }}>
+                  <h2
+                    style={{
+                      fontFamily: "var(--font-sans)",
+                      fontWeight: 500,
+                      fontSize: "clamp(18px, 1.7vw, 24px)",
+                      lineHeight: 1.25,
+                      letterSpacing: "-0.015em",
+                      // Greyed: these are not live, and the type says so
+                      // before the badge does.
+                      color: "var(--bl-fg3)",
+                      margin: "0 0 10px",
+                    }}
+                  >
+                    {n.title}
+                  </h2>
+                  <p
+                    style={{
+                      fontFamily: "var(--font-sans)",
+                      fontSize: "clamp(13.5px, 1.05vw, 15px)",
+                      lineHeight: 1.6,
+                      color: "var(--bl-fg3)",
+                      margin: 0,
+                      maxWidth: "var(--bl-text-body)",
+                    }}
+                  >
+                    {n.dek}
+                  </p>
+                </div>
+                <span
+                  style={{
+                    fontFamily: "var(--font-mono)",
+                    fontSize: 9.5,
+                    letterSpacing: "0.16em",
+                    textTransform: "uppercase",
+                    color: "var(--bl-fg3)",
+                    border: "1px dashed var(--bl-rule2)",
+                    padding: "7px 11px",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  {n.status}
+                </span>
               </Rise>
             ))}
-          </div>
-        </div>
-      </section>
-
-      <section
-        style={{
-          background: "var(--bl-section-veil)",
-          color: "var(--bl-fg)",
-          padding: "clamp(60px, 8vw, 100px) var(--bl-page-pad)",
-          borderTop: "1px solid var(--bl-rule)",
-        }}
-      >
-        <div className="bl-container" style={{ padding: 0 }}>
-          <Anchor number="02" label="Recent" />
-          <div style={{ borderTop: "1px solid var(--bl-rule)" }}>
-            {RECENT.map((p, i) => (
-              <Rise key={i} delay={i * 0.04}>
-                <RecentPostRow post={p} />
-              </Rise>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section
-        style={{
-          background: "var(--bl-section-veil)",
-          color: "var(--bl-fg)",
-          padding: "clamp(100px, 12vw, 160px) var(--bl-page-pad)",
-          borderTop: "1px solid var(--bl-rule)",
-          textAlign: "center",
-        }}
-      >
-        <div className="bl-container" style={{ padding: 0 }}>
-          <p
-            style={{
-              fontFamily: "var(--font-sans)",
-              fontWeight: 500,
-              fontSize: "clamp(18px, 1.8vw, 26px)",
-              lineHeight: 1.4,
-              letterSpacing: "-0.015em",
-              color: "var(--bl-fg)",
-              maxWidth: "var(--bl-text-body)",
-              margin: "0 auto 14px",
-            }}
-          >
-            We publish field notes, not marketing content.
-          </p>
-          <p
-            style={{
-              fontFamily: "var(--font-sans)",
-              fontSize: "clamp(14px, 1.1vw, 16px)",
-              color: "var(--bl-fg2)",
-              maxWidth: "var(--bl-text-narrow)",
-              margin: "0 auto",
-            }}
-          >
-            If we have an opinion that is not load-bearing, we do not publish
-            it.
-          </p>
+          </ol>
         </div>
       </section>
     </>
