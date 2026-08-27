@@ -130,6 +130,16 @@ export function ContactForm() {
         required
       />
 
+      {/* Part 4 · required, free text. Deliberately not a dropdown: the
+          useful answers are the ones we did not think to list. */}
+      <TextField
+        name="heardFrom"
+        label="How did you hear about us?"
+        required
+        autoComplete="off"
+        hint="A name, a post, a search, a conference. Whatever is true."
+      />
+
       <TextArea
         name="message"
         label="What is in your way?"

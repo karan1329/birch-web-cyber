@@ -19,6 +19,8 @@ type Props = {
    */
   as?: ElementType;
   style?: CSSProperties;
+  /** Anchor target, e.g. for the research library's A–Z rail. */
+  id?: string;
 };
 
 /**
@@ -35,11 +37,13 @@ export function Rise({
   threshold = 0.14,
   as: Tag = "div",
   style,
+  id,
 }: Props) {
   const [ref, inView] = useInView<HTMLDivElement>(threshold);
   return (
     <Tag
       ref={ref}
+      id={id}
       className={className}
       style={{
         opacity: inView ? 1 : 0,

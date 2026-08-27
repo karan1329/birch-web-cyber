@@ -93,10 +93,14 @@ function ClosingCTASection() {
             maxWidth: "var(--bl-heading-wide)",
           }}
         >
-          <SplitText text="Pricing is on the call," perChar={0.012} />
+          {/* Was "Pricing is on the call, not on the website." /start now
+              publishes the founding rate (ST-5a), which made that line false
+              on our own site. The pack's graceful version keeps the spirit
+              (no day rates, no surprise invoices) without the contradiction. */}
+          <SplitText text="Sprint pricing is on the call." perChar={0.012} />
           <br />
           <SplitText
-            text="not on the website."
+            text="The Security Office starts at ₹80,000 a month for founding clients."
             perChar={0.012}
             delay={0.26}
             dim

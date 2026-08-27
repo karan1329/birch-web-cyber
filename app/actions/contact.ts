@@ -143,6 +143,7 @@ export async function submitContact(formData: FormData): Promise<ActionResult> {
     company: String(formData.get("company") ?? "").trim(),
     subject: String(formData.get("subject") ?? "").trim(),
     message: String(formData.get("message") ?? "").trim(),
+    heardFrom: String(formData.get("heardFrom") ?? "").trim(),
   };
 
   if (!payload.firstName || !payload.email || !payload.message) {
@@ -150,6 +151,10 @@ export async function submitContact(formData: FormData): Promise<ActionResult> {
       ok: false,
       error: "Name, work email and message are required.",
     };
+  }
+
+  if (!payload.heardFrom) {
+    return { ok: false, error: "Please tell us how you heard about us." };
   }
 
   if (!isEmail(payload.email)) {
@@ -165,6 +170,7 @@ export async function submitContact(formData: FormData): Promise<ActionResult> {
     `From: ${fullName || "(no name)"} <${payload.email}>`,
     `Company: ${payload.company || "(not provided)"}`,
     `Subject: ${subjectLabel}`,
+    `Heard via: ${payload.heardFrom}`,
     ``,
     `Message:`,
     payload.message,
@@ -296,6 +302,53 @@ export async function submitApplication(
       ok: false,
       error:
         "We received your application but mail delivery hiccuped. We will follow up at the email you provided.",
+    };
+  }
+
+  return { ok: true };
+}
+
+// ─────────────────────────────────────────────────────────────────────────
+// RS-7 · memory-layer waitlist
+// The only email capture on the site. Tagged so these can be separated from
+// contact and application traffic in the inbox.
+// ─────────────────────────────────────────────────────────────────────────
+
+export async function joinWaitlist(formData: FormData): Promise<ActionResult> {
+  const token = String(formData.get("cf-turnstile-response") ?? "");
+  const verify = await verifyTurnstile(token);
+  if (!verify.ok) {
+    console.warn("[turnstile] waitlist verification failed:", verify.reason);
+    return {
+      ok: false,
+      error: "Could not verify the form. Please refresh and try again.",
+    };
+  }
+
+  const email = String(formData.get("email") ?? "").trim();
+  const tag = String(formData.get("tag") ?? "memory-layer-waitlist").trim();
+
+  if (!email || !isEmail(email)) {
+    return { ok: false, error: "Please enter a valid email address." };
+  }
+
+  const subject = `website-waitlist | ${tag} | ${email}`;
+  const text = [
+    `Submitted: ${new Date().toISOString()}`,
+    ``,
+    `Tag:   ${tag}`,
+    `Email: ${email}`,
+    ``,
+    `Someone asked to follow the build.`,
+  ].join("\n");
+
+  try {
+    await sendMail({ subject, text, replyTo: email });
+  } catch (err) {
+    console.error("[email] waitlist send failed", err);
+    return {
+      ok: false,
+      error: "Could not record that just now. Please try again shortly.",
     };
   }
 
