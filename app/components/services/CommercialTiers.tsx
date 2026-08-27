@@ -16,7 +16,7 @@ const TIERS: Tier[] = [
   {
     tier: "I",
     label: "Quick Sprints",
-    intro: "Twelve engagements we have run enough times to deliver in two to four weeks. Each fixes one specific thing.",
+    intro: "Nine engagements we have run enough times to deliver on a clock. Each fixes one specific thing, and most begin with the Security Read.",
     why: "Senior partner in every meeting. Fixed scope, fixed price, fixed delivery date.",
     href: "#sprints",
   },

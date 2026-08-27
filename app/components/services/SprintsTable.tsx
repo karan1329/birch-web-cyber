@@ -3,91 +3,13 @@
 import Link from "next/link";
 import { useState } from "react";
 import { Anchor } from "../primitives/Anchor";
+import {
+  ALSO_AVAILABLE,
+  ENGAGEMENT_CLOSER,
+  ENGAGEMENTS,
+  type Engagement,
+} from "../../lib/engagements";
 
-type Sprint = {
-  name: string;
-  fixes: string;
-  duration: string;
-  href?: string;
-};
-
-const SPRINTS: Sprint[] = [
-  {
-    name: "Multi-Framework Compliance Program",
-    fixes: "SOC2, ISO 27001, DPDP, AI governance, all delivered as one program. Evidence collected once, mapped across regimes.",
-    duration: "6 to 8 weeks",
-    href: "/services/multi-framework-compliance",
-  },
-  {
-    name: "SOC2 Type I in 2 Weeks",
-    fixes: "You are stalled mid-Vanta. Senior firm pushes you across the audit line.",
-    duration: "2 weeks",
-  },
-  {
-    name: "AI Security Posture Sprint",
-    fixes: "US prospects asking AI questions. You have no answers.",
-    duration: "4 weeks",
-  },
-  {
-    name: "ISO 42001 Readiness Sprint",
-    fixes: "EU customer asked for ISO 42001. You have no AIMS.",
-    duration: "4 weeks",
-    href: "/services/iso-42001-readiness",
-  },
-  {
-    name: "Cloud Security Architecture Review",
-    fixes: "AWS, Azure, GCP grew reactively. Customer-defensible architecture in 4 weeks.",
-    duration: "4 weeks",
-  },
-  {
-    name: "SEBI CSCRF Attestation Sprint",
-    fixes: "Audit committee deadline. CRQ in rupees alongside controls evidence.",
-    duration: "4 weeks",
-  },
-  {
-    name: "DPDP Act Readiness Sprint",
-    fixes: "ROPA, DPO, breach playbook, cross-border transfer framework.",
-    duration: "4 weeks",
-  },
-  {
-    name: "TPRM Audit Rescue",
-    fixes: "A deal is stuck. We unstick it in three weeks.",
-    duration: "3 to 4 weeks",
-  },
-  {
-    name: "AI Security Questionnaire Response Engine",
-    fixes: "Multiple enterprise prospects asking AI questions. We build the answer library.",
-    duration: "3 weeks + monthly",
-  },
-  {
-    name: "MAS TRM Single-Domain Sprint",
-    fixes: "One open TRM Domain finding. MAS-fluent partner.",
-    duration: "4 weeks",
-    href: "/services/mas-trm-single-domain",
-  },
-  {
-    name: "Notice 658 + TPRM Readiness Sprint",
-    fixes: "Your third-party register, mapped to Notice 658 and the incoming TPRM Guidelines before MAS asks.",
-    duration: "4 to 6 weeks",
-    href: "/services/notice-658-tprm-readiness",
-  },
-  {
-    name: "NIS2 Vendor Questionnaire Engine",
-    fixes: "EU enterprise questionnaires answered in hours, not weeks. Built for SG SaaS with EU pipeline.",
-    duration: "3 weeks + monthly",
-    href: "/services/nis2-vendor-questionnaire",
-  },
-  {
-    name: "Post-Incident 30-Day Hardening",
-    fixes: "After the breach: identity, backups, IR runbook, board recovery report.",
-    duration: "4 weeks",
-  },
-  {
-    name: "M&A Cyber DD Express",
-    fixes: "PE-ready cyber DD. IC-grade output.",
-    duration: "3 to 4 weeks",
-  },
-];
 
 /**
  * Sprint ledger. Rows with `href` link to their dedicated landing pages.
@@ -108,7 +30,7 @@ export function SprintsTable() {
       }}
     >
       <div className="bl-container" style={{ padding: 0 }}>
-        <Anchor number="04" label="The quick sprints" />
+        <Anchor number="04" label="The work" />
 
         <h2
           style={{
@@ -121,10 +43,10 @@ export function SprintsTable() {
             maxWidth: "var(--bl-heading-wide)",
           }}
         >
-          Quick sprints.
+          The work,
           <br />
           <span style={{ color: "var(--bl-fg3)" }}>
-            One specific thing, fixed in weeks.
+            matched to the problem on your desk.
           </span>
         </h2>
         <p
@@ -137,11 +59,11 @@ export function SprintsTable() {
             margin: "0 0 clamp(48px, 6vw, 80px)",
           }}
         >
-          A founder with a US enterprise deal stuck on AI questions does not
-          need a year. A SEBI mid-cap CISO with an attestation due in 60 days
-          does not need a one-off audit. They need one specific thing fixed in
-          one month, by a senior practitioner, with a partner accountable for
-          the outcome.
+          These are engagements we have run enough times to deliver on a
+          clock. If one of them looks like the problem you are facing, the
+          weeks column tells you how quickly it can be gone: fixed scope,
+          fixed date, a senior partner in every meeting, and first-pass
+          acceptance as the contracted outcome.
         </p>
 
         <div
@@ -161,18 +83,56 @@ export function SprintsTable() {
           >
             <thead>
               <tr style={{ borderBottom: "1px solid var(--bl-rule)" }}>
-                <TH style={{ width: "32%" }}>Sprint</TH>
-                <TH style={{ width: "52%" }}>What it fixes</TH>
-                <TH style={{ width: "16%", textAlign: "right" }}>Duration</TH>
+                <TH style={{ width: "32%" }}>Engagement</TH>
+                <TH style={{ width: "52%" }}>The situation it fixes</TH>
+                <TH style={{ width: "16%", textAlign: "right" }}>Weeks</TH>
               </tr>
             </thead>
             <tbody>
-              {SPRINTS.map((s, i) => (
-                <SprintRow key={i} sprint={s} isLast={i === SPRINTS.length - 1} />
+              {ENGAGEMENTS.map((s, i) => (
+                <SprintRow key={i} sprint={s} isLast={i === ENGAGEMENTS.length - 1} />
               ))}
             </tbody>
           </table>
         </div>
+
+        {/* ST-4 · every row lands in the same place. */}
+        <p
+          style={{
+            fontFamily: "var(--font-sans)",
+            fontSize: "clamp(15px, 1.2vw, 17px)",
+            lineHeight: 1.65,
+            color: "var(--bl-fg2)",
+            maxWidth: "var(--bl-text-body)",
+            margin: "clamp(28px, 3.5vw, 40px) 0 0",
+          }}
+        >
+          {ENGAGEMENT_CLOSER}
+        </p>
+
+        {/* Pack §4 keeps these two out of the nine but explicitly does not
+            drop them, so they are named rather than lost. */}
+        <p
+          style={{
+            fontFamily: "var(--font-mono)",
+            fontSize: 11.5,
+            letterSpacing: "0.04em",
+            lineHeight: 1.6,
+            color: "var(--bl-fg3)",
+            margin: "18px 0 0",
+          }}
+        >
+          Also available, scoped on request: {ALSO_AVAILABLE.join(" · ")}.
+          MAS-specific sprints live on the{" "}
+          <Link
+            href="/singapore"
+            className="bl-email-link"
+            style={{ color: "var(--bl-fg2)", textDecoration: "underline" }}
+          >
+            Singapore practice page
+          </Link>
+          .
+        </p>
       </div>
     </section>
   );
@@ -208,7 +168,7 @@ function SprintRow({
   sprint,
   isLast,
 }: {
-  sprint: Sprint;
+  sprint: Engagement;
   isLast: boolean;
 }) {
   const [hov, setHov] = useState(false);
@@ -277,6 +237,23 @@ function SprintRow({
         ) : (
           sprint.name
         )}
+        {/* ST-4 · row one is the stated front door to everything else. */}
+        {sprint.entryPoint && (
+          <span
+            style={{
+              display: "block",
+              marginTop: 6,
+              fontFamily: "var(--font-mono)",
+              fontSize: 9.5,
+              letterSpacing: "0.14em",
+              textTransform: "uppercase",
+              color: "var(--bl-accent)",
+              fontWeight: 500,
+            }}
+          >
+            Where most engagements begin
+          </span>
+        )}
       </td>
       <td
         style={{
@@ -302,7 +279,7 @@ function SprintRow({
           whiteSpace: "nowrap",
         }}
       >
-        {sprint.duration}
+        {sprint.weeks}
       </td>
     </tr>
   );

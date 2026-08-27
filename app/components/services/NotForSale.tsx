@@ -3,12 +3,20 @@
 import { Anchor } from "../primitives/Anchor";
 import { Rise } from "../primitives/Rise";
 
-const ITEMS = [
-  "Managed Detection and Response",
-  "Live incident response",
-  "Penetration testing",
-  "Cybersecurity products",
-  "Managed IT helpdesk",
+// Per-item status, because they are no longer all the same. Pack §4:
+// the site said pentest was "coordinated, not owned" while the one-pager
+// sells CERT-In empanelled VAPT — a diligent buyer reading both would
+// conclude one of them was lying. The partnering model is the honest
+// resolution, so the row states the delivery model instead.
+const ITEMS: { name: string; status: string }[] = [
+  { name: "Managed Detection and Response", status: "Coordinated, not owned" },
+  { name: "Live incident response", status: "Coordinated, not owned" },
+  {
+    name: "Penetration testing",
+    status: "Delivered with empanelled partners, owned by us",
+  },
+  { name: "Cybersecurity products", status: "Coordinated, not owned" },
+  { name: "Managed IT helpdesk", status: "Coordinated, not owned" },
 ];
 
 /**
@@ -88,7 +96,7 @@ export function NotForSale() {
                         color: "var(--bl-fg)",
                       }}
                     >
-                      {item}
+                      {item.name}
                     </span>
                     <span
                       style={{
@@ -98,7 +106,7 @@ export function NotForSale() {
                         color: "var(--bl-fg3)",
                       }}
                     >
-                      Coordinated, not owned
+                      {item.status}
                     </span>
                   </li>
                 ))}

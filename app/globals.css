@@ -310,6 +310,20 @@ input, textarea, select {
   }
 }
 
+/* SV-1 · the five-across practices row. Below 1100px it becomes a tight
+   two-column grid, and on phones a single-column accordion. The reveal
+   interaction is unchanged at every width. */
+@media (max-width: 1100px) {
+  .bl-practices-row {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+@media (max-width: 600px) {
+  .bl-practices-row {
+    grid-template-columns: 1fr !important;
+  }
+}
+
 /* Tablet / large mobile: 2-column body grids stack at 880px */
 @media (max-width: 880px) {
   .bl-stack-md {

@@ -3,13 +3,13 @@ import { MagButton } from "../components/primitives/MagButton";
 import { Rise } from "../components/primitives/Rise";
 import { SplitText } from "../components/primitives/SplitText";
 import { PracticesGrid } from "../components/services/PracticesGrid";
-import { CRQProof } from "../components/services/CRQProof";
 import { CommercialTiers } from "../components/services/CommercialTiers";
 import { SprintsTable } from "../components/services/SprintsTable";
 import {
   SubTierComparison,
   type SubTier,
 } from "../components/services/SubTierComparison";
+import { FractionalSecurityOffice } from "../components/services/FractionalSecurityOffice";
 import { NotForSale } from "../components/services/NotForSale";
 import { pageMeta } from "../lib/seo";
 
@@ -20,39 +20,24 @@ export const metadata = pageMeta({
   path: "/services",
 });
 
+// SV-3 · Solo / +Engineer / Regulated replace Light / Standard / Regulated.
+// The CRQ line inside "Regulated" is where the retired standalone CRQ block
+// (SV-2) now lives on this page.
 const VCISO_TIERS: [SubTier, SubTier, SubTier] = [
   {
-    label: "Light",
-    body: "Quarterly board pack, monthly steering, audit support, on-call Slack hours.",
-    fit: "Series A SaaS post-SOC2 with US or EU enterprise pipeline.",
+    label: "Solo vCISO",
+    body: "A named senior practitioner who represents your security: in front of your customers' security reviews, your auditors, your investors and your board.",
+    fit: "Firms whose engineering can execute and who need seniority, representation and a programme owner rather than extra hands.",
   },
   {
-    label: "Standard",
-    body: "Light plus ongoing program management, vendor risk, AI governance reviews, custom policy authoring, Trust Center maintenance.",
-    fit: "Series B SaaS and mid-size fintechs.",
+    label: "vCISO + Engineer",
+    body: "The same named practitioner, plus a forward-deployed engineer for the work that has to actually get built: the evidence pipeline, the cloud hardening, the control implementation, the findings that need closing rather than documenting.",
+    fit: "Firms where the gap is in the doing.",
   },
   {
-    label: "Regulated",
-    body: "Standard plus regulator response, monthly board pack, audit committee briefings, custom policy aligned to RBI, SEBI, or MAS, supervisor letter response.",
-    fit: "RBI-regulated fintechs, SEBI mid-caps, MAS-licensed entities.",
-  },
-];
-
-const FSO_TIERS: [SubTier, SubTier, SubTier] = [
-  {
-    label: "Core",
-    body: "Partner plus one senior plus 0.5 junior FTE-equivalent dedicated.",
-    fit: "Series B-plus B2B SaaS and mid-size fintechs.",
-  },
-  {
-    label: "Plus",
-    body: "Partner plus two senior plus one junior FTE-equivalent dedicated.",
-    fit: "SEBI mid-caps and fintechs with regulator attention.",
-  },
-  {
-    label: "Premium",
-    body: "Partner plus two senior plus two junior plus on-call IR readiness, dedicated.",
-    fit: "Tier-2 and Tier-3 banks, payment institutions, MAS-licensed mid-size, post-breach embedded.",
+    label: "vCISO Regulated",
+    body: "The senior-most configuration, for RBI, SEBI, IRDAI and MAS-regulated environments: regulator response and representation, audit committee briefings, supervisor letters answered, and board reporting that puts a number on exposure. Boards see cyber risk in dollars: a quantified exposure model, delivered in 45 days, is part of every Regulated engagement.",
+    fit: "RBI-regulated fintechs, SEBI mid-caps, IRDAI insurers and MAS-licensed entities.",
   },
 ];
 
@@ -65,7 +50,6 @@ export default function ServicesPage() {
         subtitle="Three commercial shapes. Senior-led on every one. The partner who scoped the engagement runs every quarterly review."
       />
       <PracticesGrid />
-      <CRQProof />
       <CommercialTiers />
       <SprintsTable />
       <SubTierComparison
@@ -73,21 +57,12 @@ export default function ServicesPage() {
         anchorLabel="vCISO retainer"
         id="vciso"
         heading="vCISO retainer."
-        subhead="Three intensities."
+        subhead="Three ways to run it."
         intro="A full-time CISO hire is six months and a board approval away. A vCISO retainer gives you the function in two weeks, with cross-industry pattern recognition that a first-time CISO has not yet built. Month-to-month commercial. Most engagements run multi-year because the program compounds and the partner who closed the engagement runs every quarterly review."
         tiers={VCISO_TIERS}
-        closingNote="We are month-to-month. We have no minimum commitment. Most of our clients stay multi-year because the partner who closed the engagement runs every quarterly review."
+        closingNote="Month-to-month, thirty days\u2019 notice. Most engagements begin with the Security Read."
       />
-      <SubTierComparison
-        anchorNumber="06"
-        anchorLabel="Fractional Security Office"
-        id="fso"
-        heading="Fractional Security Office."
-        subhead="A complete security function."
-        intro="vCISO retainers are advisory. Fractional Security Office is execution. The buyer here is not looking for an advisor; they are looking for the entire security function as an outsourced capability. Birchlogic owns the program. Runs the team. Reports to the board."
-        tiers={FSO_TIERS}
-        closingNote="Our model is single-tenant. We can hand the capability back to you when you are ready to bring it in-house. We are not designed to be sticky. We are designed to be necessary while we are there."
-      />
+      <FractionalSecurityOffice />
       <NotForSale />
       <ClosingCTASection />
     </>
