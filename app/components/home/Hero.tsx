@@ -48,6 +48,9 @@ export function Hero() {
           style={{
             display: "flex",
             flexDirection: "column",
+            // Headline group takes the centre; the strip is pushed to the
+            // foot by the auto margin below it, so "Cybersecurity, done
+            // seriously." stays the focus rather than competing with logos.
             justifyContent: "center",
             minWidth: 0,
             padding:
@@ -58,7 +61,7 @@ export function Hero() {
             style={{
               fontFamily: "var(--font-sans)",
               fontWeight: 600,
-              fontSize: "clamp(38px, 4.4vw, 76px)",
+              fontSize: "clamp(42px, 5.4vw, 96px)",
               lineHeight: 0.98,
               letterSpacing: "-0.038em",
               margin: "clamp(18px, 2vw, 26px) 0 0",
@@ -77,7 +80,7 @@ export function Hero() {
               perChar={0.018}
               style={{
                 fontWeight: 200,
-                fontSize: "clamp(40px, 4.6vw, 80px)",
+                fontSize: "clamp(44px, 5.7vw, 101px)",
                 color: "var(--bl-accent)",
               }}
             />
@@ -88,10 +91,10 @@ export function Hero() {
               style={{
                 fontFamily: "var(--font-sans)",
                 fontWeight: 400,
-                fontSize: "clamp(15px, 1.15vw, 17px)",
+                fontSize: "clamp(16px, 1.35vw, 20px)",
                 lineHeight: 1.55,
                 color: "var(--bl-fg2)",
-                maxWidth: "44ch",
+                maxWidth: "46ch",
                 margin: "clamp(20px, 2.4vw, 30px) 0 0",
               }}
             >
@@ -133,10 +136,16 @@ export function Hero() {
             </div>
           </Rise>
 
-          {/* HP-9 · the strip sits in the white column only, with a clear
-              gap under the CTA. Two rows counter-scrolling. */}
+          {/* The strip sits at the FOOT of the panel, separated from the
+              CTA by real space, so the headline keeps the centre. */}
           <Rise delay={1.1} y={12}>
-            <div style={{ marginTop: "clamp(40px, 5.5vw, 68px)" }}>
+            <div
+              style={{
+                marginTop: "clamp(64px, 9vw, 128px)",
+                paddingTop: "clamp(20px, 2.4vw, 32px)",
+                borderTop: "1px solid var(--bl-rule)",
+              }}
+            >
               <ClientMarquee variant="hero" />
             </div>
           </Rise>

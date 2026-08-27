@@ -9,17 +9,15 @@
  * open in Phase 6.2: it is "Saarthee" and "Batra Numerro Private Limited",
  * not "Saarthe.ai" / "The Batraa Numerology".
  *
- * LANES — this matters and is easy to get wrong.
- * The overhaul pack sets an explicit rule: founder-credential engagements
- * (institutions Karan worked with inside a prior role) must stay in their
- * own lane and NOT appear as Birchlogic firm clients. The strip publishes
- * "Names listed with permission", so presenting a central bank or a
- * ministry as a client of the firm would be a misrepresentation a diligent
- * reader would catch immediately.
+ * LANES.
+ * `kind` still records which of these are engagements of the firm and which
+ * are founder-credential institutions from Karan's prior roles, because the
+ * distinction matters wherever we make a claim about clientship.
  *
- * `kind: "founder"` entries are therefore excluded from the strip by
- * default. They are kept here, with their logos, so they can be used on the
- * About page where the founder's record is the actual subject.
+ * The hero strip no longer makes that claim. It is headed "Companies that
+ * trust our work", which is true of both lanes and is the framing Karan
+ * chose deliberately — so both render there. Anywhere that says "client",
+ * filter on kind === "firm".
  */
 
 export type Client = {
@@ -75,8 +73,14 @@ export const CLIENTS: Client[] = [
   },
 ];
 
-/** Firm clients we are cleared to publish. What the strip renders. */
-export const NAMED_CLIENTS = CLIENTS.filter(
+/**
+ * What the hero strip renders: every permissioned company, both lanes,
+ * under the "companies that trust our work" heading.
+ */
+export const NAMED_CLIENTS = CLIENTS.filter((c) => c.permissioned);
+
+/** Firm clients only. Use this anywhere the copy says "client". */
+export const FIRM_CLIENTS = CLIENTS.filter(
   (c) => c.kind === "firm" && c.permissioned,
 );
 
