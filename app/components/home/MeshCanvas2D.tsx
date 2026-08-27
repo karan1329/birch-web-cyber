@@ -59,19 +59,16 @@ export function MeshCanvas2D({
     mouse.lx = mouse.tlx = cv.clientWidth * 0.5;
     mouse.ly = mouse.tly = cv.clientHeight * 0.6;
 
-    // Deliberately render BELOW display resolution and let CSS upscale the
-    // buffer with `image-rendering: pixelated`. Same device the hero canvas
-    // uses, so the backdrop and the hero share one dithered language rather
-    // than sitting at two different fidelities.
-    const PIXEL = 3;
-
+    // Full device resolution. An earlier pass rendered this at 1/3 scale to
+    // borrow the hero's dithered look, but at that size each vertex became a
+    // chunky block and the waveform stopped reading as a fine surface. The
+    // pixel-dither language belongs to the hero canvas, where it is the
+    // subject; the ambient backdrop needs to stay sleek.
     const resize = () => {
-      cv.width = Math.max(1, Math.ceil(cv.clientWidth / PIXEL));
-      cv.height = Math.max(1, Math.ceil(cv.clientHeight / PIXEL));
-      // Draw in CSS-pixel coordinates; the transform maps them down into
-      // the small backing store, so none of the geometry math below changes.
-      ctx.setTransform(1 / PIXEL, 0, 0, 1 / PIXEL, 0, 0);
-      ctx.imageSmoothingEnabled = false;
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      cv.width = Math.max(1, Math.round(cv.clientWidth * dpr));
+      cv.height = Math.max(1, Math.round(cv.clientHeight * dpr));
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     };
     resize();
     window.addEventListener("resize", resize);
@@ -166,9 +163,7 @@ export function MeshCanvas2D({
           // mesh below the hero. If the texture ever needs to read louder,
           // the veil is the better dial than this alpha.
           ctx.strokeStyle = `rgba(${mesh},${a.fall * 0.14})`;
-          // In CSS-pixel space; the resize transform divides by PIXEL, so
-          // this lands on ~1 chunky pixel in the backing store.
-          ctx.lineWidth = PIXEL;
+          ctx.lineWidth = 0.9;
           ctx.beginPath();
           ctx.moveTo(a.x, a.y);
           ctx.lineTo(b.x, b.y);
@@ -185,9 +180,7 @@ export function MeshCanvas2D({
           // mesh below the hero. If the texture ever needs to read louder,
           // the veil is the better dial than this alpha.
           ctx.strokeStyle = `rgba(${mesh},${a.fall * 0.14})`;
-          // In CSS-pixel space; the resize transform divides by PIXEL, so
-          // this lands on ~1 chunky pixel in the backing store.
-          ctx.lineWidth = PIXEL;
+          ctx.lineWidth = 0.9;
           ctx.beginPath();
           ctx.moveTo(a.x, a.y);
           ctx.lineTo(b.x, b.y);
@@ -217,8 +210,11 @@ export function MeshCanvas2D({
         // through the spotlight.
         const zNorm = Math.max(0.25, Math.min(1, (p.z + 60) / 130));
         const intensity = cursorWeight * zNorm;
-        const r = 5 * p.depth * p.fall;
-        const glowR = r * 6 * (0.5 + intensity * 0.7);
+        // Vertex dot + its falloff. Both were sized for the old chunky
+        // buffer; at native resolution they need to be much finer or the
+        // waveform reads as a field of blobs instead of points of light.
+        const r = 2.2 * p.depth * p.fall;
+        const glowR = r * 3.2 * (0.5 + intensity * 0.7);
         const grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, glowR);
         grad.addColorStop(0, `rgba(${rgb},${0.55 * intensity})`);
         grad.addColorStop(1, `rgba(${rgb},0)`);
@@ -256,9 +252,6 @@ export function MeshCanvas2D({
         height: "100%",
         display: "block",
         pointerEvents: "none",
-        // Upscale the deliberately-small backing store into hard-edged
-        // blocks instead of a smooth blur.
-        imageRendering: "pixelated",
       }}
     />
   );

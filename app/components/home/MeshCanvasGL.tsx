@@ -91,12 +91,10 @@ export function MeshCanvasGL({ onContextLost }: Props = {}) {
       onLostRef.current?.();
       return;
     }
-    // Render BELOW display resolution on purpose. Combined with
-    // `image-rendering: pixelated` on the canvas element, the upscale
-    // gives the same chunky dither as the hero canvas and the 2D backend,
-    // so all three read as one surface. (Cheaper to draw, too.)
-    const PIXEL = 3;
-    renderer.setPixelRatio(1 / PIXEL);
+    // Native resolution. A sub-resolution buffer made the vertices read as
+    // oversized blocks; the pixel-dither language lives in the hero canvas,
+    // where it is the subject, not here in the ambient backdrop.
+    renderer.setPixelRatio(Math.min(2, window.devicePixelRatio || 1));
     renderer.setClearColor(0x000000, 0);
 
     const scene = new Scene();
@@ -307,8 +305,6 @@ export function MeshCanvasGL({ onContextLost }: Props = {}) {
         height: "100%",
         display: "block",
         pointerEvents: "none",
-        // Hard-edged upscale of the sub-resolution buffer set above.
-        imageRendering: "pixelated",
       }}
     />
   );
