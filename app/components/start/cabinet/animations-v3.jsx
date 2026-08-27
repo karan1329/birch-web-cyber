@@ -412,7 +412,10 @@ function Stage({
     if (!stageRef.current) return;
     const el = stageRef.current;
     const measure = () => {
-      const barH = 44; // playback bar height
+      // Only reserve room for the playback bar when it is actually drawn.
+      // With controls off it was reserving 44px of dead space, which is
+      // what put an uneven band under the artwork on the page.
+      const barH = controls ? 44 : 0;
       const s = Math.min(
         el.clientWidth / width,
         (el.clientHeight - barH) / height
@@ -427,7 +430,7 @@ function Stage({
       ro.disconnect();
       window.removeEventListener('resize', measure);
     };
-  }, [width, height]);
+  }, [width, height, controls]);
 
   // Passes completed since playback last started. Lives in a ref so the
   // per-frame wrap can count without re-running this effect; reset on
@@ -621,7 +624,7 @@ function Stage({
             transform: `scale(${scale})`,
             transformOrigin: 'center',
             flexShrink: 0,
-            boxShadow: '0 20px 60px rgba(0,0,0,0.4)',
+            boxShadow: controls ? '0 20px 60px rgba(0,0,0,0.4)' : 'none',
             display: 'block',
           }}
         >

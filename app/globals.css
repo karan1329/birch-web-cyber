@@ -312,8 +312,12 @@ input, textarea, select {
     padding-right: var(--bl-page-pad) !important;
     padding-bottom: clamp(36px, 7vw, 56px) !important;
   }
+  /* Do NOT set a height here. The visual column carries the artwork's
+     aspect-ratio inline, and a fixed height fights it — at most viewport
+     heights that reintroduces the letterbox the ratio exists to remove.
+     Let the ratio govern at every width. */
   .bl-hero-visual {
-    height: clamp(300px, 52vh, 460px);
+    width: 100%;
   }
 }
 

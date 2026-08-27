@@ -75,7 +75,11 @@ function Moment() {
           // this space, so the copy yields width to it rather than the
           // other way round.
           gridTemplateColumns: "37fr 63fr",
-          minHeight: "calc(100vh - var(--bl-top-offset))",
+          // No fixed height. The visual column carries the artwork's own
+          // 16:10 and the row takes its height from that, so the film fills
+          // its panel exactly and there is no letterbox to disguise. The
+          // floor stops the hero collapsing on short viewports.
+          minHeight: "min(calc(100vh - var(--bl-top-offset)), 720px)",
         }}
       >
         {/* Conversion panel. Same 46/54 grammar as the landing hero. */}
@@ -186,7 +190,16 @@ function Moment() {
         {/* The cabinet loop · full bleed, hard cut at the seam. Rendered
             live from the original SVG scene rather than the MP4 export, so
             it stays crisp at any panel size. */}
-        <div className="bl-hero-visual" style={{ minWidth: 0, minHeight: 0 }}>
+        <div
+          className="bl-hero-visual"
+          style={{
+            minWidth: 0,
+            minHeight: 0,
+            // The artwork's native ratio. The grid row grows to match, so
+            // the scene fits edge to edge with nothing left over.
+            aspectRatio: "1600 / 1000",
+          }}
+        >
           <CabinetLoop />
         </div>
       </div>
