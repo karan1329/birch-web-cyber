@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 /**
  * Hero visual · "The Index".
@@ -35,33 +35,6 @@ const LABELS = [
   "PRIVACY",
 ];
 
-const CATS: { l: string; s: string }[] = [
-  {
-    l: "Stolen credentials",
-    s: "Still the front door. The oldest trick keeps working because nobody retires it.",
-  },
-  {
-    l: "Cloud misconfiguration",
-    s: "Drift never sleeps. Configurations decay the moment the auditor leaves.",
-  },
-  {
-    l: "Identity errors",
-    s: "Permissions accumulate. Nobody audits what nobody owns.",
-  },
-  {
-    l: "Personal accounts",
-    s: "The unofficial perimeter your policy pretends does not exist.",
-  },
-  {
-    l: "Third-party access",
-    s: "Their breach, your name in the disclosure.",
-  },
-  {
-    l: "Social engineering",
-    s: "One click, one person, one very expensive afternoon.",
-  },
-];
-
 // Scene palette, as raw channel triplets for the pixel buffer.
 // Canvas `font` cannot resolve nested `var()`, so the mono stack is spelled
 // out here rather than read from `--font-mono`.
@@ -70,41 +43,18 @@ const MONO_STACK =
 
 const LIT: [number, number, number] = [241, 238, 231]; // paper  #F1EEE7
 const GROUND: [number, number, number] = [184, 55, 78]; // deep brand red
-const BAR: [number, number, number] = [18, 18, 18]; // redaction #121212
 
 type Props = {
   /** Buffer downscale factor. 1 = crisp, 4 = very chunky. */
   pixelSize?: number;
-  /** Seconds each category card is shown before advancing. */
-  cycleSeconds?: number;
-  /** Render the cycling category card bottom-left. */
-  showCard?: boolean;
 };
 
 export function HeroVisual({
   pixelSize = 2,
-  cycleSeconds = 4,
-  showCard = true,
 }: Props = {}) {
   const wrapRef = useRef<HTMLDivElement | null>(null);
   const cvRef = useRef<HTMLCanvasElement | null>(null);
   const cvTRef = useRef<HTMLCanvasElement | null>(null);
-  const [idx, setIdx] = useState(0);
-
-  // Category carousel. Independent of the canvas loop.
-  useEffect(() => {
-    if (
-      typeof window !== "undefined" &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    ) {
-      return;
-    }
-    const t = setInterval(
-      () => setIdx((i) => (i + 1) % CATS.length),
-      Math.max(1, cycleSeconds) * 1000,
-    );
-    return () => clearInterval(t);
-  }, [cycleSeconds]);
 
   useEffect(() => {
     const wrap = wrapRef.current;
@@ -127,7 +77,6 @@ export function HeroVisual({
     let img: ImageData | null = null;
     let scene = new Float32Array(0);
     let lightM = new Float32Array(0);
-    let barM = new Uint8Array(0);
 
     let raf = 0;
     const t0 = performance.now();
@@ -136,15 +85,6 @@ export function HeroVisual({
     const lifts = new Float32Array(9);
     let hits: { i: number; x0: number; x1: number; y0: number; y1: number }[] =
       [];
-
-    // Drifting dust motes along the light axis.
-    const dust = Array.from({ length: 130 }, () => ({
-      a: Math.random(),
-      p: Math.random() * 2 - 1,
-      sp: 0.008 + Math.random() * 0.02,
-      ph: Math.random() * 6.28,
-      sz: Math.random() < 0.2 ? 2 : 1,
-    }));
 
     const resize = () => {
       W = wrap.clientWidth;
@@ -159,7 +99,6 @@ export function HeroVisual({
       img = ctx.createImageData(bw, bh);
       scene = new Float32Array(bw * bh);
       lightM = new Float32Array(bw * bh);
-      barM = new Uint8Array(bw * bh);
 
       // Label overlay stays at device resolution so type is crisp.
       const d = Math.min(window.devicePixelRatio || 1, 2);
@@ -197,7 +136,6 @@ export function HeroVisual({
       pts: [number, number][],
       val: number,
       lit: boolean,
-      target?: Uint8Array,
     ) => {
       let x0 = 1e9;
       let y0 = 1e9;
@@ -234,12 +172,7 @@ export function HeroVisual({
           }
           if (!inside) continue;
           const i2 = y * bw + x;
-          if (target) {
-            target[i2] = 1;
-            scene[i2] = val;
-          } else {
-            scene[i2] = lit ? val * (0.65 + 0.35 * lightM[i2]) : val;
-          }
+          scene[i2] = lit ? val * (0.65 + 0.35 * lightM[i2]) : val;
         }
       }
     };
@@ -258,41 +191,29 @@ export function HeroVisual({
       dx /= dl;
       dy /= dl;
 
+      // The dither IS the drawing here: with one-bit output, form only
+      // reads where values differ, so a completely flat light turns every
+      // face into the same solid beige and the object disappears.
+      //
+      // What went was the *effect*: the animated streak, the drifting dust
+      // and the vignette, which together read as a light-show washing over
+      // the artwork. What stays is a STATIC directional falloff, held much
+      // flatter than before, purely so the faces separate and the object
+      // reads as an object.
       for (let y = 0; y < bh; y++) {
         for (let x = 0; x < bw; x++) {
           const rx = x - ax;
           const ry = y - ay;
-          const along = rx * dx + ry * dy;
           const perp = Math.abs(rx * dy - ry * dx);
-          const wdt = bh * 0.26 + along * 0.07;
+          const along = rx * dx + ry * dy;
+          const wdt = bh * 0.42 + along * 0.07;
           let f = 1 - perp / wdt;
           f = f < 0 ? 0 : f * f * (3 - 2 * f);
-          const streak = 0.9 + 0.1 * Math.sin(perp * 0.55 + t * 0.7);
-          const cxn = (x - bw * 0.5) / (bw * 0.62);
-          const cyn = (y - bh * 0.5) / (bh * 0.62);
-          const vig = 1 - 0.55 * (cxn * cxn + cyn * cyn);
+          // Compressed into the top of the range: enough separation to
+          // model the form, not enough to read as a spotlight.
           const i2 = y * bw + x;
-          lightM[i2] = f;
-          scene[i2] = (0.08 + 0.34 * f * streak) * Math.max(0.3, vig);
-        }
-      }
-
-      // ---- dust ----------------------------------------------------
-      const maxAlong = Math.hypot(bw, bh) * 1.15;
-      for (const p of dust) {
-        const a = ((p.a + t * p.sp) % 1) * maxAlong;
-        const wdt = bh * 0.26 + a * 0.07;
-        const off = p.p * wdt * 0.85;
-        const x = Math.round(ax + dx * a - dy * off);
-        const y = Math.round(ay + dy * a + dx * off);
-        if (x < 0 || y < 0 || x >= bw || y >= bh) continue;
-        const fl = 1 - Math.abs(p.p);
-        const tw = 0.6 + 0.4 * Math.sin(t * 2.2 + p.ph);
-        const v = (0.45 + 0.5 * fl) * tw;
-        const i2 = y * bw + x;
-        if (v > scene[i2]) scene[i2] = v;
-        if (p.sz === 2 && x + 1 < bw && v * 0.8 > scene[i2 + 1]) {
-          scene[i2 + 1] = v * 0.8;
+          lightM[i2] = 0.55 + 0.45 * f;
+          scene[i2] = 0.0;
         }
       }
 
@@ -338,13 +259,14 @@ export function HeroVisual({
           R([F2[0] + dvx, F2[1] + dvy]),
           R([F2[0], F2[1]]),
         ],
-        0.03,
+        // Top plane. Was 0.03, which only read because the old raking light
+        // lifted it; flat-lit it dithered away to bare ground and the drawer
+        // had no visible top at all.
+        0.42,
         false,
       );
 
       const hashes = [0.3, 0.8, 0.55, 0.15, 0.7, 0.45, 0.9, 0.25, 0.6];
-      const bars: { pts: [number, number][] }[] = [];
-      const hoverBars: { pts: [number, number][] }[] = [];
       const tabs: { x: number; y: number; label: string; i: number }[] = [];
 
       for (let i = 8; i >= 0; i--) {
@@ -371,7 +293,7 @@ export function HeroVisual({
             [p3[0] + 2, p3[1] + 2],
             [p4[0] - 2, p4[1] + 2],
           ],
-          0.05,
+          0.06,
           false,
         );
         fillPoly([p1, p2, p3, p4], hero ? 1.0 : 0.92 - 0.18 * fi, true);
@@ -409,35 +331,11 @@ export function HeroVisual({
           ];
           for (let b = 0; b < 3; b++) {
             const by = topY + chh * (1 - bdef[b][0]);
-            bars.push({
-              pts: [
-                R([bcx - cwd * 0.38, by]),
-                R([bcx + cwd * bdef[b][1], by]),
-                R([bcx + cwd * bdef[b][1], by + 4.5]),
-                R([bcx - cwd * 0.38, by + 4.5]),
-              ],
-            });
           }
         } else {
           if (lifts[i] > 0.85) {
-            hoverBars.push({
-              pts: [
-                R([bcx - cwd * 0.32, topY + chh * 0.4]),
-                R([bcx + cwd * 0.14, topY + chh * 0.4]),
-                R([bcx + cwd * 0.14, topY + chh * 0.4 + 4.5]),
-                R([bcx - cwd * 0.32, topY + chh * 0.4 + 4.5]),
-              ],
-            });
           }
           if (i === 0 || i === 4) {
-            bars.push({
-              pts: [
-                R([bcx - cwd * 0.3, topY + 5]),
-                R([bcx + cwd * 0.12, topY + 5]),
-                R([bcx + cwd * 0.12, topY + 9]),
-                R([bcx - cwd * 0.3, topY + 9]),
-              ],
-            });
           }
         }
       }
@@ -451,7 +349,7 @@ export function HeroVisual({
           R([F4[0] + dvx, F4[1] + dvy]),
           R(F4),
         ],
-        0.3,
+        0.34,
         true,
       );
       const lw = fw * 0.15;
@@ -490,54 +388,12 @@ export function HeroVisual({
         true,
       );
 
-      // ---- redaction bars, revealed one by one --------------------
-      const shown = reduced
-        ? bars.length
-        : el < 1.0
-          ? 0
-          : Math.min(bars.length, Math.floor((el - 1.0) / 0.09) + 1);
-      barM.fill(0);
-      for (let b = 0; b < shown; b++) fillPoly(bars[b].pts, 0.0, false, barM);
-      for (const hb of hoverBars) fillPoly(hb.pts, 0.0, false, barM);
-
-      // one-shot scanline on load
-      if (!reduced && el < 2.6) {
-        const sy = Math.floor((el / 2.6) * bh);
-        const sx0 = Math.max(0, Math.floor(cx - fw * 0.95));
-        const sx1 = Math.min(bw - 1, Math.ceil(cx + fw * 0.75));
-        for (let x = sx0; x <= sx1; x++) {
-          const i2 = sy * bw + x;
-          if (i2 >= 0 && i2 < scene.length) {
-            scene[i2] = Math.min(1, scene[i2] + 0.4);
-          }
-        }
-      }
-
-      // ---- error-diffusion dither to 1 bit ------------------------
-      for (let y = 0; y < bh; y++) {
-        for (let x = 0; x < bw; x++) {
-          const i2 = y * bw + x;
-          const o = scene[i2];
-          const nv = o > 0.5 ? 1 : 0;
-          const err = (o - nv) / 8;
-          scene[i2] = nv;
-          if (x + 1 < bw) scene[i2 + 1] += err;
-          if (x + 2 < bw) scene[i2 + 2] += err;
-          if (y + 1 < bh) {
-            if (x > 0) scene[i2 + bw - 1] += err;
-            scene[i2 + bw] += err;
-            if (x + 1 < bw) scene[i2 + bw + 1] += err;
-          }
-          if (y + 2 < bh) scene[i2 + 2 * bw] += err;
-        }
-      }
-
-      // ---- map to the three-colour palette ------------------------
+      // ---- map to the palette ---------------------------------- ------------------------
       const d = img.data;
       for (let i = 0; i < scene.length; i++) {
         const j = i * 4;
         const on = scene[i] > 0.5;
-        const src = barM[i] ? BAR : on ? LIT : GROUND;
+        const src = on ? LIT : GROUND;
         d[j] = src[0];
         d[j + 1] = src[1];
         d[j + 2] = src[2];
@@ -596,8 +452,6 @@ export function HeroVisual({
     };
   }, [pixelSize]);
 
-  const cat = CATS[idx];
-
   return (
     <div
       ref={wrapRef}
@@ -631,121 +485,6 @@ export function HeroVisual({
         }}
       />
 
-      {showCard && (
-        <div
-          key={idx}
-          style={{
-            position: "absolute",
-            left: 32,
-            bottom: 32,
-            width: 236,
-            maxWidth: "calc(100% - 64px)",
-            background: "var(--bl-ink)",
-            border: "1.5px solid #7A1A2C",
-            boxShadow: "5px 5px 0 rgba(20, 4, 10, 0.55)",
-            padding: 15,
-            animation: "bl-index-card 0.4s steps(3) both",
-          }}
-        >
-          <div
-            aria-hidden="true"
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(4, 5px)",
-              gap: 3,
-              marginBottom: 10,
-            }}
-          >
-            {Array.from({ length: 12 }, (_, c) => (
-              <div
-                key={c}
-                style={{
-                  width: 5,
-                  height: 5,
-                  border: "1px solid var(--bl-accent)",
-                  background:
-                    (c * 5 + idx * 7) % 11 < 5
-                      ? "var(--bl-accent)"
-                      : "transparent",
-                }}
-              />
-            ))}
-          </div>
-          <div
-            style={{
-              fontFamily: "var(--font-mono)",
-              fontWeight: 600,
-              fontSize: 11.5,
-              letterSpacing: "0.15em",
-              textTransform: "uppercase",
-              color: "var(--bl-fg)",
-            }}
-          >
-            {cat.l}
-          </div>
-          <div
-            style={{
-              fontFamily: "var(--font-mono)",
-              fontSize: 9.5,
-              lineHeight: 1.5,
-              color: "var(--bl-fg2)",
-              marginTop: 6,
-            }}
-          >
-            {cat.s}
-          </div>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              marginTop: 11,
-            }}
-          >
-            <div style={{ display: "flex", gap: 4 }} aria-hidden="true">
-              {CATS.map((_, d) => (
-                <div
-                  key={d}
-                  style={{
-                    width: 14,
-                    height: 2,
-                    background:
-                      d === idx
-                        ? "var(--bl-accent)"
-                        : "rgba(var(--bl-accent-rgb), 0.25)",
-                  }}
-                />
-              ))}
-            </div>
-            <div
-              style={{
-                fontFamily: "var(--font-mono)",
-                fontWeight: 500,
-                fontSize: 9,
-                color: "var(--bl-fg3)",
-              }}
-            >
-              {`0${idx + 1} / 06`}
-            </div>
-          </div>
-        </div>
-      )}
-
-      <div
-        style={{
-          position: "absolute",
-          top: 20,
-          right: 22,
-          fontFamily: "var(--font-mono)",
-          fontWeight: 500,
-          fontSize: 9,
-          letterSpacing: "0.16em",
-          color: "rgba(241, 238, 231, 0.6)",
-          pointerEvents: "none",
-        }}
-      >
-        THE INDEX · TWENTY-TWO CONTROLS · SCORED
-      </div>
     </div>
   );
 }

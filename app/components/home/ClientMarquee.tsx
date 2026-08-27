@@ -10,6 +10,13 @@ type Props = {
    * `standalone` — legacy full-width track.
    */
   variant?: "standalone" | "inline" | "hero";
+  /**
+   * Laid across the hero seam, so part of the track sits on beige and part
+   * on cranberry. Names need a colour that survives both grounds, and the
+   * label/permission line are dropped — they cannot read cleanly over two
+   * different backgrounds at once.
+   */
+  straddle?: boolean;
 };
 
 /**
@@ -20,7 +27,10 @@ type Props = {
  * visible before any scroll. The duplicate that used to sit inside
  * Who We Work With has been removed.
  */
-export function ClientMarquee({ variant = "inline" }: Props) {
+export function ClientMarquee({
+  variant = "inline",
+  straddle = false,
+}: Props) {
   const loop = [...NAMED_CLIENTS, ...NAMED_CLIENTS, ...NAMED_CLIENTS];
   const inline = variant === "inline";
   const hero = variant === "hero";
@@ -33,10 +43,12 @@ export function ClientMarquee({ variant = "inline" }: Props) {
         padding: hero ? "12px 0" : inline ? "20px 0" : "28px 0",
         borderTop: inline ? "1px solid var(--bl-rule)" : undefined,
         borderBottom: inline ? "1px solid var(--bl-rule)" : undefined,
-        WebkitMaskImage:
-          "linear-gradient(to right, transparent 0, #000 8%, #000 92%, transparent 100%)",
-        maskImage:
-          "linear-gradient(to right, transparent 0, #000 8%, #000 92%, transparent 100%)",
+        WebkitMaskImage: straddle
+          ? undefined
+          : "linear-gradient(to right, transparent 0, #000 8%, #000 92%, transparent 100%)",
+        maskImage: straddle
+          ? undefined
+          : "linear-gradient(to right, transparent 0, #000 8%, #000 92%, transparent 100%)",
       }}
     >
       <div
@@ -70,7 +82,7 @@ export function ClientMarquee({ variant = "inline" }: Props) {
                     : "clamp(22px, 2.2vw, 32px)",
                 letterSpacing: "-0.015em",
                 color: "var(--bl-fg)",
-                opacity: 0.72,
+                opacity: straddle ? 0.9 : 0.72,
                 whiteSpace: "nowrap",
               }}
             >
@@ -93,6 +105,7 @@ export function ClientMarquee({ variant = "inline" }: Props) {
     </div>
   );
 
+  if (straddle) return track;
   if (!hero) return track;
 
   // HP-9 · in the hero window, the strip is labelled and carries the

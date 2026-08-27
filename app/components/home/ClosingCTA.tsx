@@ -4,7 +4,6 @@ import Link from "next/link";
 import { MagButton } from "../primitives/MagButton";
 import { Rise } from "../primitives/Rise";
 import { SplitText } from "../primitives/SplitText";
-import { Tag } from "../primitives/Tag";
 
 /**
  * Section 6 of the home page. Per doc: "One conversation. Thirty minutes."
@@ -47,18 +46,6 @@ export function ClosingCTA() {
           textAlign: "center",
         }}
       >
-        <Rise>
-          <div
-            style={{
-              display: "inline-flex",
-              justifyContent: "center",
-              marginBottom: 40,
-            }}
-          >
-            <Tag>30 minutes · zero pitch deck</Tag>
-          </div>
-        </Rise>
-
         <h2
           style={{
             fontFamily: "var(--font-sans)",
@@ -69,13 +56,13 @@ export function ClosingCTA() {
             margin: "0 0 clamp(36px, 5vw, 56px)",
           }}
         >
-          <SplitText text="One conversation." perChar={0.014} />
+          <SplitText text="One conversation," perChar={0.014} />
           <br />
           <SplitText
-            text="Thirty minutes."
+            text="thirty minutes."
             perChar={0.014}
             delay={0.28}
-            dim
+            style={{ color: "var(--bl-accent)" }}
           />
         </h2>
 
@@ -90,10 +77,9 @@ export function ClosingCTA() {
               lineHeight: 1.65,
             }}
           >
-            We do not run a sales process. If you have a specific blocker,
-            bring it to a thirty-minute call. We will tell you what we would
-            do, in how many weeks. If it is not a fit, we will say so. If it
-            is an emergency, we will start in seven days.
+            Bring a specific blocker to a thirty-minute call and we will tell
+            you what we would do, in how many weeks. If it is not a fit, we
+            will say so. If it is an emergency, we will start in seven days.
           </p>
           {/* HP-6 · the Security Read sentence, added after the emergency
               line. Sits closer to the CTA than the paragraph above it so it

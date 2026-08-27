@@ -39,16 +39,18 @@ export function WhoWeWorkWith() {
             maxWidth: "var(--bl-heading-wide)",
           }}
         >
+          {/* One sentence, no forced break. It was split across a <br/>
+              mid-clause, which stranded "who treat the craft seriously." on
+              its own line. Let it wrap where the measure wants to. */}
           <SplitText
             text="We build security programs with people"
             perChar={0.01}
-          />
-          <br />
+          />{" "}
           <SplitText
             text="who treat the craft seriously."
             perChar={0.01}
             delay={0.32}
-            dim
+            style={{ color: "var(--bl-accent)" }}
           />
         </h2>
 
@@ -123,14 +125,47 @@ function FounderBlock() {
   return (
     <div
       style={{
+        position: "relative",
         display: "flex",
         flexDirection: "column",
         gap: 14,
-        padding: "clamp(26px, 3vw, 38px)",
-        background: "var(--bl-ink2)",
-        border: "1px solid var(--bl-rule)",
+        padding: "clamp(28px, 3.2vw, 42px)",
+        background: "var(--bl-accent)",
+        color: "var(--bl-ink)",
+        overflow: "hidden",
       }}
     >
+      {/* Oversized corner glyph, same device as the founding-principle card
+          so the two accent surfaces read as one family. */}
+      <span
+        aria-hidden="true"
+        style={{
+          position: "absolute",
+          top: "clamp(-18px, -1vw, -8px)",
+          right: "clamp(10px, 1.6vw, 22px)",
+          fontFamily: "var(--font-sans)",
+          fontSize: "clamp(110px, 12vw, 170px)",
+          lineHeight: 0.7,
+          fontWeight: 500,
+          color: "rgba(0, 0, 0, 0.10)",
+          letterSpacing: "-0.05em",
+          pointerEvents: "none",
+        }}
+      >
+        +
+      </span>
+      <span
+        style={{
+          position: "relative",
+          fontFamily: "var(--font-mono)",
+          fontSize: 10,
+          letterSpacing: "0.18em",
+          textTransform: "uppercase",
+          color: "rgba(0, 0, 0, 0.55)",
+        }}
+      >
+        For founders
+      </span>
       <h3
         style={{
           fontFamily: "var(--font-sans)",
@@ -138,8 +173,9 @@ function FounderBlock() {
           fontSize: "clamp(20px, 1.9vw, 26px)",
           letterSpacing: "-0.018em",
           lineHeight: 1.15,
-          color: "var(--bl-fg)",
+          color: "var(--bl-ink)",
           margin: 0,
+          position: "relative",
         }}
       >
         Building a startup?
@@ -149,9 +185,10 @@ function FounderBlock() {
           fontFamily: "var(--font-sans)",
           fontSize: "clamp(14px, 1.1vw, 16px)",
           lineHeight: 1.6,
-          color: "var(--bl-fg2)",
+          color: "rgba(18, 18, 18, 0.78)",
           margin: 0,
           maxWidth: "var(--bl-text-body)",
+          position: "relative",
         }}
       >
         If you are a founder somewhere between bootstrapped and Series B, with
@@ -169,10 +206,11 @@ function FounderBlock() {
           fontSize: 12,
           letterSpacing: "0.06em",
           textTransform: "uppercase",
-          color: "var(--bl-accent)",
+          color: "var(--bl-ink)",
+          background: "var(--bl-fg)",
           textDecoration: "none",
-          borderBottom: "1px solid var(--bl-accent)",
-          paddingBottom: 3,
+          padding: "11px 18px",
+          position: "relative",
         }}
       >
         See the founding offer →

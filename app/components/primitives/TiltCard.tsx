@@ -42,13 +42,18 @@ export function TiltCard({
     <Link
       href={href}
       className={className}
-      style={{ display: "block", textDecoration: "none", color: "inherit" }}
+      style={{
+        display: "block",
+        textDecoration: "none",
+        color: "inherit",
+        height: "100%",
+      }}
     >
       <div
         ref={ref}
         onPointerEnter={() => setHov(true)}
         onPointerLeave={() => setHov(false)}
-        style={{ cursor: "pointer", perspective: 1200 }}
+        style={{ cursor: "pointer", perspective: 1200, height: "100%" }}
       >
         <div
           data-tilt-inner
@@ -59,6 +64,7 @@ export function TiltCard({
             borderRadius: 24,
             padding: "clamp(28px, 3vw, 44px)",
             minHeight,
+            height: "100%",
             display: "flex",
             flexDirection: "column",
             justifyContent: "space-between",

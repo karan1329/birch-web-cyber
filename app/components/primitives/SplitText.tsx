@@ -75,13 +75,26 @@ export function SplitText({
             {tokens.map((tok, ti) => {
               if (tok.length === 0) return null;
               if (/^\s+$/.test(tok)) {
-                // Whitespace becomes a plain text node so the browser's
-                // default whitespace handling collapses it at line wraps.
+                // Interior whitespace stays a plain text node so the
+                // browser's default handling collapses it at line wraps.
                 // (A `whiteSpace: "pre"` wrapper preserves the space at
                 // wrap points and ends up indenting the wrapped line by
                 // one space-width — which is what caused the H1's second
                 // line to sit visibly to the right of the first.)
-                return tok;
+                //
+                // Leading and trailing whitespace is different: CSS strips
+                // it at the edges of a block, so a SplitText written as
+                // `text=" thesis."` lost its space entirely and butted
+                // against the element before it. At the edges the space is
+                // therefore rendered as a non-collapsing span — there is no
+                // wrap point there for it to indent.
+                const atEdge = ti === 0 || ti === tokens.length - 1;
+                if (!atEdge) return tok;
+                return (
+                  <span key={ti} style={{ whiteSpace: "pre" }}>
+                    {tok}
+                  </span>
+                );
               }
               // Word: keep characters together so the line can break
               // BETWEEN words but never inside a word.

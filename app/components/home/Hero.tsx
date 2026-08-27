@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 import { Rise } from "../primitives/Rise";
 import { SplitText } from "../primitives/SplitText";
 import { MagButton } from "../primitives/MagButton";
@@ -34,9 +36,10 @@ export function Hero() {
       <div
         className="bl-hero-split"
         style={{
+          position: "relative",
           display: "grid",
           gridTemplateColumns: "46fr 54fr",
-          minHeight: "calc(100vh - var(--bl-top-offset))",
+          minHeight: "calc(100vh - var(--bl-top-offset) - 132px)",
         }}
       >
         {/* ---- conversion panel ---------------------------------- */}
@@ -51,22 +54,6 @@ export function Hero() {
               "clamp(48px, 6vw, 88px) clamp(32px, 4vw, 64px) clamp(48px, 6vw, 88px) var(--bl-page-pad)",
           }}
         >
-          <Rise delay={0.05} y={12}>
-            <p
-              style={{
-                fontFamily: "var(--font-mono)",
-                fontWeight: 600,
-                fontSize: 10.5,
-                letterSpacing: "0.18em",
-                textTransform: "uppercase",
-                color: "var(--bl-accent)",
-                margin: 0,
-              }}
-            >
-              Senior cybersecurity advisory · Delhi + Singapore
-            </p>
-          </Rise>
-
           <h1
             style={{
               fontFamily: "var(--font-sans)",
@@ -82,14 +69,16 @@ export function Hero() {
             <br />
             {/* Thin weight at a hair larger size so the light glyphs hit the
                 same horizontal extent as the heavy line above. */}
+            {/* The line the whole brand rests on — set in the accent, not
+                dimmed to grey. */}
             <SplitText
               text="done seriously."
               delay={0.45}
               perChar={0.018}
-              dim
               style={{
                 fontWeight: 200,
                 fontSize: "clamp(40px, 4.6vw, 80px)",
+                color: "var(--bl-accent)",
               }}
             />
           </h1>
@@ -125,10 +114,8 @@ export function Hero() {
               <MagButton href="/contact">
                 Book a 30-minute discovery call
               </MagButton>
-              <a
-                href="https://www.linkedin.com/in/karan-bhandari-0ab161149/"
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                href="/start"
                 className="bl-email-link"
                 style={{
                   fontFamily: "var(--font-sans)",
@@ -141,26 +128,39 @@ export function Hero() {
                   transition: "color 0.2s ease, border-color 0.2s ease",
                 }}
               >
-                or message Karan on LinkedIn
-              </a>
+                Check out our new initiative for startups and growth
+                companies
+              </Link>
             </div>
           </Rise>
 
-          {/* HP-9 · client strip inside the first viewport, visible before
-              any scroll. Pinned to the bottom of the panel so it reads as
-              evidence under the claim rather than as another CTA. */}
-          <Rise delay={1.1} y={12}>
-            <div style={{ marginTop: "clamp(34px, 5vw, 60px)" }}>
-              <ClientMarquee variant="hero" />
-            </div>
-          </Rise>
         </div>
 
         {/* ---- visual · full bleed, hard cut ---------------------- */}
         <div className="bl-hero-visual" style={{ minWidth: 0, minHeight: 0 }}>
           <HeroVisual />
         </div>
+
+        {/* HP-9 · the client strip is laid ACROSS the bottom of the split
+            rather than under it, so it crosses the seam: the left of the
+            track runs over the beige column, the right of it over the
+            cranberry one. Transparent background — the mixture is the
+            point. */}
+        <div
+          style={{
+            position: "absolute",
+            left: 0,
+            right: 0,
+            bottom: 0,
+            zIndex: 2,
+            padding: "0 0 clamp(18px, 2.4vw, 28px)",
+            pointerEvents: "none",
+          }}
+        >
+          <ClientMarquee variant="hero" straddle />
+        </div>
       </div>
+
     </section>
   );
 }

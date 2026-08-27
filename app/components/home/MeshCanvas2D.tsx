@@ -162,7 +162,7 @@ export function MeshCanvas2D({
           // Tuned against the 0.90 `--bl-section-veil` that sits over the
           // mesh below the hero. If the texture ever needs to read louder,
           // the veil is the better dial than this alpha.
-          ctx.strokeStyle = `rgba(${mesh},${a.fall * 0.14})`;
+          ctx.strokeStyle = `rgba(${mesh},${a.fall * 0.20})`;
           ctx.lineWidth = 0.9;
           ctx.beginPath();
           ctx.moveTo(a.x, a.y);
@@ -179,7 +179,7 @@ export function MeshCanvas2D({
           // Tuned against the 0.90 `--bl-section-veil` that sits over the
           // mesh below the hero. If the texture ever needs to read louder,
           // the veil is the better dial than this alpha.
-          ctx.strokeStyle = `rgba(${mesh},${a.fall * 0.14})`;
+          ctx.strokeStyle = `rgba(${mesh},${a.fall * 0.20})`;
           ctx.lineWidth = 0.9;
           ctx.beginPath();
           ctx.moveTo(a.x, a.y);

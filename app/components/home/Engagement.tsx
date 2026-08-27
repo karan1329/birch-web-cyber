@@ -80,6 +80,10 @@ export function Engagement() {
           style={{
             display: "grid",
             gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+            // Equal-height cards: the rows share one track height and each
+            // card fills it, so Quick Sprints / vCISO / FSO line up along
+            // the bottom regardless of how long each body runs.
+            gridAutoRows: "1fr",
             gap: 24,
           }}
         >

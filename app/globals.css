@@ -44,22 +44,14 @@
   --bl-nav-bg-rest: rgba(241, 238, 231, 0.55);
   --bl-nav-bg-scrolled: rgba(241, 238, 231, 0.88);
 
-  /* Editorial sections sit between the global mesh canvas and body
-     text. The veil opacity is mode-conditional because the contrast
-     math is asymmetric:
-       - Dark mode: mesh lines are LIGHT on dark and body text is LIGHT
-         on dark — same tone family, low mutual interference, so the
-         veil can sit lighter (mesh stays visible as ambient).
-       - Light mode: mesh lines are DARK on bone and body text is DARK
-         on bone — both compete for the same contrast band, so the
-         veil has to suppress the mesh harder to keep paragraph copy
-         readable.
-     `--bl-ink-rgb` swaps between dark and light, so the veil colour
-     auto-tracks the surface. Only the opacity is overridden below.
-     Hero-style sections (Hero, InnerHero) stay fully transparent so
-     the mesh reads at full strength behind the headline. Bone
-     sections continue to use solid `var(--bl-bone)`. */
-  --bl-section-veil: rgba(var(--bl-ink-rgb), 0.90);
+  /* Editorial sections sit between the global mesh canvas and the body
+     text. At 0.90 the veil suppressed the mesh so hard that the flowing
+     surface only read near the footer, which made the rest of the scroll
+     look flat. At 0.72 the mesh carries through every section while the
+     cranberry lines stay far enough under the body copy to keep paragraphs
+     comfortable. Hero-style sections are opaque (they have their own
+     visual); bone sections stay solid. */
+  --bl-section-veil: rgba(var(--bl-ink-rgb), 0.72);
 
   /* =================================================================
      Accent · cranberry. The canonical names are `--bl-accent*`.

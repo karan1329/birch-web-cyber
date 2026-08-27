@@ -42,13 +42,17 @@ export function Thesis() {
         >
           <SplitText text="We were founded on an" perChar={0.012} />
           <br />
+          {/* Two SplitTexts render as adjacent inline-blocks, so the space
+              between them has to be explicit — a leading space inside the
+              second one is stripped by CSS at the start of its line box.
+              That is what closed up "unfashionable thesis." */}
           <SplitText
             text="unfashionable"
             perChar={0.012}
             delay={0.22}
-            dim
-          />
-          <SplitText text=" thesis." perChar={0.012} delay={0.5} />
+            style={{ color: "var(--bl-accent)" }}
+          />{" "}
+          <SplitText text="thesis." perChar={0.012} delay={0.5} />
         </h2>
 
         <div
