@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics><meta name="design_doc_mode" content="canvas"><link href="https://fonts.googleapis.com/css2?family=Shantell+Sans:ital,wght@0,300..600;1,300..600&display=swap" rel="stylesheet"><style>body{margin:0;background:#f0eee9;font-family:system-ui,sans-serif}a{color:#2a2721}a:hover{color:#B8862F}.dv-turn{padding:40px 44px 32px;border-bottom:1px solid rgba(0,0,0,.08);scroll-margin-top:16px}.dv-thd{display:flex;align-items:baseline;gap:10px;margin:0 0 20px}.dv-tid{font:600 10px ui-monospace,Menlo,monospace;padding:3px 7px;background:#1a1a1a;color:#fff;border-radius:4px;text-decoration:none}.dv-tname{font:600 13px/1.2 system-ui,sans-serif;color:#1a1a1a}.dv-opts{display:flex;flex-wrap:wrap;gap:28px;align-items:flex-start}.dv-opt{flex:none;display:flex;flex-direction:column;gap:9px;scroll-margin-top:16px}.dv-oid{font:600 10.5px ui-monospace,Menlo,monospace;padding:3px 7px;background:rgba(0,0,0,.08);color:#1a1a1a;border-radius:5px;text-decoration:none}.dv-olabel{display:flex;align-items:baseline;gap:8px;font:400 11px/1.3 system-ui,sans-serif;color:rgba(0,0,0,.55)}.dv-card{max-width:100%;background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.06);overflow:hidden}.dv-opt:target .dv-oid{background:#2a78d6;color:#fff}.dv-next{margin:22px 0 0;font:12px/1.5 system-ui,sans-serif;color:rgba(0,0,0,.5)}
+.wf{width:400px;background:#FBF9F4;color:#2a2721;font-family:'Shantell Sans',system-ui,sans-serif;font-weight:400}
+.m{font-family:ui-monospace,Menlo,monospace;font-weight:600;font-size:7.5px;letter-spacing:.14em;text-transform:uppercase}
+.mut{color:#8a8375}
+.tl{height:4px;background:#ddd6c6;border-radius:2px;margin:4px 0}
+.hatch{background:repeating-linear-gradient(45deg,#ece5d6 0 6px,#e0d9c7 6px 12px)}
+.dhatch{background:repeating-linear-gradient(45deg,#1d1a14 0 6px,#282318 6px 12px)}
+.btn{display:inline-block;background:#2a2721;color:#FBF9F4;padding:6px 12px;font-family:ui-monospace,Menlo,monospace;font-weight:600;font-size:7.5px;letter-spacing:.12em;text-transform:uppercase}
+.gbtn{display:inline-block;border:1.2px solid #2a2721;color:#2a2721;padding:5px 11px;font-family:ui-monospace,Menlo,monospace;font-weight:600;font-size:7.5px;letter-spacing:.12em;text-transform:uppercase}
+.note{font-style:italic;font-size:9.5px;color:#B8862F;line-height:1.35;font-weight:500}
+.red{background:#0d0d0f;height:6px}
+.h{font-weight:500;line-height:1.1}
+.tile{background:#F2EEE3;border:1px solid #e2dbc9;padding:10px}
+.draw{border:1px solid #cfc8b6;background:repeating-linear-gradient(0deg,transparent 0 7px,rgba(140,136,127,.18) 7px 8px),repeating-linear-gradient(90deg,transparent 0 7px,rgba(140,136,127,.18) 7px 8px)}
+</style></helmet>
+<section class="dv-turn" id="t3">
+<div class="dv-thd"><a class="dv-tid" href="#t3">3</a><span class="dv-tname">Birchlogic — the real site ("Cybersecurity, done seriously.") into the reference systems · supersedes turn <a class="dv-oid" href="#t2">2</a></span></div>
+<div class="dv-opts">
+
+<div class="dv-opt" id="3a"><div class="dv-olabel"><a class="dv-oid" href="#3a">3a</a>Axiom split — conversion panel left, image window right, honest marquee</div><div class="dv-card wf">
+  <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-bottom:1px solid #e2dbc9"><span class="m">Birchlogic</span><div style="display:flex;gap:9px;align-items:center"><span class="m mut">How we work</span><span class="m mut">Services</span><span class="m mut">Field notes</span><span class="btn">Book a call</span></div></div>
+  <div style="display:grid;grid-template-columns:46fr 54fr;height:310px">
+    <div style="display:flex;flex-direction:column;padding:20px 14px 12px;min-width:0">
+      <span class="m" style="color:#3f8f4f">Senior advisory · Delhi + Singapore</span>
+      <div class="h" style="font-size:20px;margin-top:10px">CYBERSECURITY,<br><span style="font-style:italic;font-weight:300">done seriously.</span></div>
+      <div style="margin-top:10px;width:90%"><span class="m mut" style="letter-spacing:.06em;text-transform:none;font-size:8px">Senior-led security programs for growth-stage companies and regulated industries.</span></div>
+      <div style="display:flex;gap:8px;margin-top:12px;align-items:center"><span class="btn">Book a 30-min call</span></div>
+      <div style="margin-top:auto;border-top:1px solid #e2dbc9;padding-top:8px;overflow:hidden;white-space:nowrap"><span class="m mut">AMCS Group · K&S Partners · Nest Money · Saarthe.ai · Nexwave →</span></div>
+    </div>
+    <div class="hatch" style="position:relative;overflow:hidden">
+      <span class="m" style="position:absolute;top:8px;left:8px;background:#FBF9F4;padding:2px 5px">img — dir A doc stack, raking light, one hue</span>
+      <div style="position:absolute;top:38px;right:10px;width:130px;display:flex;flex-direction:column;gap:5px"><div style="border-top:2px dotted #8a8375;width:100%"></div><div style="border-top:2px dotted #8a8375;width:80%;margin-left:auto"></div><div style="border-top:2px dotted #8a8375;width:58%;margin-left:auto"></div></div>
+      <div style="position:absolute;left:12px;bottom:14px;width:155px;background:rgba(251,249,244,.78);border:1px solid #cfc8b6;padding:8px">
+        <div style="display:grid;grid-template-columns:repeat(4,4px);gap:2px;margin-bottom:5px"><span style="background:#2a2721;width:4px;height:4px"></span><span style="border:1px solid #2a2721;width:4px;height:4px"></span><span style="background:#2a2721;width:4px;height:4px"></span><span style="border:1px solid #2a2721;width:4px;height:4px"></span></div>
+        <span class="m">Stolen credentials</span>
+        <div class="tl" style="margin-top:5px"></div><div class="tl" style="width:70%"></div>
+        <span class="m mut" style="display:block;margin-top:5px">1 of 6 · since 2008</span>
+      </div>
+    </div>
+  </div>
+  <div style="padding:6px 14px"><span class="note" style="color:#3f8f4f">↑ rotating cards = the six incident categories from their own thesis footnote (credentials, misconfig, identity, personal accounts, third-party, phishing) — honest data, Axiom's carousel earned. marquee = permissioned client names, not fake logos.</span></div>
+  <div style="border-top:1px solid #cfc8b6;border-bottom:1px solid #cfc8b6;position:relative;padding:12px 0;text-align:center;margin-top:6px">
+    <span style="position:absolute;left:0;top:50%;width:6px;border-top:1px solid #2a2721"></span><span style="position:absolute;right:0;top:50%;width:6px;border-top:1px solid #2a2721"></span>
+    <div class="m mut">01 · Thesis</div>
+    <div class="m" style="font-size:10px;margin-top:6px;letter-spacing:.1em">WE WERE FOUNDED ON AN<br>UNFASHIONABLE THESIS.</div>
+  </div>
+  <div style="padding:12px 14px"><div class="tl"></div><div class="tl" style="width:92%"></div><div class="tl" style="width:85%"></div><div class="tl" style="width:60%"></div>
+    <div style="border-left:2px solid #3f8f4f;padding:6px 0 6px 10px;margin-top:10px"><div class="h" style="font-size:11px;font-style:italic;font-weight:300">"Serious cybersecurity work is not a marketplace problem to be procured. It is a craft problem, to be practiced."</div><span class="m mut" style="display:block;margin-top:4px">Karan Bhandari · Co-founder</span></div>
+  </div>
+  <div style="padding:12px 14px;border-top:1px solid #e2dbc9"><div class="m mut" style="text-align:center">02 · How we work</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px">
+      <div><span class="m">Old school in discipline</span><div style="margin-top:5px"><div style="display:flex;gap:6px;padding:4px 0;border-bottom:1px dotted #cfc8b6"><span class="m" style="color:#3f8f4f">01</span><span class="m mut" style="text-transform:none">Identity is the perimeter</span></div><div style="display:flex;gap:6px;padding:4px 0;border-bottom:1px dotted #cfc8b6"><span class="m" style="color:#3f8f4f">02</span><span class="m mut" style="text-transform:none">Risk in financial terms</span></div><div style="display:flex;gap:6px;padding:4px 0;border-bottom:1px dotted #cfc8b6"><span class="m" style="color:#3f8f4f">03</span><span class="m mut" style="text-transform:none">Evidence in the workflow</span></div><div style="display:flex;gap:6px;padding:4px 0"><span class="m" style="color:#3f8f4f">04</span><span class="m mut" style="text-transform:none">Boards see risk in dollars</span></div></div></div>
+      <div><span class="m">Cutting edge in execution</span><div style="margin-top:5px"><div style="display:flex;gap:6px;padding:4px 0;border-bottom:1px dotted #cfc8b6"><span class="m" style="color:#3f8f4f">01</span><span class="m mut" style="text-transform:none">Regulatory drift monitored</span></div><div style="display:flex;gap:6px;padding:4px 0;border-bottom:1px dotted #cfc8b6"><span class="m" style="color:#3f8f4f">02</span><span class="m mut" style="text-transform:none">Bureaucratic 60% on AI</span></div><div style="display:flex;gap:6px;padding:4px 0;border-bottom:1px dotted #cfc8b6"><span class="m" style="color:#3f8f4f">03</span><span class="m mut" style="text-transform:none">Seniors multiplied by sw</span></div><div style="display:flex;gap:6px;padding:4px 0"><span class="m" style="color:#3f8f4f">04</span><span class="m mut" style="text-transform:none">AI risk in the program</span></div></div></div>
+    </div>
+  </div>
+  <div style="padding:12px 14px;border-top:1px solid #e2dbc9"><div class="m mut" style="text-align:center">03 · Engagement</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:8px">
+      <div class="tile"><span class="m" style="color:#3f8f4f">Tier I</span><div class="m" style="margin-top:4px">Quick Sprints</div><div class="tl"></div><div class="tl" style="width:70%"></div><span class="m mut" style="display:block;margin-top:5px">2–4 wks · fixed</span></div>
+      <div class="tile" style="border-color:#2a2721"><span class="m" style="color:#3f8f4f">Tier II</span><div class="m" style="margin-top:4px">vCISO</div><div class="tl"></div><div class="tl" style="width:75%"></div><span class="m mut" style="display:block;margin-top:5px">Month-to-month</span></div>
+      <div class="tile"><span class="m" style="color:#3f8f4f">Tier III</span><div class="m" style="margin-top:4px">Fractional Sec Office</div><div class="tl"></div><div class="tl" style="width:65%"></div><span class="m mut" style="display:block;margin-top:5px">12–24 months</span></div>
+    </div>
+  </div>
+  <div class="dhatch" style="padding:16px 14px;text-align:center"><span class="m" style="color:rgba(251,249,244,.6)">04 · The promise</span><div class="h" style="color:#FBF9F4;font-size:13px;margin-top:6px">A senior partner runs every engagement.<br><span style="font-style:italic;font-weight:300">There is no other model.</span></div></div>
+  <div style="padding:12px 14px"><div class="m mut" style="text-align:center">05 · Who we work with</div><div class="tl" style="margin-top:8px"></div><div class="tl" style="width:85%"></div><div class="tl" style="width:60%"></div>
+    <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap"><span class="gbtn">RBI fintechs</span><span class="gbtn">SEBI mid-caps</span><span class="gbtn">MAS-licensed</span></div>
+  </div>
+  <div style="padding:16px 14px;border-top:1.2px solid #2a2721;display:flex;justify-content:space-between;align-items:center"><div><div class="h" style="font-size:13px">One conversation. Thirty minutes.</div><span class="m mut">Zero pitch deck · emergency start in 7 days</span></div><span class="btn">Book →</span></div>
+  <div style="display:flex;justify-content:space-between;padding:9px 14px;border-top:1px solid #e2dbc9"><span class="m mut">© Birchlogic 2026 · Delhi · Singapore</span><span class="m mut">RBI · SEBI · MAS TRM · NIS2 · DPDP</span></div>
+</div></div>
+
+<div class="dv-opt" id="3b"><div class="dv-olabel"><a class="dv-oid" href="#3b">3b</a>Apogee dark — the promise as the monumental centre</div><div class="dv-card wf">
+  <div class="dhatch" style="position:relative;height:390px;overflow:hidden">
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px"><span class="m" style="color:#FBF9F4">Birchlogic</span><div style="display:flex;gap:10px;align-items:center"><span class="m" style="color:rgba(251,249,244,.6)">How we work</span><span class="m" style="color:rgba(251,249,244,.6)">Services</span><span class="gbtn" style="border-color:#FBF9F4;color:#FBF9F4">Book a call</span></div></div>
+    <div style="text-align:center;margin-top:24px">
+      <span class="m" style="display:inline-block;border:1px solid rgba(251,249,244,.4);border-radius:20px;padding:3px 9px;color:rgba(251,249,244,.8)"><span style="display:inline-block;width:4px;height:4px;background:#3f8f4f;border-radius:50%;margin-right:4px"></span>Delhi · Singapore · six countries</span>
+      <div class="h" style="color:#FBF9F4;font-size:23px;font-style:italic;font-weight:300;margin-top:12px">Cybersecurity,<br>done seriously.</div>
+      <span class="m" style="display:block;color:rgba(251,249,244,.65);margin-top:8px;text-transform:none;letter-spacing:.04em">Senior-led programs · discipline + AI workbench</span>
+    </div>
+    <div style="position:absolute;left:50%;transform:translateX(-50%);bottom:-26px;width:260px;background:#efe8d8;border:1px solid #cfc8b6;padding:12px;opacity:.92;text-align:center">
+      <span class="m mut">The promise</span>
+      <div class="h" style="font-size:11px;margin-top:5px">A senior partner runs every engagement.<br><span style="font-style:italic;font-weight:300">There is no other model.</span></div>
+    </div>
+    <span class="m" style="position:absolute;top:52px;left:8px;background:rgba(251,249,244,.15);color:#FBF9F4;padding:2px 5px">img — dark field, one accent, grain, low horizon</span>
+  </div>
+  <div style="padding:36px 14px 6px"><span class="note" style="color:#3f8f4f">↑ where Apogee floats a dashboard, we float the promise — the firm's realest asset. type in the reserved quiet, no scrim.</span></div>
+  <div style="border-top:1px solid #cfc8b6;border-bottom:1px solid #cfc8b6;text-align:center;padding:12px 0;margin-top:8px"><div class="m mut">01 · Thesis</div><div class="m" style="font-size:10px;margin-top:6px">THE INDUSTRY MISTAKES COMPLEXITY<br>FOR SOPHISTICATION.</div></div>
+  <div style="padding:12px 14px"><span class="m mut">Six categories, every major report since 2008</span>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 14px;margin-top:8px">
+      <div style="display:flex;gap:7px;align-items:center;border-bottom:1px dotted #cfc8b6;padding:4px 0"><span class="m" style="color:#3f8f4f">01</span><span class="m">Stolen credentials</span></div>
+      <div style="display:flex;gap:7px;align-items:center;border-bottom:1px dotted #cfc8b6;padding:4px 0"><span class="m" style="color:#3f8f4f">02</span><span class="m">Cloud misconfiguration</span></div>
+      <div style="display:flex;gap:7px;align-items:center;border-bottom:1px dotted #cfc8b6;padding:4px 0"><span class="m" style="color:#3f8f4f">03</span><span class="m">Identity errors</span></div>
+      <div style="display:flex;gap:7px;align-items:center;border-bottom:1px dotted #cfc8b6;padding:4px 0"><span class="m" style="color:#3f8f4f">04</span><span class="m">Personal accounts</span></div>
+      <div style="display:flex;gap:7px;align-items:center;padding:4px 0"><span class="m" style="color:#3f8f4f">05</span><span class="m">Third-party access</span></div>
+      <div style="display:flex;gap:7px;align-items:center;padding:4px 0"><span class="m" style="color:#3f8f4f">06</span><span class="m">Social engineering</span></div>
+    </div>
+    <div style="margin-top:6px"><span class="note" style="color:#3f8f4f">the six as a ledger — this is the site's measurement overlay: the constants being read</span></div>
+  </div>
+  <div style="padding:12px 14px;border-top:1px solid #e2dbc9"><div class="m mut" style="text-align:center">03 · Three commercial shapes. Same craft.</div>
+    <div style="display:grid;grid-template-columns:24px 1fr 70px;gap:10px;align-items:start;border-bottom:1px dotted #cfc8b6;padding:10px 0"><span class="m" style="color:#3f8f4f">I</span><div><div class="m">Quick Sprints · twelve engagements</div><div class="tl" style="width:80%"></div></div><span class="m mut">2–4 wks</span></div>
+    <div style="display:grid;grid-template-columns:24px 1fr 70px;gap:10px;align-items:start;border-bottom:1px dotted #cfc8b6;padding:10px 0"><span class="m" style="color:#3f8f4f">II</span><div><div class="m">vCISO · three intensities</div><div class="tl" style="width:70%"></div></div><span class="m mut">Monthly</span></div>
+    <div style="display:grid;grid-template-columns:24px 1fr 70px;gap:10px;align-items:start;padding:10px 0"><span class="m" style="color:#3f8f4f">III</span><div><div class="m">Fractional Security Office</div><div class="tl" style="width:75%"></div></div><span class="m mut">12–24 mo</span></div>
+  </div>
+  <div style="padding:12px 14px;border-top:1px solid #e2dbc9"><span class="m mut">Who we work with</span><div class="tl" style="margin-top:7px"></div><div class="tl" style="width:88%"></div>
+    <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap"><span class="gbtn">SOC2 with teeth</span><span class="gbtn">Regulator's letter</span><span class="gbtn">Week after an incident</span><span class="gbtn">Year before IPO</span></div>
+    <div style="margin-top:6px"><span class="note" style="color:#3f8f4f">the four trigger moments as chips — the reader finds their own</span></div>
+  </div>
+  <div class="dhatch" style="padding:18px 14px;text-align:center"><div class="h" style="color:#FBF9F4;font-size:14px;font-style:italic;font-weight:300">One conversation. Thirty minutes.</div><span class="m" style="display:block;color:rgba(251,249,244,.6);margin-top:4px">Zero pitch deck</span><span class="btn" style="background:#3f8f4f;color:#FBF9F4;margin-top:9px">Book a discovery call</span></div>
+  <div style="display:flex;justify-content:space-between;padding:9px 14px"><span class="m mut">© Birchlogic 2026</span><span class="m mut">RBI · SEBI · MAS TRM · NIS2 · DPDP</span></div>
+</div></div>
+
+<div class="dv-opt" id="3c"><div class="dv-olabel"><a class="dv-oid" href="#3c">3c</a>Editorial index — the site's own 01–05 numbering promoted to structure</div><div class="dv-card wf">
+  <div style="display:flex;justify-content:space-between;align-items:baseline;padding:12px 14px;border-bottom:1.2px solid #2a2721"><span class="m">Birchlogic</span><span class="m mut">Delhi · Singapore · est. reading 4 min</span></div>
+  <div style="display:grid;grid-template-columns:55fr 45fr;gap:12px;padding:18px 14px 10px">
+    <div>
+      <span class="m" style="color:#3f8f4f">Senior cybersecurity advisory</span>
+      <div class="h" style="font-size:19px;margin-top:8px">Cybersecurity,<br><span style="font-style:italic;font-weight:300">done seriously.</span></div>
+      <div style="margin-top:10px"><div class="tl"></div><div class="tl" style="width:82%"></div></div>
+      <span class="btn" style="margin-top:12px">Book a 30-min call</span>
+    </div>
+    <div class="draw" style="position:relative;min-height:160px"><span class="m" style="position:absolute;top:6px;left:6px;background:#FBF9F4;padding:2px 5px">SVG — iso line drawing: the security office, drawn like an architect's section</span></div>
+  </div>
+  <div style="padding:0 14px 8px"><span class="note" style="color:#3f8f4f">↑ no photography — hairline drawing register matches "old school in discipline". quietest, most credible for a CISO/CFO reader.</span></div>
+  <div style="border-top:1.2px solid #2a2721;margin:6px 14px 0;padding:10px 0">
+    <div style="display:flex;align-items:baseline;gap:6px;padding:5px 0"><span class="m" style="color:#3f8f4f">01</span><span class="m">Thesis</span><span style="flex:1;border-bottom:1px dotted #8a8375"></span><span class="m mut">unfashionable</span></div>
+    <div style="display:flex;align-items:baseline;gap:6px;padding:5px 0"><span class="m" style="color:#3f8f4f">02</span><span class="m">How we work</span><span style="flex:1;border-bottom:1px dotted #8a8375"></span><span class="m mut">old school × cutting edge</span></div>
+    <div style="display:flex;align-items:baseline;gap:6px;padding:5px 0"><span class="m" style="color:#3f8f4f">03</span><span class="m">Engagement</span><span style="flex:1;border-bottom:1px dotted #8a8375"></span><span class="m mut">three shapes</span></div>
+    <div style="display:flex;align-items:baseline;gap:6px;padding:5px 0"><span class="m" style="color:#3f8f4f">04</span><span class="m">The promise</span><span style="flex:1;border-bottom:1px dotted #8a8375"></span><span class="m mut">no other model</span></div>
+    <div style="display:flex;align-items:baseline;gap:6px;padding:5px 0"><span class="m" style="color:#3f8f4f">05</span><span class="m">Who we work with</span><span style="flex:1;border-bottom:1px dotted #8a8375"></span><span class="m mut">the serious</span></div>
+  </div>
+  <div style="display:grid;grid-template-columns:34px 1fr;gap:10px;padding:16px 14px;border-top:1px solid #e2dbc9;margin-top:8px">
+    <span class="m" style="font-size:14px;color:#e2dbc9">01</span>
+    <div><div class="m">We were founded on an unfashionable thesis</div><div class="tl" style="margin-top:6px"></div><div class="tl" style="width:90%"></div><div class="tl" style="width:85%"></div>
+    <div style="border-left:2px solid #3f8f4f;padding:5px 0 5px 10px;margin-top:8px"><div class="h" style="font-size:10.5px;font-style:italic;font-weight:300">"A craft problem, to be practiced."</div><span class="m mut" style="display:block;margin-top:3px">Karan Bhandari · Co-founder</span></div></div>
+  </div>
+  <div style="display:grid;grid-template-columns:34px 1fr;gap:10px;padding:16px 14px;border-top:1px solid #e2dbc9">
+    <span class="m" style="font-size:14px;color:#e2dbc9">02</span>
+    <div><div class="m">Old school in discipline. Cutting edge in execution.</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px"><div class="tile"><div class="draw" style="height:36px"></div><span class="m" style="display:block;margin-top:5px">Discipline ×4</span></div><div class="tile"><div class="draw" style="height:36px"></div><span class="m" style="display:block;margin-top:5px">Execution ×4</span></div></div></div>
+  </div>
+  <div style="display:grid;grid-template-columns:34px 1fr;gap:10px;padding:16px 14px;border-top:1px solid #e2dbc9">
+    <span class="m" style="font-size:14px;color:#e2dbc9">03</span>
+    <div><div class="m">Three commercial shapes. Same craft.</div>
+      <div style="display:grid;grid-template-columns:40px 1fr 60px;gap:6px;margin-top:8px;border-top:1.2px solid #2a2721">
+        <span class="m" style="padding:5px 0;border-bottom:1px dotted #cfc8b6;color:#3f8f4f">I</span><span class="m" style="padding:5px 0;border-bottom:1px dotted #cfc8b6">Quick Sprints</span><span class="m mut" style="padding:5px 0;border-bottom:1px dotted #cfc8b6">2–4 wks</span>
+        <span class="m" style="padding:5px 0;border-bottom:1px dotted #cfc8b6;color:#3f8f4f">II</span><span class="m" style="padding:5px 0;border-bottom:1px dotted #cfc8b6">vCISO</span><span class="m mut" style="padding:5px 0;border-bottom:1px dotted #cfc8b6">Monthly</span>
+        <span class="m" style="padding:5px 0;color:#3f8f4f">III</span><span class="m" style="padding:5px 0">Fractional Security Office</span><span class="m mut" style="padding:5px 0">12–24 mo</span>
+      </div></div>
+  </div>
+  <div style="display:grid;grid-template-columns:34px 1fr;gap:10px;padding:16px 14px;border-top:1px solid #e2dbc9">
+    <span class="m" style="font-size:14px;color:#e2dbc9">04</span>
+    <div class="h" style="font-size:12px">A senior partner runs every engagement. <span style="font-style:italic;font-weight:300">There is no other model.</span></div>
+  </div>
+  <div style="display:grid;grid-template-columns:34px 1fr;gap:10px;padding:16px 14px;border-top:1px solid #e2dbc9">
+    <span class="m" style="font-size:14px;color:#e2dbc9">05</span>
+    <div><div class="m">Who we work with</div><div class="tl" style="margin-top:6px"></div><div class="tl" style="width:80%"></div>
+      <div style="margin-top:10px;display:flex;flex-direction:column;gap:12px;max-width:230px"><div style="border-bottom:1px solid #2a2721;padding-bottom:2px"><span class="m mut">Name</span></div><div style="border-bottom:1px solid #2a2721;padding-bottom:2px"><span class="m mut">Work email</span></div><div style="border-bottom:1px solid #2a2721;padding-bottom:2px"><span class="m mut">The specific blocker</span></div><span class="btn" style="align-self:flex-start">Book 30 minutes</span></div>
+      <div style="margin-top:6px"><span class="note" style="color:#3f8f4f">"bring a specific blocker" is already a form — the CTA asks for it as a field</span></div>
+    </div>
+  </div>
+  <div style="display:flex;justify-content:space-between;padding:9px 14px;border-top:1.2px solid #2a2721"><span class="m mut">© Birchlogic 2026 · Delhi · Singapore</span><span class="m mut">RBI · SEBI · MAS TRM · NIS2 · DPDP</span></div>
+</div></div>
+
+</div>
+<p class="dv-next">Try next: "take <a class="dv-oid" href="#3a">3a</a> to hi-fi in the Birchlogic black + green" · "merge <a class="dv-oid" href="#3b">3b</a>'s six-categories ledger into <a class="dv-oid" href="#3a">3a</a>" · "mobile pass on <a class="dv-oid" href="#3c">3c</a>"</p>
+</section>
+<section class="dv-turn" id="t2">
+<div class="dv-thd"><a class="dv-tid" href="#t2">2</a><span class="dv-tname">Birchlogic.com — live site copy restructured into the <a class="dv-oid" href="#1a">1a</a>/<a class="dv-oid" href="#1b">1b</a>/<a class="dv-oid" href="#1d">1d</a> systems</span></div>
+<div class="dv-opts">
+
+<div class="dv-opt" id="2a"><div class="dv-olabel"><a class="dv-oid" href="#2a">2a</a>Axiom split — the cloud bill as the thing being measured</div><div class="dv-card wf">
+  <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-bottom:1px solid #e2dbc9"><span class="m">Birchlogic · FinOps & GreenOps</span><div style="display:flex;gap:10px;align-items:center"><span class="m mut">Services</span><span class="m mut">Numbers</span><span class="btn">Book a first pass</span></div></div>
+  <div style="display:grid;grid-template-columns:46fr 54fr;height:300px">
+    <div style="display:flex;flex-direction:column;padding:20px 14px 12px">
+      <span class="m" style="color:#3f8f4f">Sustainable FinOps · SMBs & startups</span>
+      <div class="h" style="font-size:19px;margin-top:10px">WE CUT YOUR CLOUD SPEND<br><span style="font-style:italic;font-weight:300">with zero compromise</span><br>ON PERFORMANCE</div>
+      <div style="margin-top:10px;width:88%"><div class="tl"></div><div class="tl" style="width:74%"></div></div>
+      <div style="display:flex;gap:8px;margin-top:12px;align-items:center"><span class="btn">Book a 1-day first pass</span><span class="m mut" style="text-decoration:underline">The numbers →</span></div>
+      <div style="margin-top:auto;border-top:1px solid #e2dbc9;padding-top:8px"><span class="m mut">Avg. 38% reduction · don't trust us, trust our numbers</span></div>
+    </div>
+    <div class="hatch" style="position:relative;overflow:hidden">
+      <span class="m" style="position:absolute;top:8px;left:8px;background:#FBF9F4;padding:2px 5px">img — cloud mass under measurement, one hue</span>
+      <div style="position:absolute;top:36px;right:10px;width:130px;display:flex;flex-direction:column;gap:5px"><div style="border-top:2px dotted #8a8375;width:100%"></div><div style="border-top:2px dotted #8a8375;width:82%;margin-left:auto"></div><div style="border-top:2px dotted #8a8375;width:60%;margin-left:auto"></div></div>
+      <div style="position:absolute;left:12px;bottom:14px;width:150px;background:rgba(251,249,244,.78);border:1px solid #cfc8b6;padding:8px">
+        <div style="display:grid;grid-template-columns:repeat(4,4px);gap:2px;margin-bottom:5px"><span style="background:#2a2721;width:4px;height:4px"></span><span style="border:1px solid #2a2721;width:4px;height:4px"></span><span style="background:#2a2721;width:4px;height:4px"></span><span style="border:1px solid #2a2721;width:4px;height:4px"></span></div>
+        <span class="m">Cloud spend</span>
+        <div class="h" style="font-size:13px;color:#3f8f4f">−38% avg.</div>
+        <div class="tl" style="width:70%"></div>
+      </div>
+    </div>
+  </div>
+  <div style="padding:6px 14px"><span class="note" style="color:#3f8f4f">↑ contour overlay = the bill being read, not decoration. stat card is real (38%), no fake dashboard. mono strip carries the site's own line verbatim.</span></div>
+  <div style="border-top:1px solid #cfc8b6;border-bottom:1px solid #cfc8b6;position:relative;padding:12px 0;text-align:center;margin-top:6px">
+    <span style="position:absolute;left:0;top:50%;width:6px;border-top:1px solid #2a2721"></span><span style="position:absolute;right:0;top:50%;width:6px;border-top:1px solid #2a2721"></span>
+    <div class="m mut">You are at the right place if</div>
+    <div class="m" style="font-size:10px;margin-top:6px;letter-spacing:.1em">YOUR CLOUD SPEND IS UNPREDICTABLE<br>AND NOBODY CAN SAY WHY.</div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:14px">
+    <div class="tile"><div class="draw" style="height:50px"></div><div class="m" style="margin-top:7px">Chaotic spend</div><div class="tl" style="width:85%"></div></div>
+    <div class="tile"><div class="draw" style="height:50px"></div><div class="m" style="margin-top:7px">No visibility</div><div class="tl" style="width:80%"></div></div>
+    <div class="tile"><div class="draw" style="height:50px"></div><div class="m" style="margin-top:7px">Multi-cloud complexity</div><div class="tl" style="width:70%"></div></div>
+    <div class="tile"><div class="draw" style="height:50px"></div><div class="m" style="margin-top:7px">ROI you can't prove</div><div class="tl" style="width:88%"></div></div>
+  </div>
+  <div style="padding:0 14px"><span class="note" style="color:#3f8f4f">live site lists 8 pains — cut to the 4 strongest, iso line drawings per Axiom section two</span></div>
+  <div style="padding:14px;border-top:1px solid #e2dbc9;margin-top:10px"><span class="m mut">Our services</span>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:8px">
+      <div><span class="m" style="color:#3f8f4f">1 day</span><div class="m" style="margin-top:4px">Cloud Bill First Pass</div><div class="tl"></div><div class="tl" style="width:70%"></div><div class="h" style="font-size:11px;margin-top:5px">−20% avg.</div></div>
+      <div><span class="m" style="color:#3f8f4f">2 months</span><div class="m" style="margin-top:4px">Cloud Financial Mgmt</div><div class="tl"></div><div class="tl" style="width:75%"></div><div class="h" style="font-size:11px;margin-top:5px">−50–60%</div></div>
+      <div><span class="m" style="color:#3f8f4f">New</span><div class="m" style="margin-top:4px">Green Cloud Mgmt</div><div class="tl"></div><div class="tl" style="width:65%"></div><div class="h" style="font-size:11px;margin-top:5px">CO₂ ↓</div></div>
+    </div>
+  </div>
+  <div style="padding:14px;border-top:1px solid #e2dbc9;text-align:center">
+    <div class="h" style="font-size:12px;font-style:italic;font-weight:300">"Amazing team and results — we worked with Birchlogic to assess and optimise our cloud."</div>
+    <span class="m mut" style="display:block;margin-top:6px">CFO · French CRM startup</span>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:14px;border-top:1px solid #e2dbc9;text-align:center">
+    <div><div class="h" style="font-size:14px">38%</div><span class="m mut">Direct savings</span></div>
+    <div><div class="h" style="font-size:14px">···</div><span class="m mut">Eco initiatives</span></div>
+    <div><div class="h" style="font-size:14px">···</div><span class="m mut">Hours delivered</span></div>
+    <div><div class="h" style="font-size:14px">···</div><span class="m mut">Years expertise</span></div>
+  </div>
+  <div class="dhatch" style="padding:18px 14px;text-align:center"><div class="h" style="color:#FBF9F4;font-size:14px">Show me the numbers.</div><span class="btn" style="background:#3f8f4f;color:#FBF9F4;margin-top:9px">Book a first pass</span></div>
+  <div style="display:flex;justify-content:space-between;padding:9px 14px"><span class="m mut">© Birchlogic</span><span class="m mut">Services · Contact</span></div>
+</div></div>
+
+<div class="dv-opt" id="2b"><div class="dv-olabel"><a class="dv-oid" href="#2b">2b</a>Apogee dark — "While others claim, we do." as the monumental line</div><div class="dv-card wf">
+  <div class="dhatch" style="position:relative;height:380px;overflow:hidden">
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px"><span class="m" style="color:#FBF9F4">Birchlogic</span><div style="display:flex;gap:10px;align-items:center"><span class="m" style="color:rgba(251,249,244,.6)">Services</span><span class="gbtn" style="border-color:#FBF9F4;color:#FBF9F4">First pass</span></div></div>
+    <div style="text-align:center;margin-top:24px">
+      <span class="m" style="display:inline-block;border:1px solid rgba(251,249,244,.4);border-radius:20px;padding:3px 9px;color:rgba(251,249,244,.8)"><span style="display:inline-block;width:4px;height:4px;background:#3f8f4f;border-radius:50%;margin-right:4px"></span>Avg. 38% cloud spend reduction</span>
+      <div class="h" style="color:#FBF9F4;font-size:22px;font-style:italic;font-weight:300;margin-top:12px">While others claim,<br>we do.</div>
+    </div>
+    <div style="position:absolute;left:50%;transform:translateX(-50%);bottom:-24px;width:240px;background:#efe8d8;border:1px solid #cfc8b6;padding:12px;opacity:.92">
+      <span class="m mut">Your cloud bill</span>
+      <div style="display:flex;align-items:baseline;gap:8px;margin-top:5px"><div class="tl" style="width:90px;height:6px"></div><span class="m" style="color:#3f8f4f">before</span></div>
+      <div style="display:flex;align-items:baseline;gap:8px"><div class="tl" style="width:52px;height:6px;background:#3f8f4f"></div><span class="m" style="color:#3f8f4f">after · −38%</span></div>
+      <div class="tl" style="width:80%;margin-top:7px"></div><div class="tl" style="width:60%"></div>
+    </div>
+    <span class="m" style="position:absolute;top:52px;left:8px;background:rgba(251,249,244,.15);color:#FBF9F4;padding:2px 5px">img — dark field, one accent, grain</span>
+  </div>
+  <div style="padding:34px 14px 6px"><span class="note" style="color:#3f8f4f">↑ floating proof is a before/after bill ledger, not an invented dashboard — Apogee's structure without its fabricated-KPI liability</span></div>
+  <div style="border-top:1px solid #cfc8b6;border-bottom:1px solid #cfc8b6;text-align:center;padding:12px 0;margin-top:8px"><div class="m mut">You are at the right place if</div></div>
+  <div style="padding:10px 14px">
+    <div style="display:flex;gap:8px;align-items:baseline;border-bottom:1px dotted #cfc8b6;padding:7px 0"><span style="width:8px;height:8px;border:1.2px solid #2a2721;flex:none"></span><div class="tl" style="width:85%;margin:0"></div></div>
+    <div style="display:flex;gap:8px;align-items:baseline;border-bottom:1px dotted #cfc8b6;padding:7px 0"><span style="width:8px;height:8px;border:1.2px solid #2a2721;flex:none"></span><div class="tl" style="width:70%;margin:0"></div></div>
+    <div style="display:flex;gap:8px;align-items:baseline;border-bottom:1px dotted #cfc8b6;padding:7px 0"><span style="width:8px;height:8px;border:1.2px solid #2a2721;flex:none"></span><div class="tl" style="width:90%;margin:0"></div></div>
+    <div style="display:flex;gap:8px;align-items:baseline;padding:7px 0"><span style="width:8px;height:8px;border:1.2px solid #2a2721;flex:none"></span><div class="tl" style="width:65%;margin:0"></div></div>
+    <div style="margin-top:4px"><span class="note" style="color:#3f8f4f">pains as a checklist the reader self-scores against</span></div>
+  </div>
+  <div style="padding:14px;border-top:1px solid #e2dbc9"><span class="m mut">Our services</span>
+    <div style="display:grid;grid-template-columns:20px 1fr 60px;gap:10px;align-items:start;border-bottom:1px dotted #cfc8b6;padding:10px 0"><span class="m" style="color:#3f8f4f">01</span><div><div class="m">Cloud Bill First Pass · 1 day</div><div class="tl" style="width:80%"></div></div><span class="h" style="font-size:11px">−20%</span></div>
+    <div style="display:grid;grid-template-columns:20px 1fr 60px;gap:10px;align-items:start;border-bottom:1px dotted #cfc8b6;padding:10px 0"><span class="m" style="color:#3f8f4f">02</span><div><div class="m">Cloud Financial Mgmt · 2 months</div><div class="tl" style="width:88%"></div></div><span class="h" style="font-size:11px">−50–60%</span></div>
+    <div style="display:grid;grid-template-columns:20px 1fr 60px;gap:10px;align-items:start;padding:10px 0"><span class="m" style="color:#3f8f4f">03</span><div><div class="m">Green Cloud Mgmt · new</div><div class="tl" style="width:75%"></div></div><span class="h" style="font-size:11px">CO₂ ↓</span></div>
+  </div>
+  <div style="padding:14px;border-top:1px solid #e2dbc9;text-align:center"><div class="h" style="font-size:12px;font-style:italic;font-weight:300">"Une équipe et des résultats incroyables."</div><span class="m mut" style="display:block;margin-top:6px">CFO · French CRM startup</span></div>
+  <div class="dhatch" style="padding:18px 14px;text-align:center"><div class="h" style="color:#FBF9F4;font-size:14px;font-style:italic;font-weight:300">No guesswork. Just savings.</div><span class="btn" style="background:#3f8f4f;color:#FBF9F4;margin-top:9px">Book a first pass</span></div>
+  <div style="display:flex;justify-content:space-between;padding:9px 14px"><span class="m mut">© Birchlogic</span><span class="m mut">Contact</span></div>
+</div></div>
+
+<div class="dv-opt" id="2c"><div class="dv-olabel"><a class="dv-oid" href="#2c">2c</a>Numbers-first ledger — the 38% opens the page</div><div class="dv-card wf">
+  <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px"><span class="m">Birchlogic · FinOps & GreenOps</span><span class="gbtn">Book a first pass</span></div>
+  <div style="padding:24px 14px 18px;border-top:1px solid #e2dbc9">
+    <div style="display:flex;align-items:baseline;gap:12px"><div class="h" style="font-size:44px;color:#3f8f4f">−38%</div><div style="max-width:170px"><span class="m mut">Average cloud spend reduction across engagements</span></div></div>
+    <div class="h" style="font-size:15px;margin-top:12px">Don't trust us. <span style="font-style:italic;font-weight:300">Trust our numbers.</span></div>
+    <div style="margin-top:8px;width:65%"><div class="tl"></div><div class="tl" style="width:80%"></div></div>
+  </div>
+  <div style="padding:0 14px 8px"><span class="note" style="color:#3f8f4f">↑ no hero image — the number is the hero. site's own tagline verbatim as the headline.</span></div>
+  <div class="hatch" style="position:relative;height:130px;overflow:hidden">
+    <span class="m" style="position:absolute;top:8px;left:8px;background:#FBF9F4;padding:2px 5px">img — overhead flat lay: printed cloud invoices, annotated</span>
+    <span style="position:absolute;top:58px;left:70px;width:100px;border-top:1px solid #2a2721;transform:rotate(15deg)"></span>
+    <span class="m" style="position:absolute;top:44px;left:160px;background:#FBF9F4;padding:1px 4px">IDLE · $4.2K/mo</span>
+    <span class="m" style="position:absolute;top:92px;left:220px;background:#FBF9F4;padding:1px 4px">RESERVED?</span>
+  </div>
+  <div style="padding:6px 14px"><span class="note" style="color:#3f8f4f">hairline annotations over the bills — a reading in progress, drawn in-page</span></div>
+  <div style="padding:14px;border-top:1px solid #e2dbc9;margin-top:6px"><span class="m mut">Tick what sounds familiar</span>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px 14px;margin-top:8px">
+      <div style="display:flex;gap:7px;align-items:center"><span style="width:8px;height:8px;border:1.2px solid #2a2721"></span><span class="m">Unpredictable spend</span></div>
+      <div style="display:flex;gap:7px;align-items:center"><span style="width:8px;height:8px;border:1.2px solid #2a2721;background:#3f8f4f"></span><span class="m">No visibility</span></div>
+      <div style="display:flex;gap:7px;align-items:center"><span style="width:8px;height:8px;border:1.2px solid #2a2721"></span><span class="m">Multi-cloud chaos</span></div>
+      <div style="display:flex;gap:7px;align-items:center"><span style="width:8px;height:8px;border:1.2px solid #2a2721"></span><span class="m">Budget misaligned</span></div>
+      <div style="display:flex;gap:7px;align-items:center"><span style="width:8px;height:8px;border:1.2px solid #2a2721"></span><span class="m">No forecasts</span></div>
+      <div style="display:flex;gap:7px;align-items:center"><span style="width:8px;height:8px;border:1.2px solid #2a2721"></span><span class="m">ROI unprovable</span></div>
+    </div>
+    <div style="margin-top:6px"><span class="note" style="color:#3f8f4f">interactive: 2+ ticks reveals "you're at the right place →"</span></div>
+  </div>
+  <div style="padding:14px;border-top:1px solid #e2dbc9"><span class="m mut">Our services</span>
+    <div style="display:grid;grid-template-columns:1.4fr 60px 60px;gap:6px;margin-top:8px;border-top:1.2px solid #2a2721">
+      <span class="m" style="padding:6px 0;border-bottom:1px solid #e2dbc9;color:#3f8f4f">Engagement</span><span class="m" style="padding:6px 0;border-bottom:1px solid #e2dbc9;color:#3f8f4f">Duration</span><span class="m" style="padding:6px 0;border-bottom:1px solid #e2dbc9;color:#3f8f4f">Avg result</span>
+      <span class="m" style="padding:6px 0;border-bottom:1px dotted #cfc8b6">Cloud Bill First Pass</span><span class="m mut" style="padding:6px 0;border-bottom:1px dotted #cfc8b6">1 day</span><span class="m" style="padding:6px 0;border-bottom:1px dotted #cfc8b6">−20%</span>
+      <span class="m" style="padding:6px 0;border-bottom:1px dotted #cfc8b6">Cloud Financial Mgmt</span><span class="m mut" style="padding:6px 0;border-bottom:1px dotted #cfc8b6">2 months</span><span class="m" style="padding:6px 0;border-bottom:1px dotted #cfc8b6">−50–60%</span>
+      <span class="m" style="padding:6px 0">Green Cloud Mgmt</span><span class="m mut" style="padding:6px 0">New</span><span class="m" style="padding:6px 0">CO₂ ↓</span>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:14px;border-top:1px solid #e2dbc9;text-align:center">
+    <div><div class="h" style="font-size:13px">38%</div><span class="m mut">Savings</span></div>
+    <div><div class="h" style="font-size:13px">···</div><span class="m mut">Eco initiatives</span></div>
+    <div><div class="h" style="font-size:13px">···</div><span class="m mut">Hours</span></div>
+    <div><div class="h" style="font-size:13px">···</div><span class="m mut">Years</span></div>
+  </div>
+  <div style="padding:16px 14px;border-top:1.2px solid #2a2721;display:flex;justify-content:space-between;align-items:center"><div class="h" style="font-size:13px">Decrease it ASAP.</div><span class="btn">Book the 1-day first pass →</span></div>
+  <div style="display:flex;justify-content:space-between;padding:9px 14px;border-top:1px solid #e2dbc9"><span class="m mut">© Birchlogic</span><span class="m mut">Services · Contact</span></div>
+</div></div>
+
+</div>
+<p class="dv-next">Try next: "take <a class="dv-oid" href="#2a">2a</a> to hi-fi with the real 8 pains" · "merge <a class="dv-oid" href="#2c">2c</a>'s numbers opener into <a class="dv-oid" href="#2b">2b</a>" · "rewrite the copy, it's rough on the live site"</p>
+</section>
+<section class="dv-turn" id="t1">
+<div class="dv-thd"><a class="dv-tid" href="#t1">1</a><span class="dv-tname">The Security Read · landing page — four structures from the Axiom / Apogee teardowns</span></div>
+<div class="dv-opts">
+
+<div class="dv-opt" id="1a"><div class="dv-olabel"><a class="dv-oid" href="#1a">1a</a>Split panel · Axiom logic — conversion zone left, image window right</div><div class="dv-card wf">
+  <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-bottom:1px solid #e2dbc9"><span class="m">The Security Read</span><div style="display:flex;gap:10px;align-items:center"><span class="m mut">Method</span><span class="m mut">Sample</span><span class="btn">Request a read</span></div></div>
+  <div style="display:grid;grid-template-columns:46fr 54fr;height:300px">
+    <div style="display:flex;flex-direction:column;padding:20px 14px 12px">
+      <span class="m" style="color:#B8862F">Security assessment · regulated finance</span>
+      <div class="h" style="font-size:19px;margin-top:10px">READ YOUR SECURITY<br><span style="font-style:italic;font-weight:300">the way the regulator will,</span><br>BEFORE THEY DO</div>
+      <div style="margin-top:10px;width:88%"><div class="tl"></div><div class="tl" style="width:74%"></div></div>
+      <div style="display:flex;gap:8px;margin-top:12px;align-items:center"><span class="btn">Request a read</span><span class="m mut" style="text-decoration:underline">See a sample →</span></div>
+      <div style="margin-top:auto;border-top:1px solid #e2dbc9;padding-top:8px"><span class="m mut">For MAS · RBI · SEBI-regulated teams</span></div>
+    </div>
+    <div class="hatch" style="position:relative;overflow:hidden">
+      <span class="m" style="position:absolute;top:8px;left:8px;background:#FBF9F4;padding:2px 5px">img · dir A — doc stack, raking light</span>
+      <div style="position:absolute;top:40px;right:10px;width:120px;display:flex;flex-direction:column;gap:5px"><div style="border-top:2px dotted #8a8375;width:100%"></div><div style="border-top:2px dotted #8a8375;width:80%;margin-left:auto"></div><div style="border-top:2px dotted #8a8375;width:60%;margin-left:auto"></div></div>
+      <div style="position:absolute;left:12px;bottom:14px;width:150px;background:rgba(251,249,244,.75);border:1px solid #cfc8b6;padding:8px">
+        <div style="display:grid;grid-template-columns:repeat(4,4px);gap:2px;margin-bottom:5px"><span style="background:#2a2721;width:4px;height:4px"></span><span style="border:1px solid #2a2721;width:4px;height:4px"></span><span style="background:#2a2721;width:4px;height:4px"></span><span style="border:1px solid #2a2721;width:4px;height:4px"></span></div>
+        <span class="m">Redaction density</span>
+        <div class="tl" style="margin-top:5px"></div><div class="tl" style="width:70%"></div>
+      </div>
+    </div>
+  </div>
+  <div style="padding:6px 14px"><span class="note">↑ image full-bleed, hard cut at panel edge — no radius, no shadow. dot-contour bands = SVG in the page, not in the image. static card, no carousel. mono strip replaces logo marquee (NDA).</span></div>
+  <div style="border-top:1px solid #cfc8b6;border-bottom:1px solid #cfc8b6;position:relative;padding:12px 0;text-align:center;margin-top:6px">
+    <span style="position:absolute;left:0;top:50%;width:6px;border-top:1px solid #2a2721"></span><span style="position:absolute;right:0;top:50%;width:6px;border-top:1px solid #2a2721"></span>
+    <div class="m mut">The problem</div>
+    <div class="m" style="font-size:10px;margin-top:6px;letter-spacing:.1em">YOUR LAST AUDIT WAS A CHECKLIST.<br>THE REGULATOR'S WON'T BE.</div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:14px">
+    <div class="tile"><div class="draw" style="height:56px"></div><div class="m" style="margin-top:7px">Findings without reading</div><div class="tl" style="width:85%"></div></div>
+    <div class="tile"><div class="draw" style="height:56px"></div><div class="m" style="margin-top:7px">Scanner noise</div><div class="tl" style="width:80%"></div></div>
+    <div class="tile"><div class="draw" style="height:56px"></div><div class="m" style="margin-top:7px">Audit-day surprises</div><div class="tl" style="width:70%"></div></div>
+    <div class="tile"><div class="draw" style="height:56px"></div><div class="m" style="margin-top:7px">Unowned risk</div><div class="tl" style="width:88%"></div></div>
+  </div>
+  <div style="padding:0 14px"><span class="note">2×2 pale tiles, hairline iso drawings — Axiom section two verbatim device</span></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;padding:16px 14px;border-top:1px solid #e2dbc9;margin-top:10px">
+    <div><span class="m" style="color:#B8862F">01</span><div class="m" style="margin-top:4px">We read</div><div class="tl"></div><div class="tl" style="width:70%"></div></div>
+    <div><span class="m" style="color:#B8862F">02</span><div class="m" style="margin-top:4px">We score</div><div class="tl"></div><div class="tl" style="width:75%"></div></div>
+    <div><span class="m" style="color:#B8862F">03</span><div class="m" style="margin-top:4px">You act</div><div class="tl"></div><div class="tl" style="width:65%"></div></div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1.2fr;gap:12px;padding:14px;border-top:1px solid #e2dbc9;align-items:center">
+    <div style="background:#fff;border:1px solid #cfc8b6;padding:12px 10px;box-shadow:2px 2px 0 #e2dbc9">
+      <span style="display:inline-block;background:#B8862F;width:16px;height:5px"></span>
+      <div class="tl" style="margin-top:8px"></div><div class="red" style="width:60%;margin:4px 0"></div><div class="tl" style="width:90%"></div><div class="tl"></div><div class="red" style="width:40%;margin:4px 0"></div><div class="tl" style="width:75%"></div><div class="tl" style="width:85%"></div>
+    </div>
+    <div><span class="m mut">The deliverable</span><div class="h" style="font-size:13px;margin-top:5px">A read, not a report dump</div><div class="tl" style="margin-top:7px"></div><div class="tl" style="width:80%"></div><div class="tl" style="width:88%"></div></div>
+  </div>
+  <div class="dhatch" style="padding:18px 14px;text-align:center"><div class="h" style="color:#FBF9F4;font-size:14px">Know what they'll find.</div><span class="btn" style="background:#B8862F;color:#1d1a14;margin-top:9px">Request a read</span></div>
+  <div style="display:flex;justify-content:space-between;padding:9px 14px"><span class="m mut">© The Security Read</span><span class="m mut">Contact · Method</span></div>
+</div></div>
+
+<div class="dv-opt" id="1b"><div class="dv-olabel"><a class="dv-oid" href="#1b">1b</a>Full-bleed dark · Apogee logic — image is the page, type in the quiet</div><div class="dv-card wf">
+  <div class="dhatch" style="position:relative;height:400px;overflow:hidden">
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px"><span class="m" style="color:#FBF9F4">The Security Read</span><div style="display:flex;gap:10px;align-items:center"><span class="m" style="color:rgba(251,249,244,.6)">Method</span><span class="gbtn" style="border-color:#FBF9F4;color:#FBF9F4">Request</span></div></div>
+    <div style="text-align:center;margin-top:26px">
+      <span class="m" style="display:inline-block;border:1px solid rgba(251,249,244,.4);border-radius:20px;padding:3px 9px;color:rgba(251,249,244,.8)"><span style="display:inline-block;width:4px;height:4px;background:#B8862F;border-radius:50%;margin-right:4px"></span>Sample read available</span>
+      <div class="h" style="color:#FBF9F4;font-size:21px;font-style:italic;font-weight:300;margin-top:12px">The parts they remove<br>are the parts<br>that matter.</div>
+    </div>
+    <div style="position:absolute;left:50%;transform:translateX(-50%);bottom:-30px;width:250px;background:#efe8d8;border:1px solid #cfc8b6;padding:14px 12px;opacity:.92">
+      <span style="display:inline-block;background:#B8862F;width:14px;height:4px"></span>
+      <div class="tl" style="margin-top:8px;width:50%"></div><div class="red" style="width:70%;margin:5px 0"></div><div class="tl"></div><div class="tl" style="width:85%"></div><div class="red" style="width:45%;margin:5px 0"></div><div class="tl" style="width:90%"></div><div class="tl" style="width:60%"></div>
+    </div>
+    <span class="m" style="position:absolute;top:52px;left:8px;background:rgba(251,249,244,.15);color:#FBF9F4;padding:2px 5px">img · dir A field, near-black</span>
+  </div>
+  <div style="padding:40px 14px 6px"><span class="note">↑ no split — one dark image field, serif type dead-centre in the reserved quiet (no scrim). deliverable page floats where Apogee floats its dashboard, tinted into the image, cropped by hero edge. grain applied globally, last.</span></div>
+  <div style="border-top:1px solid #cfc8b6;border-bottom:1px solid #cfc8b6;text-align:center;padding:12px 0;margin-top:8px"><div class="m mut">The problem</div><div class="m" style="font-size:10px;margin-top:6px">EVERYONE SCANS. NOBODY READS.</div></div>
+  <div style="padding:14px">
+    <div style="display:grid;grid-template-columns:20px 1fr;gap:10px;align-items:start;border-bottom:1px dotted #cfc8b6;padding:10px 0"><span class="m" style="color:#B8862F">01</span><div><div class="m">Scope in one call</div><div class="tl" style="width:80%"></div></div></div>
+    <div style="display:grid;grid-template-columns:20px 1fr;gap:10px;align-items:start;border-bottom:1px dotted #cfc8b6;padding:10px 0"><span class="m" style="color:#B8862F">02</span><div><div class="m">The read · 2 weeks</div><div class="tl" style="width:88%"></div><div class="tl" style="width:60%"></div></div></div>
+    <div style="display:grid;grid-template-columns:20px 1fr;gap:10px;align-items:start;padding:10px 0"><span class="m" style="color:#B8862F">03</span><div><div class="m">Walkthrough with your board</div><div class="tl" style="width:75%"></div></div></div>
+  </div>
+  <div style="padding:0 14px 12px"><span class="note">method as a vertical timeline — reads like an engagement letter, not a features grid</span></div>
+  <div style="display:flex;gap:10px;padding:14px;border-top:1px solid #e2dbc9">
+    <div style="flex:1;background:#fff;border:1px solid #cfc8b6;padding:10px 8px"><div class="tl" style="width:55%"></div><div class="red" style="width:65%;margin:4px 0"></div><div class="tl"></div><div class="tl" style="width:70%"></div></div>
+    <div style="flex:1;background:#fff;border:1px solid #cfc8b6;padding:10px 8px"><div class="tl" style="width:45%"></div><div class="tl"></div><div class="red" style="width:50%;margin:4px 0"></div><div class="tl" style="width:80%"></div></div>
+    <div style="width:70px;display:flex;align-items:center"><span class="note">two real sample spreads, redacted — proof without fake KPIs</span></div>
+  </div>
+  <div style="padding:14px;border-top:1px solid #e2dbc9"><span class="m mut">Who it's for</span>
+    <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap"><span class="gbtn">Bank CISO</span><span class="gbtn">NBFC risk head</span><span class="gbtn">MAS-licensed CTO</span></div>
+  </div>
+  <div class="dhatch" style="padding:18px 14px;text-align:center"><div class="h" style="color:#FBF9F4;font-size:14px;font-style:italic;font-weight:300">Read it before they do.</div><span class="btn" style="background:#B8862F;color:#1d1a14;margin-top:9px">Request a read</span></div>
+  <div style="display:flex;justify-content:space-between;padding:9px 14px"><span class="m mut">© The Security Read</span><span class="m mut">Contact</span></div>
+</div></div>
+
+<div class="dv-opt" id="1c"><div class="dv-olabel"><a class="dv-oid" href="#1c">1c</a>The drawn archive · Direction C — no photography, editorial index</div><div class="dv-card wf">
+  <div style="display:flex;justify-content:space-between;align-items:baseline;padding:12px 14px;border-bottom:1.2px solid #2a2721"><span class="m">The Security Read</span><span class="m mut">Est. reading time · 4 min</span></div>
+  <div style="display:grid;grid-template-columns:55fr 45fr;gap:12px;padding:18px 14px 10px">
+    <div>
+      <span class="m" style="color:#B8862F">A note on method</span>
+      <div class="h" style="font-size:18px;margin-top:8px">We read your security<br><span style="font-style:italic;font-weight:300">like a regulator would.</span></div>
+      <div style="margin-top:10px"><div class="tl"></div><div class="tl" style="width:82%"></div><div class="tl" style="width:90%"></div></div>
+      <span class="btn" style="margin-top:12px">Request a read</span>
+    </div>
+    <div class="draw" style="position:relative;min-height:170px"><span class="m" style="position:absolute;top:6px;left:6px;background:#FBF9F4;padding:2px 5px">SVG · iso archive shelving, 1px lines, one drawer open — animatable line-by-line</span></div>
+  </div>
+  <div style="padding:0 14px 8px"><span class="note">↑ no image model anywhere. hero drawing = Axiom's section-two device promoted to hero scale. quietest option; most credible register for a document buyer.</span></div>
+  <div style="border-top:1.2px solid #2a2721;margin:6px 14px 0;padding:10px 0">
+    <div style="display:flex;align-items:baseline;gap:6px;padding:5px 0"><span class="m" style="color:#B8862F">01</span><span class="m">The problem</span><span style="flex:1;border-bottom:1px dotted #8a8375"></span><span class="m mut">↓</span></div>
+    <div style="display:flex;align-items:baseline;gap:6px;padding:5px 0"><span class="m" style="color:#B8862F">02</span><span class="m">The method</span><span style="flex:1;border-bottom:1px dotted #8a8375"></span><span class="m mut">↓</span></div>
+    <div style="display:flex;align-items:baseline;gap:6px;padding:5px 0"><span class="m" style="color:#B8862F">03</span><span class="m">The deliverable</span><span style="flex:1;border-bottom:1px dotted #8a8375"></span><span class="m mut">↓</span></div>
+    <div style="display:flex;align-items:baseline;gap:6px;padding:5px 0"><span class="m" style="color:#B8862F">04</span><span class="m">Request</span><span style="flex:1;border-bottom:1px dotted #8a8375"></span><span class="m mut">↓</span></div>
+  </div>
+  <div style="padding:0 14px"><span class="note">contents strip with dotted leaders — the page presents itself as a document</span></div>
+  <div style="display:grid;grid-template-columns:34px 1fr;gap:10px;padding:16px 14px;border-top:1px solid #e2dbc9;margin-top:8px">
+    <span class="m" style="font-size:14px;color:#e2dbc9">01</span>
+    <div><div class="m">The problem</div><div class="tl" style="margin-top:6px"></div><div class="tl" style="width:85%"></div><div class="tl" style="width:92%"></div><div class="tl" style="width:60%"></div>
+    <div style="display:flex;gap:8px;margin-top:10px"><div class="tile" style="flex:1"><div class="draw" style="height:40px"></div><div class="tl" style="width:70%;margin-top:6px"></div></div><div class="tile" style="flex:1"><div class="draw" style="height:40px"></div><div class="tl" style="width:60%;margin-top:6px"></div></div></div></div>
+  </div>
+  <div style="display:grid;grid-template-columns:34px 1fr;gap:10px;padding:16px 14px;border-top:1px solid #e2dbc9">
+    <span class="m" style="font-size:14px;color:#e2dbc9">02</span>
+    <div><div class="m">The method</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:8px"><div><span class="m" style="color:#B8862F">Read</span><div class="tl"></div></div><div><span class="m" style="color:#B8862F">Score</span><div class="tl"></div></div><div><span class="m" style="color:#B8862F">Walk through</span><div class="tl"></div></div></div></div>
+  </div>
+  <div style="display:grid;grid-template-columns:34px 1fr;gap:10px;padding:16px 14px;border-top:1px solid #e2dbc9">
+    <span class="m" style="font-size:14px;color:#e2dbc9">03</span>
+    <div style="display:grid;grid-template-columns:1fr 90px;gap:10px"><div><div class="m">The deliverable</div><div class="tl" style="margin-top:6px"></div><div class="tl" style="width:80%"></div><div class="tl" style="width:88%"></div></div>
+    <div style="background:#fff;border:1px solid #cfc8b6;padding:8px 7px"><span style="display:inline-block;background:#B8862F;width:12px;height:4px"></span><div class="tl" style="margin-top:6px"></div><div class="red" style="width:55%;margin:3px 0"></div><div class="tl" style="width:85%"></div><div class="red" style="width:40%;margin:3px 0"></div><div class="tl"></div></div></div>
+  </div>
+  <div style="display:grid;grid-template-columns:34px 1fr;gap:10px;padding:16px 14px;border-top:1px solid #e2dbc9">
+    <span class="m" style="font-size:14px;color:#e2dbc9">04</span>
+    <div><div class="m">Request a read</div>
+      <div style="margin-top:10px;display:flex;flex-direction:column;gap:12px;max-width:230px"><div style="border-bottom:1px solid #2a2721;padding-bottom:2px"><span class="m mut">Name</span></div><div style="border-bottom:1px solid #2a2721;padding-bottom:2px"><span class="m mut">Work email</span></div><div style="border-bottom:1px solid #2a2721;padding-bottom:2px"><span class="m mut">Institution type</span></div><span class="btn" style="align-self:flex-start">Submit</span></div>
+      <div style="margin-top:8px"><span class="note">CTA styled as a paper form — the page ends the way the engagement begins</span></div>
+    </div>
+  </div>
+  <div style="display:flex;justify-content:space-between;padding:9px 14px;border-top:1.2px solid #2a2721"><span class="m mut">© The Security Read</span><span class="m mut">Contact</span></div>
+</div></div>
+
+<div class="dv-opt" id="1d"><div class="dv-olabel"><a class="dv-oid" href="#1d">1d</a>Text-first ledger · Direction B band — type opens, image is a full-width interlude</div><div class="dv-card wf">
+  <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px"><span class="m">The Security Read</span><span class="gbtn">Request a read</span></div>
+  <div style="padding:26px 14px 20px;border-top:1px solid #e2dbc9">
+    <span class="m" style="color:#B8862F">Security assessment · regulated finance</span>
+    <div class="h" style="font-size:24px;font-style:italic;font-weight:300;margin-top:10px">Your security has<br>already been written.<br><span style="font-weight:500;font-style:normal">We read it first.</span></div>
+    <div style="margin-top:12px;width:70%"><div class="tl"></div><div class="tl" style="width:80%"></div></div>
+  </div>
+  <div style="padding:0 14px 8px"><span class="note">↑ opener is type only on paper — no hero image at all. boldest departure from both references; the image arrives below as evidence, not spectacle.</span></div>
+  <div class="hatch" style="position:relative;height:150px;overflow:hidden">
+    <span class="m" style="position:absolute;top:8px;left:8px;background:#FBF9F4;padding:2px 5px">img · dir B — overhead flat lay, 5 documents</span>
+    <span style="position:absolute;top:60px;left:60px;width:110px;border-top:1px solid #2a2721;transform:rotate(18deg)"></span>
+    <span style="position:absolute;top:90px;left:180px;width:90px;border-top:1px solid #2a2721;transform:rotate(-12deg)"></span>
+    <span class="m" style="position:absolute;top:48px;left:150px;background:#FBF9F4;padding:1px 4px">EXHIBIT 3</span>
+    <span class="m" style="position:absolute;top:104px;left:250px;background:#FBF9F4;padding:1px 4px">§ 4.2</span>
+  </div>
+  <div style="padding:6px 14px"><span class="note">hairline connectors + tiny mono labels drawn in-page over the flat lay — "a reading in progress"</span></div>
+  <div style="display:grid;grid-template-columns:3px 1fr;gap:12px;padding:16px 14px;border-top:1px solid #e2dbc9;margin-top:6px">
+    <span style="background:#B8862F"></span>
+    <div><span class="m mut">The problem</span><div class="h" style="font-size:13px;margin-top:5px">Your last audit was a checklist</div><div class="tl" style="margin-top:7px"></div><div class="tl" style="width:85%"></div><div class="tl" style="width:90%"></div><div class="tl" style="width:55%"></div></div>
+  </div>
+  <div style="padding:14px;border-top:1px solid #e2dbc9">
+    <span class="m mut">The method</span>
+    <div style="display:grid;grid-template-columns:50px 1fr 1fr;gap:6px;margin-top:8px;border-top:1.2px solid #2a2721">
+      <span class="m" style="padding:6px 0;border-bottom:1px solid #e2dbc9;color:#B8862F">Step</span><span class="m" style="padding:6px 0;border-bottom:1px solid #e2dbc9;color:#B8862F">What we do</span><span class="m" style="padding:6px 0;border-bottom:1px solid #e2dbc9;color:#B8862F">You get</span>
+      <span class="m" style="padding:6px 0;border-bottom:1px dotted #cfc8b6">01</span><div style="padding:6px 0;border-bottom:1px dotted #cfc8b6"><div class="tl" style="width:80%"></div></div><div style="padding:6px 0;border-bottom:1px dotted #cfc8b6"><div class="tl" style="width:60%"></div></div>
+      <span class="m" style="padding:6px 0;border-bottom:1px dotted #cfc8b6">02</span><div style="padding:6px 0;border-bottom:1px dotted #cfc8b6"><div class="tl" style="width:70%"></div></div><div style="padding:6px 0;border-bottom:1px dotted #cfc8b6"><div class="tl" style="width:75%"></div></div>
+      <span class="m" style="padding:6px 0">03</span><div style="padding:6px 0"><div class="tl" style="width:85%"></div></div><div style="padding:6px 0"><div class="tl" style="width:50%"></div></div>
+    </div>
+    <div style="margin-top:6px"><span class="note">method as a ruled table — ledger register, zero marketing furniture</span></div>
+  </div>
+  <div style="display:grid;grid-template-columns:1.2fr 1fr;gap:12px;padding:14px;border-top:1px solid #e2dbc9;align-items:center">
+    <div><span class="m mut">The deliverable</span><div class="tl" style="margin-top:7px"></div><div class="tl" style="width:82%"></div><div class="tl" style="width:90%"></div></div>
+    <div style="background:#fff;border:1px solid #cfc8b6;padding:10px 9px;box-shadow:2px 2px 0 #e2dbc9"><span style="display:inline-block;background:#B8862F;width:14px;height:4px"></span><div class="tl" style="margin-top:7px"></div><div class="red" style="width:60%;margin:4px 0"></div><div class="tl" style="width:85%"></div><div class="tl"></div><div class="red" style="width:45%;margin:4px 0"></div><div class="tl" style="width:70%"></div></div>
+  </div>
+  <div style="padding:18px 14px;border-top:1.2px solid #2a2721;display:flex;justify-content:space-between;align-items:center"><div class="h" style="font-size:13px">Request a read.</div><span class="btn">Start →</span></div>
+  <div style="display:flex;justify-content:space-between;padding:9px 14px;border-top:1px solid #e2dbc9"><span class="m mut">© The Security Read</span><span class="m mut">Method · Contact</span></div>
+</div></div>
+
+</div>
+<p class="dv-next">Try next: "riff on <a class="dv-oid" href="#1a">1a</a> with the drawn hero from <a class="dv-oid" href="#1c">1c</a>" · "take <a class="dv-oid" href="#1d">1d</a> to hi-fi" · "show mobile versions of <a class="dv-oid" href="#1a">1a</a> and <a class="dv-oid" href="#1b">1b</a>"</p>
+</section>
+</x-dc>
+</body>
+</html>

@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F1EFE8}
+a{color:#111}a:hover{color:#ce3850}
+@keyframes bc-card{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</helmet>
+<div style="position:relative;width:100%;height:100vh;min-height:560px;overflow:hidden;background:#ce3850">
+  <canvas ref="{{ cvRef }}" style="position:absolute;inset:0;display:block;image-rendering:pixelated"></canvas>
+  <canvas ref="{{ cvTRef }}" style="position:absolute;inset:0;display:block;pointer-events:none"></canvas>
+  <div style="position:absolute;top:20px;right:22px;font:500 9px 'IBM Plex Mono';letter-spacing:.16em;color:rgba(241,239,232,.6)">THE INDEX · TWENTY-TWO CONTROLS · SCORED</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:900,&quot;height&quot;:760},&quot;pixelSize&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:2,&quot;min&quot;:1,&quot;max&quot;:4,&quot;step&quot;:1,&quot;unit&quot;:&quot;px&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Dither&quot;}}">
+class Component extends DCLogic {
+  cvRef = React.createRef();
+  cvTRef = React.createRef();
+  LABELS = ['GRC', 'APP SEC', 'DEVSECOPS', 'IAM', 'SOC', 'VULN MGMT', 'CLOUD', 'TRAINING', 'PRIVACY'];
+  componentDidMount() {
+    const cv = this.cvRef.current;
+    if (!cv) return;
+    this.ctx = cv.getContext('2d');
+    this.t0 = performance.now();
+    this.reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    this.mx = -1; this.my = -1;
+    this.lifts = new Float32Array(9);
+    this.hitsNow = [];
+    this.onMove = e => {
+      const r = cv.getBoundingClientRect();
+      this.mx = (e.clientX - r.left) / r.width;
+      this.my = (e.clientY - r.top) / r.height;
+    };
+    this.onLeave = () => { this.mx = -1; this.my = -1; };
+    cv.parentElement.addEventListener('mousemove', this.onMove);
+    cv.parentElement.addEventListener('mouseleave', this.onLeave);
+    this.dust = [];
+    for (let i = 0; i < 130; i++) {
+      this.dust.push({ a: Math.random(), p: Math.random() * 2 - 1, sp: 0.008 + Math.random() * 0.02, ph: Math.random() * 6.28, sz: Math.random() < 0.2 ? 2 : 1 });
+    }
+    this.ro = new ResizeObserver(() => this.resize());
+    this.ro.observe(cv.parentElement);
+    this.resize();
+    const loop = () => { this.raf = requestAnimationFrame(loop); this.draw(); };
+    loop();
+  }
+  componentWillUnmount() {
+    cancelAnimationFrame(this.raf);
+    if (this.ro) this.ro.disconnect();
+    const cv = this.cvRef.current;
+    if (cv && cv.parentElement) {
+      cv.parentElement.removeEventListener('mousemove', this.onMove);
+      cv.parentElement.removeEventListener('mouseleave', this.onLeave);
+    }
+  }
+  componentDidUpdate() { if (this.ctx) this.resize(); }
+  resize() {
+    const cv = this.cvRef.current, p = cv.parentElement;
+    const px = this.props.pixelSize ?? 2;
+    this.W = p.clientWidth; this.H = p.clientHeight;
+    this.bw = Math.ceil(this.W / px); this.bh = Math.ceil(this.H / px);
+    cv.width = this.bw; cv.height = this.bh;
+    cv.style.width = this.W + 'px'; cv.style.height = this.H + 'px';
+    this.img = this.ctx.createImageData(this.bw, this.bh);
+    this.scene = new Float32Array(this.bw * this.bh);
+    this.lightM = new Float32Array(this.bw * this.bh);
+    this.pxc = px;
+    const ct = this.cvTRef.current;
+    if (ct) {
+      const d = Math.min(window.devicePixelRatio || 1, 2);
+      ct.width = this.W * d; ct.height = this.H * d;
+      ct.style.width = this.W + 'px'; ct.style.height = this.H + 'px';
+      this.ctxT = ct.getContext('2d');
+      this.ctxT.setTransform(d, 0, 0, d, 0, 0);
+    }
+  }
+  fillPoly(pts, val, lit, target) {
+    const s = this.scene, L = this.lightM, bw = this.bw, bh = this.bh;
+    let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9;
+    for (const p of pts) { x0 = Math.min(x0, p[0]); y0 = Math.min(y0, p[1]); x1 = Math.max(x1, p[0]); y1 = Math.max(y1, p[1]); }
+    x0 = Math.max(0, Math.floor(x0)); y0 = Math.max(0, Math.floor(y0));
+    x1 = Math.min(bw - 1, Math.ceil(x1)); y1 = Math.min(bh - 1, Math.ceil(y1));
+    const n = pts.length;
+    for (let y = y0; y <= y1; y++) {
+      for (let x = x0; x <= x1; x++) {
+        let inside = true, sign = 0;
+        for (let i = 0; i < n; i++) {
+          const a = pts[i], b = pts[(i + 1) % n];
+          const cr = (b[0] - a[0]) * (y - a[1]) - (b[1] - a[1]) * (x - a[0]);
+          if (cr !== 0) { const sg = cr > 0 ? 1 : -1; if (sign === 0) sign = sg; else if (sg !== sign) { inside = false; break; } }
+        }
+        if (!inside) continue;
+        const idx = y * bw + x;
+        if (target) { target[idx] = 1; s[idx] = val; }
+        else { s[idx] = lit ? val * (0.65 + 0.35 * L[idx]) : val; }
+      }
+    }
+  }
+  rot(p, cx, cy, c, sn) { const dx = p[0] - cx, dy = p[1] - cy; return [cx + dx * c - dy * sn, cy + dx * sn + dy * c]; }
+  draw() {
+    const ctx = this.ctx, bw = this.bw, bh = this.bh;
+    if (!bw) return;
+    const s = this.scene, L = this.lightM;
+    const el = (performance.now() - this.t0) / 1000;
+    const t = this.reduced ? 0 : el;
+    const ax = -bw * 0.05, ay = -bh * 0.12;
+    let dx = 0.78, dy = 0.63;
+    const dl = Math.hypot(dx, dy); dx /= dl; dy /= dl;
+    for (let y = 0; y < bh; y++) {
+      for (let x = 0; x < bw; x++) {
+        const rx = x - ax, ry = y - ay;
+        const along = rx * dx + ry * dy;
+        const perp = Math.abs(rx * dy - ry * dx);
+        const wdt = bh * 0.26 + along * 0.07;
+        let f = 1 - perp / wdt;
+        f = f < 0 ? 0 : f * f * (3 - 2 * f);
+        const streak = 0.9 + 0.1 * Math.sin(perp * 0.55 + t * 0.7);
+        const cxn = (x - bw * 0.5) / (bw * 0.62), cyn = (y - bh * 0.5) / (bh * 0.62);
+        const vig = 1 - 0.55 * (cxn * cxn + cyn * cyn);
+        const idx = y * bw + x;
+        L[idx] = f;
+        s[idx] = (0.08 + 0.34 * f * streak) * Math.max(0.3, vig);
+      }
+    }
+    const maxAlong = Math.hypot(bw, bh) * 1.15;
+    for (const p of this.dust) {
+      const a = ((p.a + t * p.sp) % 1) * maxAlong;
+      const wdt = bh * 0.26 + a * 0.07;
+      const off = p.p * wdt * 0.85;
+      const x = Math.round(ax + dx * a - dy * off);
+      const y = Math.round(ay + dy * a + dx * off);
+      if (x < 0 || y < 0 || x >= bw || y >= bh) continue;
+      const fl = 1 - Math.abs(p.p);
+      const tw = 0.6 + 0.4 * Math.sin(t * 2.2 + p.ph);
+      const v = (0.45 + 0.5 * fl) * tw;
+      const idx = y * bw + x;
+      if (v > s[idx]) s[idx] = v;
+      if (p.sz === 2 && x + 1 < bw && v * 0.8 > s[idx + 1]) s[idx + 1] = v * 0.8;
+    }
+    let hov = -1;
+    if (!this.reduced && this.mx >= 0) {
+      const mxB = this.mx * bw, myB = this.my * bh;
+      for (const hb of this.hitsNow) if (mxB >= hb.x0 && mxB <= hb.x1 && myB >= hb.y0 && myB <= hb.y1) hov = hb.i;
+    }
+    for (let li = 0; li < 9; li++) this.lifts[li] += ((li === hov ? 1 : 0) - this.lifts[li]) * 0.16;
+    this.cvRef.current.style.cursor = hov >= 0 ? 'pointer' : 'default';
+    this.hitsNow = [];
+    const cx = bw * 0.56, cy = bh * 0.54 + (this.reduced ? 0 : Math.sin(t * 0.55) * 3);
+    const ang = this.reduced ? 0 : Math.sin(t * 0.35) * 0.04;
+    const c = Math.cos(ang), sn = Math.sin(ang);
+    const fw = bw * 0.5, fh = fw * 0.3;
+    const dvx = -fw * 0.26, dvy = -fw * 0.14;
+    const R = p => this.rot(p, cx, cy + fh / 2, c, sn);
+    const F1 = [cx - fw / 2, cy], F2 = [cx + fw / 2, cy], F3 = [cx + fw / 2, cy + fh], F4 = [cx - fw / 2, cy + fh];
+    this.fillPoly([R([F1[0], F1[1]]), R([F1[0] + dvx, F1[1] + dvy]), R([F2[0] + dvx, F2[1] + dvy]), R([F2[0], F2[1]])], 0.03, false);
+    const hashes = [0.3, 0.8, 0.55, 0.15, 0.7, 0.45, 0.9, 0.25, 0.6];
+    this.tabsNow = [];
+    for (let i = 8; i >= 0; i--) {
+      const fi = 0.07 + i * 0.105;
+      const bcx = cx + dvx * fi, bcy = cy + dvy * fi;
+      const cwd = fw * (0.82 - 0.06 * fi);
+      const hero = i === 1;
+      const chh = hero ? fw * 0.24 : fw * (0.13 + 0.03 * hashes[i]);
+      const tilt = (hashes[i] - 0.5) * 3;
+      const lift = this.lifts[i] * fw * 0.11;
+      const topY = bcy - chh - lift;
+      const p1 = R([bcx - cwd / 2 + tilt, topY]), p2 = R([bcx + cwd / 2 + tilt, topY]), p3 = R([bcx + cwd / 2, bcy + 3]), p4 = R([bcx - cwd / 2, bcy + 3]);
+      this.fillPoly([[p1[0] - 2, p1[1] - 2], [p2[0] + 2, p2[1] - 2], [p3[0] + 2, p3[1] + 2], [p4[0] - 2, p4[1] + 2]], 0.05, false);
+      this.fillPoly([p1, p2, p3, p4], hero ? 1.0 : 0.92 - 0.18 * fi, true);
+      const tf = [0.24, 0.5, 0.8, 0.12, 0.55, 0.85, 0.3, 0.56, 0.15][i];
+      const tp = R([bcx - cwd / 2 + cwd * tf + tilt, topY]);
+      this.tabsNow.push({ x: tp[0], y: tp[1], label: this.LABELS[i], i: i });
+      this.hitsNow.push({ i: i, x0: bcx - cwd / 2, x1: bcx + cwd / 2, y0: topY - 14, y1: bcy + 3 });
+      if (hero) {
+        for (let ln = 0; ln < 5; ln++) {
+          const ly = topY + 4 + ln * 5;
+          const lw2 = cwd * (0.12 + 0.24 * hashes[ln % 5]);
+          this.fillPoly([R([bcx - cwd * 0.38, ly]), R([bcx + lw2, ly]), R([bcx + lw2, ly + 1.7]), R([bcx - cwd * 0.38, ly + 1.7])], 0.25, false);
+        }
+      }
+    }
+    this.fillPoly([R(F1), R(F2), R(F3), R(F4)], 0.6, true);
+    this.fillPoly([R(F1), R([F1[0] + dvx, F1[1] + dvy]), R([F4[0] + dvx, F4[1] + dvy]), R(F4)], 0.3, true);
+    const lw = fw * 0.15, lh = fh * 0.32, lcx = cx, lcy = cy + fh * 0.34;
+    this.fillPoly([R([lcx - lw / 2, lcy - lh / 2]), R([lcx + lw / 2, lcy - lh / 2]), R([lcx + lw / 2, lcy + lh / 2]), R([lcx - lw / 2, lcy + lh / 2])], 0.9, true);
+    this.fillPoly([R([lcx - lw / 2 + 2, lcy - lh / 2 + 2]), R([lcx + lw / 2 - 2, lcy - lh / 2 + 2]), R([lcx + lw / 2 - 2, lcy + lh / 2 - 2]), R([lcx - lw / 2 + 2, lcy + lh / 2 - 2])], 0.12, false);
+    const pcy = cy + fh * 0.74;
+    this.fillPoly([R([lcx - lw * 0.35, pcy - 2]), R([lcx + lw * 0.35, pcy - 2]), R([lcx + lw * 0.35, pcy + 2]), R([lcx - lw * 0.35, pcy + 2])], 0.85, true);
+    const swT = el % 5;
+    if (!this.reduced && swT < 2.6) {
+      const sy = Math.floor((swT / 2.6) * bh);
+      const sx0 = 0, sx1 = bw - 1;
+      for (let x = sx0; x <= sx1; x++) {
+        const idx = sy * bw + x;
+        if (idx >= 0 && idx < s.length) s[idx] = Math.min(1, s[idx] + 0.4);
+      }
+    }
+    for (let y = 0; y < bh; y++) {
+      for (let x = 0; x < bw; x++) {
+        const idx = y * bw + x;
+        const o = s[idx];
+        const nv = o > 0.5 ? 1 : 0;
+        const err = (o - nv) / 8;
+        s[idx] = nv;
+        if (x + 1 < bw) s[idx + 1] += err;
+        if (x + 2 < bw) s[idx + 2] += err;
+        if (y + 1 < bh) {
+          if (x > 0) s[idx + bw - 1] += err;
+          s[idx + bw] += err;
+          if (x + 1 < bw) s[idx + bw + 1] += err;
+        }
+        if (y + 2 < bh) s[idx + 2 * bw] += err;
+      }
+    }
+    const d = this.img.data;
+    for (let i = 0; i < s.length; i++) {
+      const on = s[i] > 0.5;
+      const j = i * 4;
+      if (on) { d[j] = 241; d[j + 1] = 239; d[j + 2] = 232; }
+      else { d[j] = 206; d[j + 1] = 56; d[j + 2] = 80; }
+      d[j + 3] = 255;
+    }
+    ctx.putImageData(this.img, 0, 0);
+    const ctT = this.ctxT, pxs = this.pxc;
+    if (ctT) {
+      ctT.clearRect(0, 0, this.W, this.H);
+      ctT.textAlign = 'center'; ctT.textBaseline = 'middle';
+      ctT.font = '600 11px "IBM Plex Mono",monospace';
+      for (const tb of this.tabsNow) {
+        const sx = tb.x * pxs, sy = tb.y * pxs;
+        const tw = ctT.measureText(tb.label).width + 14;
+        const th = 17;
+        const on = tb.i === hov;
+        ctT.fillStyle = on ? '#40101F' : '#F1EFE8';
+        ctT.fillRect(sx - tw / 2, sy - th, tw, th);
+        ctT.strokeStyle = '#ce3850'; ctT.lineWidth = 1.5;
+        ctT.strokeRect(sx - tw / 2, sy - th, tw, th);
+        ctT.fillStyle = on ? '#F1EFE8' : '#40101F';
+        ctT.fillText(tb.label, sx, sy - th / 2 + 1);
+      }
+    }
+  }
+  renderVals() {
+    return { cvRef: this.cvRef, cvTRef: this.cvTRef };
+  }
+}
+</script>
+</body>
+</html>

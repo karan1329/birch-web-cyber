@@ -38,7 +38,7 @@ export function Hero() {
         style={{
           position: "relative",
           display: "grid",
-          gridTemplateColumns: "50fr 50fr",
+          gridTemplateColumns: "47fr 53fr",
           // Row height comes from the copy column's content. Both columns
           // stretch to that one row, so the cranberry panel and the logo
           // strip END ON THE SAME LINE by construction rather than by

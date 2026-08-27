@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#FAF9F6;font-family:'Archivo',system-ui,sans-serif;color:#101210}
+a{color:#101210;text-decoration:none}a:hover{color:#557A15}
+@keyframes bl-marq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes bl-doc{0%,100%{transform:rotateY(-10deg) rotateX(4deg) translateY(0)}50%{transform:rotateY(12deg) rotateX(-3deg) translateY(-14px)}}
+@keyframes bl-scan{0%{top:4%;opacity:0}8%{opacity:.9}46%{top:94%;opacity:.9}54%{opacity:0}100%{top:4%;opacity:0}}
+@keyframes bl-drift{from{stroke-dashoffset:0}to{stroke-dashoffset:-160}}
+@keyframes bl-haze{0%,100%{transform:scale(1) translate(0,0)}50%{transform:scale(1.08) translate(-12px,8px)}}
+@keyframes bl-fadecard{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</helmet>
+<div style="min-height:100vh;background:#FAF9F6">
+  <nav style="display:flex;justify-content:space-between;align-items:center;padding:0 40px;height:64px;border-bottom:1px solid #E8E5DC">
+    <a href="#" style="font:600 17px 'Archivo';letter-spacing:-.01em">Birchlogic<span style="color:#7CB518">.</span></a>
+    <div style="display:flex;align-items:center;gap:28px">
+      <a href="#" style="font:500 13.5px 'Archivo';color:#4A4E46">How We Work</a>
+      <a href="#" style="font:500 13.5px 'Archivo';color:#4A4E46">Services</a>
+      <a href="#" style="font:500 13.5px 'Archivo';color:#4A4E46">Field notes</a>
+      <a href="#" style="font:500 13.5px 'Archivo';color:#4A4E46">Careers</a>
+      <a href="#" style="font:500 13.5px 'Archivo';color:#4A4E46">Contact</a>
+      <a href="#" style="background:#101210;color:#FAF9F6;padding:10px 18px;font:600 13px 'Archivo'" style-hover="background:#2A2E28;color:#FAF9F6">Book a call</a>
+    </div>
+  </nav>
+  <div style="display:grid;grid-template-columns:46fr 54fr;height:calc(100vh - 65px);min-height:620px">
+    <div style="display:flex;flex-direction:column;min-width:0;padding:56px 48px 0 40px">
+      <div style="margin-top:auto">
+        <div style="font:600 10.5px 'IBM Plex Mono';letter-spacing:.18em;text-transform:uppercase;color:#557A15">Senior cybersecurity advisory · Delhi + Singapore</div>
+        <h1 style="font:600 62px/1.02 'Archivo';letter-spacing:-.035em;margin:22px 0 0">Cybersecurity,<br><span style="font:italic 400 66px/1 'Instrument Serif';letter-spacing:0">done seriously<span style="color:#7CB518">.</span></span></h1>
+        <p style="font:400 16.5px/1.55 'Archivo';color:#4A4E46;max-width:42ch;margin:24px 0 0;text-wrap:pretty">We run senior-led security programs for growth-stage companies and regulated industries. Built on discipline, sharpened with our internal AI workbench.</p>
+        <div style="display:flex;align-items:center;gap:22px;margin-top:32px">
+          <a href="#" style="background:#101210;color:#FAF9F6;padding:15px 24px;font:600 14px 'Archivo'" style-hover="background:#2A2E28;color:#FAF9F6">Book a 30-minute discovery call →</a>
+          <a href="#" style="font:500 13.5px 'Archivo';color:#4A4E46;border-bottom:1px solid #C9C5B8;padding-bottom:2px">or message Karan on LinkedIn</a>
+        </div>
+      </div>
+      <div style="margin-top:auto;border-top:1px solid #E8E5DC;padding:18px 0 22px">
+        <div style="font:600 9.5px 'IBM Plex Mono';letter-spacing:.18em;text-transform:uppercase;color:#9B978A">Some of our clients, making these bets</div>
+        <div style="overflow:hidden;margin-top:12px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)">
+          <div style="display:flex;gap:36px;width:max-content;animation:bl-marq 36s linear infinite;font:500 12.5px 'IBM Plex Mono';color:#6B6F66;white-space:nowrap">
+            <span>AMCS Group</span><span>K&amp;S Partners</span><span>MB Solutions</span><span>Saarthe.ai</span><span>Fusionedge.io</span><span>Nexwave GmbH</span><span>Mintergraph Solutions</span><span>Nest Money Fintech</span><span>The Batraa Numerology</span>
+            <span>AMCS Group</span><span>K&amp;S Partners</span><span>MB Solutions</span><span>Saarthe.ai</span><span>Fusionedge.io</span><span>Nexwave GmbH</span><span>Mintergraph Solutions</span><span>Nest Money Fintech</span><span>The Batraa Numerology</span>
+          </div>
+        </div>
+        <div style="font:400 10px 'Archivo';color:#B3AFA2;margin-top:10px">Names listed with permission. Most engagements stay private.</div>
+      </div>
+    </div>
+    <div style="position:relative;overflow:hidden;background:radial-gradient(120% 90% at 62% 38%,#25342A 0%,#18231C 42%,#0C120E 78%,#080D0A 100%)">
+      <div style="position:absolute;left:38%;top:16%;width:420px;height:340px;border-radius:50%;background:radial-gradient(closest-side,rgba(94,122,102,.42),rgba(94,122,102,0));filter:blur(30px);animation:bl-haze 14s ease-in-out infinite"></div>
+      <div style="position:absolute;left:18%;top:44%;width:360px;height:280px;border-radius:50%;background:radial-gradient(closest-side,rgba(70,94,78,.35),rgba(70,94,78,0));filter:blur(36px);animation:bl-haze 18s ease-in-out infinite reverse"></div>
+      <div style="position:absolute;right:-6%;bottom:-4%;width:380px;height:300px;border-radius:50%;background:radial-gradient(closest-side,rgba(52,72,58,.3),rgba(52,72,58,0));filter:blur(40px)"></div>
+      <svg viewBox="0 0 800 900" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0;width:100%;height:100%">
+        <g fill="none" stroke="#A8E63C" stroke-linecap="round" stroke-dasharray="0.1 9" style="animation:bl-drift 26s linear infinite">
+          <path d="M40,120 C240,70 480,90 780,150" stroke-width="2.4" opacity=".34"></path>
+          <path d="M20,170 C230,120 470,140 790,205" stroke-width="2.2" opacity=".26"></path>
+          <path d="M60,225 C260,180 500,195 780,265" stroke-width="2" opacity=".18"></path>
+        </g>
+        <g fill="none" stroke="#A8E63C" stroke-linecap="round" stroke-dasharray="0.1 12" style="animation:bl-drift 34s linear infinite reverse">
+          <path d="M420,700 C560,660 690,650 800,670" stroke-width="2.2" opacity=".28"></path>
+          <path d="M460,760 C590,725 700,715 800,735" stroke-width="2" opacity=".2"></path>
+          <path d="M520,820 C630,790 720,782 800,798" stroke-width="1.8" opacity=".14"></path>
+        </g>
+        <g fill="none" stroke="#A8E63C" stroke-linecap="round" stroke-dasharray="0.1 10" style="animation:bl-drift 30s linear infinite">
+          <path d="M600,300 C680,320 740,360 760,430" stroke-width="2" opacity=".2"></path>
+          <path d="M650,280 C730,305 790,350 805,420" stroke-width="1.8" opacity=".14"></path>
+        </g>
+      </svg>
+      <div style="position:absolute;left:50%;top:47%;transform:translate(-50%,-50%);perspective:1100px">
+        <div style="position:relative;width:236px;height:314px;transform-style:preserve-3d;animation:bl-doc 13s ease-in-out infinite">
+          <div style="position:absolute;inset:0;background:#7E8B78;transform:translateZ(-16px) rotate(2.2deg);box-shadow:0 30px 60px rgba(0,0,0,.35)"></div>
+          <div style="position:absolute;inset:0;background:#96A28E;transform:translateZ(-8px) rotate(-1.4deg)"></div>
+          <div style="position:absolute;inset:0;background:linear-gradient(148deg,#C4CDB9 0%,#AEB9A4 58%,#8E9B86 100%);padding:24px 20px;box-sizing:border-box">
+            <div style="font:600 8px 'IBM Plex Mono';letter-spacing:.16em;color:#5C6754">SECURITY PROGRAMME · CONFIDENTIAL</div>
+            <div style="height:1px;background:#8E9B86;margin:10px 0 14px"></div>
+            <div style="height:5px;width:78%;background:rgba(52,62,48,.34);margin-bottom:7px"></div>
+            <div style="height:5px;width:90%;background:rgba(52,62,48,.28);margin-bottom:7px"></div>
+            <div style="height:11px;width:62%;background:#070A06;margin:10px 0"></div>
+            <div style="height:5px;width:84%;background:rgba(52,62,48,.3);margin-bottom:7px"></div>
+            <div style="height:5px;width:70%;background:rgba(52,62,48,.26);margin-bottom:7px"></div>
+            <div style="height:5px;width:88%;background:rgba(52,62,48,.3);margin-bottom:7px"></div>
+            <div style="height:11px;width:40%;background:#070A06;margin:10px 0"></div>
+            <div style="height:5px;width:82%;background:rgba(52,62,48,.28);margin-bottom:7px"></div>
+            <div style="height:5px;width:58%;background:rgba(52,62,48,.24);margin-bottom:7px"></div>
+            <div style="height:11px;width:52%;background:#070A06;margin:10px 0"></div>
+            <div style="height:5px;width:86%;background:rgba(52,62,48,.28);margin-bottom:7px"></div>
+            <div style="height:5px;width:66%;background:rgba(52,62,48,.24)"></div>
+            <div style="position:absolute;right:-7px;top:52px;width:14px;height:30px;background:#A8E63C;box-shadow:0 2px 8px rgba(168,230,60,.35)"></div>
+          </div>
+          <sc-if value="{{ showScanline }}" hint-placeholder-val="{{ true }}">
+            <div style="position:absolute;left:-6%;width:112%;height:2px;background:linear-gradient(90deg,rgba(168,230,60,0),rgba(168,230,60,.85) 30%,rgba(168,230,60,.85) 70%,rgba(168,230,60,0));box-shadow:0 0 14px rgba(168,230,60,.5);animation:bl-scan 7s ease-in-out infinite;transform:translateZ(6px)"></div>
+          </sc-if>
+        </div>
+      </div>
+      <div style="position:absolute;left:44%;top:60%;width:280px;height:200px;border-radius:50%;background:radial-gradient(closest-side,rgba(12,18,14,.55),rgba(12,18,14,0));filter:blur(26px);pointer-events:none"></div>
+      <div style="position:absolute;right:26%;top:22%;width:220px;height:160px;border-radius:50%;background:radial-gradient(closest-side,rgba(24,35,28,.5),rgba(24,35,28,0));filter:blur(30px);pointer-events:none"></div>
+      <div key="{{ cardKey }}" style="position:absolute;left:30px;bottom:30px;width:238px;background:rgba(8,12,9,.5);border:1px solid rgba(168,230,60,.16);backdrop-filter:blur(10px);padding:16px;animation:bl-fadecard .5s ease both">
+        <div style="display:grid;grid-template-columns:repeat(4,5px);gap:3px;margin-bottom:11px">
+          <sc-for list="{{ glyphCells }}" as="c" hint-placeholder-count="12">
+            <div style="width:5px;height:5px;border:1px solid rgba(168,230,60,.7);background:{{ c.bg }}"></div>
+          </sc-for>
+        </div>
+        <div style="font:600 11.5px 'IBM Plex Mono';letter-spacing:.15em;text-transform:uppercase;color:#EAF2E2">{{ cardLabel }}</div>
+        <div style="font:400 9.5px/1.5 'IBM Plex Mono';color:rgba(234,242,226,.55);margin-top:6px">{{ cardSub }}</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px">
+          <div style="display:flex;gap:4px">
+            <sc-for list="{{ dashes }}" as="d" hint-placeholder-count="6">
+              <div style="width:14px;height:2px;background:{{ d.bg }}"></div>
+            </sc-for>
+          </div>
+          <div style="font:500 9px 'IBM Plex Mono';color:rgba(234,242,226,.45)">{{ cardCount }}</div>
+        </div>
+      </div>
+      <div style="position:absolute;top:18px;right:20px;font:500 9px 'IBM Plex Mono';letter-spacing:.16em;color:rgba(234,242,226,.4)">SIX CONSTANTS · EVERY MAJOR REPORT SINCE 2008</div>
+      <div style="position:absolute;top:16px;left:16px;width:12px;height:12px;border-left:1px solid rgba(168,230,60,.4);border-top:1px solid rgba(168,230,60,.4)"></div>
+      <div style="position:absolute;bottom:16px;right:16px;width:12px;height:12px;border-right:1px solid rgba(168,230,60,.4);border-bottom:1px solid rgba(168,230,60,.4)"></div>
+      <div style="position:absolute;inset:0;pointer-events:none;opacity:.28;mix-blend-mode:overlay;background-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E&quot;)"></div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;showScanline&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Hero animation&quot;},&quot;cycleSeconds&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:4,&quot;min&quot;:2,&quot;max&quot;:8,&quot;step&quot;:0.5,&quot;unit&quot;:&quot;s&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Hero animation&quot;}}">
+class Component extends DCLogic {
+  state = { idx: 0 };
+  CATS = [
+    { l: 'Stolen credentials', s: 'Still the front door. The oldest trick keeps working because nobody retires it.' },
+    { l: 'Cloud misconfiguration', s: 'Drift never sleeps. Configurations decay the moment the auditor leaves.' },
+    { l: 'Identity errors', s: 'Permissions accumulate. Nobody audits what nobody owns.' },
+    { l: 'Personal accounts', s: 'The unofficial perimeter your policy pretends does not exist.' },
+    { l: 'Third-party access', s: 'Their breach, your name in the disclosure.' },
+    { l: 'Social engineering', s: 'One click, one person, one very expensive afternoon.' }
+  ];
+  componentDidMount() {
+    this.timer = setInterval(() => {
+      this.setState(s => ({ idx: (s.idx + 1) % this.CATS.length }));
+    }, (this.props.cycleSeconds ?? 4) * 1000);
+  }
+  componentWillUnmount() { clearInterval(this.timer); }
+  renderVals() {
+    const i = this.state.idx, cat = this.CATS[i];
+    const cells = [];
+    for (let c = 0; c < 12; c++) cells.push({ bg: ((c * 5 + i * 7) % 11) < 5 ? '#A8E63C' : 'transparent' });
+    const dashes = this.CATS.map((_, d) => ({ bg: d === i ? '#A8E63C' : 'rgba(168,230,60,.22)' }));
+    return {
+      cardLabel: cat.l,
+      cardSub: cat.s,
+      cardCount: '0' + (i + 1) + ' / 06',
+      cardKey: 'card-' + i,
+      glyphCells: cells,
+      dashes: dashes,
+      showScanline: this.props.showScanline ?? true
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F1EFE8}
+a{color:#111}a:hover{color:#C93A5C}
+@keyframes bi-card{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</helmet>
+<div style="position:relative;width:100%;height:100vh;min-height:560px;overflow:hidden;background:#7E1F3D">
+  <canvas ref="{{ cvRef }}" style="position:absolute;inset:0;display:block"></canvas>
+  <sc-if value="{{ showCard }}" hint-placeholder-val="{{ true }}">
+    <div key="{{ cardKey }}" style="position:absolute;left:32px;bottom:32px;width:240px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.28);backdrop-filter:blur(12px);padding:16px;animation:bi-card .5s ease both">
+      <div style="display:grid;grid-template-columns:repeat(4,5px);gap:3px;margin-bottom:11px">
+        <sc-for list="{{ glyphCells }}" as="c" hint-placeholder-count="12">
+          <div style="width:5px;height:5px;border:1px solid rgba(255,255,255,.8);background:{{ c.bg }}"></div>
+        </sc-for>
+      </div>
+      <div style="font:600 11.5px 'IBM Plex Mono';letter-spacing:.15em;text-transform:uppercase;color:#FFFFFF">{{ cardLabel }}</div>
+      <div style="font:400 9.5px/1.5 'IBM Plex Mono';color:rgba(255,255,255,.72);margin-top:6px">{{ cardSub }}</div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px">
+        <div style="display:flex;gap:4px">
+          <sc-for list="{{ dashes }}" as="d" hint-placeholder-count="6">
+            <div style="width:14px;height:2px;background:{{ d.bg }}"></div>
+          </sc-for>
+        </div>
+        <div style="font:500 9px 'IBM Plex Mono';color:rgba(255,255,255,.6)">{{ cardCount }}</div>
+      </div>
+    </div>
+  </sc-if>
+  <div style="position:absolute;top:20px;right:22px;font:500 9px 'IBM Plex Mono';letter-spacing:.16em;color:rgba(255,255,255,.55)">SIX CONSTANTS · EVERY MAJOR REPORT SINCE 2008</div>
+  <div style="position:absolute;inset:0;pointer-events:none;background:radial-gradient(120% 120% at 50% 50%,rgba(0,0,0,0) 64%,rgba(46,6,20,.35) 100%)"></div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:900,&quot;height&quot;:760},&quot;showCard&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Overlays&quot;},&quot;cycleSeconds&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:4,&quot;min&quot;:2,&quot;max&quot;:8,&quot;step&quot;:0.5,&quot;unit&quot;:&quot;s&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Overlays&quot;},&quot;driftSpeed&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1,&quot;min&quot;:0.3,&quot;max&quot;:2,&quot;step&quot;:0.1,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Atmosphere&quot;}}">
+class Component extends DCLogic {
+  state = { idx: 0 };
+  cvRef = React.createRef();
+  CATS = [
+    { l: 'Stolen credentials', s: 'Still the front door. The oldest trick keeps working because nobody retires it.' },
+    { l: 'Cloud misconfiguration', s: 'Drift never sleeps. Configurations decay the moment the auditor leaves.' },
+    { l: 'Identity errors', s: 'Permissions accumulate. Nobody audits what nobody owns.' },
+    { l: 'Personal accounts', s: 'The unofficial perimeter your policy pretends does not exist.' },
+    { l: 'Third-party access', s: 'Their breach, your name in the disclosure.' },
+    { l: 'Social engineering', s: 'One click, one person, one very expensive afternoon.' }
+  ];
+  componentDidMount() {
+    this.timer = setInterval(() => {
+      this.setState(s => ({ idx: (s.idx + 1) % this.CATS.length }));
+    }, (this.props.cycleSeconds ?? 4) * 1000);
+    const cv = this.cvRef.current;
+    if (!cv) return;
+    this.ctx = cv.getContext('2d');
+    this.t0 = performance.now();
+    this.mx = 0.5; this.my = 0.5;
+    this.onMove = e => {
+      const r = cv.getBoundingClientRect();
+      this.mx = (e.clientX - r.left) / r.width;
+      this.my = (e.clientY - r.top) / r.height;
+    };
+    cv.parentElement.addEventListener('mousemove', this.onMove);
+    this.ro = new ResizeObserver(() => this.resize());
+    this.ro.observe(cv.parentElement);
+    this.resize();
+    const loop = () => { this.raf = requestAnimationFrame(loop); this.draw(); };
+    loop();
+  }
+  componentWillUnmount() {
+    clearInterval(this.timer);
+    cancelAnimationFrame(this.raf);
+    if (this.ro) this.ro.disconnect();
+    const cv = this.cvRef.current;
+    if (cv && cv.parentElement) cv.parentElement.removeEventListener('mousemove', this.onMove);
+  }
+  resize() {
+    const cv = this.cvRef.current, p = cv.parentElement, d = Math.min(window.devicePixelRatio || 1, 2);
+    this.W = p.clientWidth; this.H = p.clientHeight;
+    cv.width = this.W * d; cv.height = this.H * d;
+    cv.style.width = this.W + 'px'; cv.style.height = this.H + 'px';
+    this.ctx.setTransform(d, 0, 0, d, 0, 0);
+    const g = this.ctx.createRadialGradient(this.W * 0.6, this.H * 0.38, 40, this.W * 0.5, this.H * 0.5, Math.max(this.W, this.H) * 0.78);
+    g.addColorStop(0, '#C24B64'); g.addColorStop(0.4, '#A83252'); g.addColorStop(0.75, '#7E1F3D'); g.addColorStop(1, '#5E142E');
+    this.grad = g;
+  }
+  hash(x, y) { const s = Math.sin(x * 127.1 + y * 311.7) * 43758.5453; return s - Math.floor(s); }
+  noise(x, y) {
+    const ix = Math.floor(x), iy = Math.floor(y), fx = x - ix, fy = y - iy;
+    const a = this.hash(ix, iy), b = this.hash(ix + 1, iy), c = this.hash(ix, iy + 1), d = this.hash(ix + 1, iy + 1);
+    const ux = fx * fx * (3 - 2 * fx), uy = fy * fy * (3 - 2 * fy);
+    return a + (b - a) * ux + (c - a) * uy + (a - b - c + d) * ux * uy;
+  }
+  fbm(x, y) { return this.noise(x, y) * 0.55 + this.noise(x * 2.1, y * 2.1) * 0.28 + this.noise(x * 4.3, y * 4.3) * 0.17; }
+  draw() {
+    const ctx = this.ctx, W = this.W, H = this.H;
+    if (!W) return;
+    const t = (performance.now() - this.t0) / 1000 * (this.props.driftSpeed ?? 1);
+    ctx.fillStyle = this.grad; ctx.fillRect(0, 0, W, H);
+    const cw = 9, ch = 13;
+    const cols = Math.ceil(W / cw), rows = Math.ceil(H / ch);
+    ctx.font = '700 11px "IBM Plex Mono",monospace';
+    ctx.textBaseline = 'middle'; ctx.textAlign = 'center';
+    const ramp = ' \u00b7\u00b7::--==+*#%&@';
+    const cxd = W * 0.58, cyd = H * 0.44 + Math.sin(t * 0.5) * 10;
+    const ang = Math.sin(t * 0.3) * 0.22, cosA = Math.cos(ang), sinA = Math.sin(ang);
+    const squeeze = 0.78 + 0.22 * Math.abs(Math.cos(ang * 2.4));
+    const dw = 204, dh = 288;
+    const bars = [ { y: -92, w: 0.56 }, { y: -12, w: 0.34 }, { y: 66, w: 0.48 } ];
+    const scanP = (t % 8) / 8;
+    const scanY = cyd - dh / 2 - 40 + scanP * (dh + 80);
+    const mox = (this.mx - 0.5) * 3, moy = (this.my - 0.5) * 2;
+    for (let ry = 0; ry < rows; ry++) {
+      for (let rx = 0; rx < cols; rx++) {
+        const x = rx * cw + cw / 2, y = ry * ch + ch / 2;
+        const n = this.fbm(rx * 0.16 + t * 0.06 + mox, ry * 0.23 - t * 0.03 + moy);
+        const dxc = (x - W * 0.52) / (W * 0.62), dyc = (y - H * 0.45) / (H * 0.6);
+        const mask = Math.max(0, 1 - (dxc * dxc + dyc * dyc));
+        let d = Math.max(0, Math.min(1, (n - 0.34) * 1.7 * mask));
+        if (x < W * 0.38 && y > H * 0.6) d *= 0.22;
+        let docD = 0, isBar = false;
+        const lx = x - cxd, ly = y - cyd;
+        let px = (lx * cosA + ly * sinA) / squeeze;
+        let py = -lx * sinA * 0.3 + ly * cosA;
+        if (Math.abs(px) < dw / 2 && Math.abs(py) < dh / 2) {
+          const edge = Math.max(0, Math.min(1, Math.min((dw / 2 - Math.abs(px)) / 24, (dh / 2 - Math.abs(py)) / 28)));
+          let v = ((py + dh / 2) % 17) < 6 ? 0.74 : 0.52;
+          if (py < -dh / 2 + 26) v = 0.64;
+          docD = v * edge;
+          if (edge > 0.45) {
+            for (let b = 0; b < 3; b++) {
+              const bb = bars[b];
+              if (py > bb.y && py < bb.y + 14 && px > -dw / 2 + 24 && px < -dw / 2 + 24 + bb.w * dw) { isBar = true; break; }
+            }
+          }
+        }
+        if (isBar) { ctx.fillStyle = '#0B0A0B'; ctx.fillRect(x - cw / 2, y - ch / 2 + 1, cw, ch - 1); continue; }
+        let total = Math.max(d, Math.min(1, docD * 0.95 + d * 0.3));
+        const nearScan = Math.abs(y - scanY) < ch;
+        if (nearScan && (docD > 0 || d > 0.08)) total = Math.min(1, total + 0.45);
+        if (total <= 0.05) continue;
+        const chr = ramp[Math.min(ramp.length - 1, Math.floor(total * ramp.length))];
+        if (chr === ' ') continue;
+        const alpha = nearScan ? 1 : 0.16 + 0.84 * total;
+        ctx.fillStyle = 'rgba(250,246,240,' + alpha.toFixed(3) + ')';
+        ctx.fillText(chr, x, y);
+      }
+    }
+  }
+  renderVals() {
+    const i = this.state.idx, cat = this.CATS[i];
+    const cells = [];
+    for (let c = 0; c < 12; c++) cells.push({ bg: ((c * 5 + i * 7) % 11) < 5 ? '#FFFFFF' : 'transparent' });
+    const dashes = this.CATS.map((_, d) => ({ bg: d === i ? '#FFFFFF' : 'rgba(255,255,255,.3)' }));
+    return {
+      cvRef: this.cvRef,
+      cardLabel: cat.l,
+      cardSub: cat.s,
+      cardCount: '0' + (i + 1) + ' / 06',
+      cardKey: 'card-' + i,
+      glyphCells: cells,
+      dashes: dashes,
+      showCard: this.props.showCard ?? true
+    };
+  }
+}
+</script>
+</body>
+</html>

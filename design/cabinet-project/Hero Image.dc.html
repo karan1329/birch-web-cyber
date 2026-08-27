@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F1EFE8}
+a{color:#111}a:hover{color:#C93A5C}
+@keyframes bi-doc{0%,100%{transform:rotateY(-9deg) rotateX(3deg) translateY(0)}50%{transform:rotateY(11deg) rotateX(-2deg) translateY(-16px)}}
+@keyframes bi-scan{0%{top:3%;opacity:0}8%{opacity:.85}46%{top:95%;opacity:.85}54%{opacity:0}100%{top:3%;opacity:0}}
+@keyframes bi-drift{from{stroke-dashoffset:0}to{stroke-dashoffset:-140}}
+@keyframes bi-haze{0%,100%{transform:scale(1) translate(0,0)}50%{transform:scale(1.07) translate(-10px,10px)}}
+@keyframes bi-card{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</helmet>
+<div style="position:relative;width:100%;height:100vh;min-height:560px;overflow:hidden;background:radial-gradient(115% 95% at 64% 34%,#F4DCD8 0%,#ECACB6 24%,#D45E77 48%,#AE2F50 70%,#87203E 86%,#671530 100%)">
+  <div style="position:absolute;left:34%;top:8%;width:46%;height:44%;border-radius:50%;background:radial-gradient(closest-side,rgba(247,226,222,.85),rgba(247,226,222,0));filter:blur(34px);animation:bi-haze 16s ease-in-out infinite"></div>
+  <div style="position:absolute;left:52%;top:30%;width:40%;height:38%;border-radius:50%;background:radial-gradient(closest-side,rgba(240,190,196,.7),rgba(240,190,196,0));filter:blur(38px);animation:bi-haze 20s ease-in-out infinite reverse"></div>
+  <div style="position:absolute;left:16%;top:26%;width:34%;height:34%;border-radius:50%;background:radial-gradient(closest-side,rgba(228,150,164,.55),rgba(228,150,164,0));filter:blur(42px)"></div>
+  <div style="position:absolute;left:-6%;bottom:-10%;width:52%;height:48%;border-radius:50%;background:radial-gradient(closest-side,rgba(140,40,66,.5),rgba(140,40,66,0));filter:blur(46px)"></div>
+  <svg viewBox="0 0 900 800" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0;width:100%;height:100%">
+    <g fill="none" stroke="#FFFFFF" stroke-linecap="round" stroke-dasharray="0.1 8" style="animation:bi-drift 30s linear infinite">
+      <path d="M20,95 C220,55 440,70 690,120" stroke-width="2.4" opacity=".5"></path>
+      <path d="M0,145 C210,105 430,118 660,175" stroke-width="2.2" opacity=".38"></path>
+      <path d="M35,200 C230,165 440,175 640,235" stroke-width="2" opacity=".26"></path>
+      <path d="M60,255 C250,225 430,232 600,290" stroke-width="1.8" opacity=".16"></path>
+    </g>
+    <g fill="none" stroke="#FFFFFF" stroke-linecap="round" stroke-dasharray="0.1 10" style="animation:bi-drift 40s linear infinite reverse">
+      <path d="M700,180 C780,210 850,270 880,360" stroke-width="2.2" opacity=".44"></path>
+      <path d="M740,150 C825,185 885,250 905,340" stroke-width="2" opacity=".32"></path>
+      <path d="M660,220 C735,255 800,315 830,400" stroke-width="1.8" opacity=".2"></path>
+    </g>
+    <g fill="none" stroke="#FFFFFF" stroke-linecap="round" stroke-dasharray="0.1 11" style="animation:bi-drift 36s linear infinite">
+      <path d="M560,620 C680,585 800,580 900,605" stroke-width="2" opacity=".3"></path>
+      <path d="M600,680 C710,650 810,645 900,665" stroke-width="1.8" opacity=".2"></path>
+    </g>
+  </svg>
+  <div style="position:absolute;left:58%;top:42%;transform:translate(-50%,-50%);perspective:1100px">
+    <div style="position:relative;width:246px;height:326px;transform-style:preserve-3d;animation:bi-doc 14s ease-in-out infinite">
+      <div style="position:absolute;inset:0;background:#C57B8D;transform:translateZ(-16px) rotate(2.4deg)"></div>
+      <div style="position:absolute;inset:0;background:#D18F9F;transform:translateZ(-8px) rotate(-1.6deg)"></div>
+      <div style="position:absolute;inset:0;background:linear-gradient(150deg,#EDBEC4 0%,#E1A6B1 56%,#D08FA0 100%);box-shadow:inset 0 0 40px rgba(140,55,75,.25);padding:26px 22px;box-sizing:border-box">
+        <div style="font:600 8px 'IBM Plex Mono';letter-spacing:.16em;color:#A5697A">SECURITY PROGRAMME · CONFIDENTIAL</div>
+        <div style="height:1px;background:rgba(130,60,76,.25);margin:10px 0 15px"></div>
+        <div style="height:5px;width:80%;background:rgba(115,48,63,.2);margin-bottom:8px"></div>
+        <div style="height:5px;width:92%;background:rgba(115,48,63,.16);margin-bottom:8px"></div>
+        <div style="height:12px;width:60%;background:#0B0A0B;margin:11px 0"></div>
+        <div style="height:5px;width:86%;background:rgba(115,48,63,.18);margin-bottom:8px"></div>
+        <div style="height:5px;width:68%;background:rgba(115,48,63,.15);margin-bottom:8px"></div>
+        <div style="height:5px;width:90%;background:rgba(115,48,63,.18);margin-bottom:8px"></div>
+        <div style="height:12px;width:38%;background:#0B0A0B;margin:11px 0"></div>
+        <div style="height:5px;width:84%;background:rgba(115,48,63,.16);margin-bottom:8px"></div>
+        <div style="height:5px;width:56%;background:rgba(115,48,63,.14);margin-bottom:8px"></div>
+        <div style="height:12px;width:50%;background:#0B0A0B;margin:11px 0"></div>
+        <div style="height:5px;width:88%;background:rgba(115,48,63,.16);margin-bottom:8px"></div>
+        <div style="height:5px;width:64%;background:rgba(115,48,63,.14)"></div>
+        <div style="position:absolute;right:-7px;top:56px;width:14px;height:30px;background:#101010"></div>
+      </div>
+      <div style="position:absolute;left:-14%;bottom:-12%;width:64%;height:52%;border-radius:50%;background:radial-gradient(closest-side,rgba(212,94,119,.85),rgba(212,94,119,0));filter:blur(22px);transform:translateZ(4px);pointer-events:none"></div>
+      <div style="position:absolute;right:-16%;top:-14%;width:60%;height:48%;border-radius:50%;background:radial-gradient(closest-side,rgba(240,200,206,.9),rgba(240,200,206,0));filter:blur(20px);transform:translateZ(4px);pointer-events:none"></div>
+      <sc-if value="{{ showScanline }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;left:-6%;width:112%;height:2px;background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,.9) 30%,rgba(255,255,255,.9) 70%,rgba(255,255,255,0));box-shadow:0 0 16px rgba(255,255,255,.55);animation:bi-scan 7.5s ease-in-out infinite;transform:translateZ(6px)"></div>
+      </sc-if>
+    </div>
+  </div>
+  <div style="position:absolute;left:44%;top:56%;width:300px;height:220px;border-radius:50%;background:radial-gradient(closest-side,rgba(196,74,100,.6),rgba(196,74,100,0));filter:blur(30px);pointer-events:none"></div>
+  <div style="position:absolute;left:62%;top:14%;width:240px;height:170px;border-radius:50%;background:radial-gradient(closest-side,rgba(240,200,204,.65),rgba(240,200,204,0));filter:blur(32px);pointer-events:none"></div>
+  <sc-if value="{{ showCard }}" hint-placeholder-val="{{ true }}">
+    <div key="{{ cardKey }}" style="position:absolute;left:32px;bottom:32px;width:240px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);backdrop-filter:blur(12px);padding:16px;animation:bi-card .5s ease both">
+      <div style="display:grid;grid-template-columns:repeat(4,5px);gap:3px;margin-bottom:11px">
+        <sc-for list="{{ glyphCells }}" as="c" hint-placeholder-count="12">
+          <div style="width:5px;height:5px;border:1px solid rgba(255,255,255,.8);background:{{ c.bg }}"></div>
+        </sc-for>
+      </div>
+      <div style="font:600 11.5px 'IBM Plex Mono';letter-spacing:.15em;text-transform:uppercase;color:#FFFFFF">{{ cardLabel }}</div>
+      <div style="font:400 9.5px/1.5 'IBM Plex Mono';color:rgba(255,255,255,.72);margin-top:6px">{{ cardSub }}</div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px">
+        <div style="display:flex;gap:4px">
+          <sc-for list="{{ dashes }}" as="d" hint-placeholder-count="6">
+            <div style="width:14px;height:2px;background:{{ d.bg }}"></div>
+          </sc-for>
+        </div>
+        <div style="font:500 9px 'IBM Plex Mono';color:rgba(255,255,255,.6)">{{ cardCount }}</div>
+      </div>
+    </div>
+  </sc-if>
+  <div style="position:absolute;top:20px;right:22px;font:500 9px 'IBM Plex Mono';letter-spacing:.16em;color:rgba(255,255,255,.55)">SIX CONSTANTS · EVERY MAJOR REPORT SINCE 2008</div>
+  <div style="position:absolute;inset:0;pointer-events:none;background:radial-gradient(120% 120% at 50% 50%,rgba(0,0,0,0) 62%,rgba(60,8,24,.32) 100%)"></div>
+  <div style="position:absolute;inset:0;pointer-events:none;opacity:.32;mix-blend-mode:overlay;background-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E&quot;)"></div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:900,&quot;height&quot;:760},&quot;showCard&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Overlays&quot;},&quot;showScanline&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Overlays&quot;},&quot;cycleSeconds&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:4,&quot;min&quot;:2,&quot;max&quot;:8,&quot;step&quot;:0.5,&quot;unit&quot;:&quot;s&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Overlays&quot;}}">
+class Component extends DCLogic {
+  state = { idx: 0 };
+  CATS = [
+    { l: 'Stolen credentials', s: 'Still the front door. The oldest trick keeps working because nobody retires it.' },
+    { l: 'Cloud misconfiguration', s: 'Drift never sleeps. Configurations decay the moment the auditor leaves.' },
+    { l: 'Identity errors', s: 'Permissions accumulate. Nobody audits what nobody owns.' },
+    { l: 'Personal accounts', s: 'The unofficial perimeter your policy pretends does not exist.' },
+    { l: 'Third-party access', s: 'Their breach, your name in the disclosure.' },
+    { l: 'Social engineering', s: 'One click, one person, one very expensive afternoon.' }
+  ];
+  componentDidMount() {
+    this.timer = setInterval(() => {
+      this.setState(s => ({ idx: (s.idx + 1) % this.CATS.length }));
+    }, (this.props.cycleSeconds ?? 4) * 1000);
+  }
+  componentWillUnmount() { clearInterval(this.timer); }
+  renderVals() {
+    const i = this.state.idx, cat = this.CATS[i];
+    const cells = [];
+    for (let c = 0; c < 12; c++) cells.push({ bg: ((c * 5 + i * 7) % 11) < 5 ? '#FFFFFF' : 'transparent' });
+    const dashes = this.CATS.map((_, d) => ({ bg: d === i ? '#FFFFFF' : 'rgba(255,255,255,.3)' }));
+    return {
+      cardLabel: cat.l,
+      cardSub: cat.s,
+      cardCount: '0' + (i + 1) + ' / 06',
+      cardKey: 'card-' + i,
+      glyphCells: cells,
+      dashes: dashes,
+      showScanline: this.props.showScanline ?? true,
+      showCard: this.props.showCard ?? true
+    };
+  }
+}
+</script>
+</body>
+</html>

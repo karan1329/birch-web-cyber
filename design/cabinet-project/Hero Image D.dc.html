@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F1EFE8}
+a{color:#111}a:hover{color:#C93A5C}
+@keyframes bd-card{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</helmet>
+<div style="position:relative;width:100%;height:100vh;min-height:560px;overflow:hidden;background:#8E2140">
+  <canvas ref="{{ cvRef }}" style="position:absolute;inset:0;display:block;image-rendering:pixelated"></canvas>
+  <canvas ref="{{ cvTRef }}" style="position:absolute;inset:0;display:block;pointer-events:none"></canvas>
+  <sc-if value="{{ showCard }}" hint-placeholder-val="{{ true }}">
+    <div key="{{ cardKey }}" style="position:absolute;left:32px;bottom:32px;width:236px;background:#F1EFE8;border:1.5px solid #40101F;box-shadow:5px 5px 0 rgba(20,4,10,.55);padding:15px;animation:bd-card .4s steps(3) both">
+      <div style="display:grid;grid-template-columns:repeat(4,5px);gap:3px;margin-bottom:10px">
+        <sc-for list="{{ glyphCells }}" as="c" hint-placeholder-count="12">
+          <div style="width:5px;height:5px;border:1px solid #8E2140;background:{{ c.bg }}"></div>
+        </sc-for>
+      </div>
+      <div style="font:600 11.5px 'IBM Plex Mono';letter-spacing:.15em;text-transform:uppercase;color:#2A0E18">{{ cardLabel }}</div>
+      <div style="font:400 9.5px/1.5 'IBM Plex Mono';color:rgba(42,14,24,.7);margin-top:6px">{{ cardSub }}</div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:11px">
+        <div style="display:flex;gap:4px">
+          <sc-for list="{{ dashes }}" as="d" hint-placeholder-count="6">
+            <div style="width:14px;height:2px;background:{{ d.bg }}"></div>
+          </sc-for>
+        </div>
+        <div style="font:500 9px 'IBM Plex Mono';color:rgba(42,14,24,.55)">{{ cardCount }}</div>
+      </div>
+    </div>
+  </sc-if>
+  <div style="position:absolute;top:20px;right:22px;font:500 9px 'IBM Plex Mono';letter-spacing:.16em;color:rgba(241,239,232,.6)">THE INDEX · TWENTY-TWO CONTROLS · SCORED</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:900,&quot;height&quot;:760},&quot;pixelSize&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:2,&quot;min&quot;:1,&quot;max&quot;:4,&quot;step&quot;:1,&quot;unit&quot;:&quot;px&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Dither&quot;},&quot;showCard&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Overlays&quot;},&quot;cycleSeconds&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:4,&quot;min&quot;:2,&quot;max&quot;:8,&quot;step&quot;:0.5,&quot;unit&quot;:&quot;s&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Overlays&quot;}}">
+class Component extends DCLogic {
+  state = { idx: 0 };
+  cvRef = React.createRef();
+  cvTRef = React.createRef();
+  LABELS = ['GRC', 'APP SEC', 'IAM', 'SOC', 'PRIVACY'];
+  CATS = [
+    { l: 'Stolen credentials', s: 'Still the front door. The oldest trick keeps working because nobody retires it.' },
+    { l: 'Cloud misconfiguration', s: 'Drift never sleeps. Configurations decay the moment the auditor leaves.' },
+    { l: 'Identity errors', s: 'Permissions accumulate. Nobody audits what nobody owns.' },
+    { l: 'Personal accounts', s: 'The unofficial perimeter your policy pretends does not exist.' },
+    { l: 'Third-party access', s: 'Their breach, your name in the disclosure.' },
+    { l: 'Social engineering', s: 'One click, one person, one very expensive afternoon.' }
+  ];
+  componentDidMount() {
+    this.timer = setInterval(() => {
+      this.setState(s => ({ idx: (s.idx + 1) % this.CATS.length }));
+    }, (this.props.cycleSeconds ?? 4) * 1000);
+    const cv = this.cvRef.current;
+    if (!cv) return;
+    this.ctx = cv.getContext('2d');
+    this.t0 = performance.now();
+    this.reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    this.mx = -1; this.my = -1;
+    this.lifts = new Float32Array(5);
+    this.hitsNow = [];
+    this.onMove = e => {
+      const r = cv.getBoundingClientRect();
+      this.mx = (e.clientX - r.left) / r.width;
+      this.my = (e.clientY - r.top) / r.height;
+    };
+    this.onLeave = () => { this.mx = -1; this.my = -1; };
+    cv.parentElement.addEventListener('mousemove', this.onMove);
+    cv.parentElement.addEventListener('mouseleave', this.onLeave);
+    this.dust = [];
+    for (let i = 0; i < 130; i++) {
+      this.dust.push({ a: Math.random(), p: Math.random() * 2 - 1, sp: 0.008 + Math.random() * 0.02, ph: Math.random() * 6.28, sz: Math.random() < 0.2 ? 2 : 1 });
+    }
+    this.ro = new ResizeObserver(() => this.resize());
+    this.ro.observe(cv.parentElement);
+    this.resize();
+    const loop = () => { this.raf = requestAnimationFrame(loop); this.draw(); };
+    loop();
+  }
+  componentWillUnmount() {
+    clearInterval(this.timer);
+    cancelAnimationFrame(this.raf);
+    if (this.ro) this.ro.disconnect();
+    const cv = this.cvRef.current;
+    if (cv && cv.parentElement) {
+      cv.parentElement.removeEventListener('mousemove', this.onMove);
+      cv.parentElement.removeEventListener('mouseleave', this.onLeave);
+    }
+  }
+  componentDidUpdate() { if (this.ctx) this.resize(); }
+  resize() {
+    const cv = this.cvRef.current, p = cv.parentElement;
+    const px = this.props.pixelSize ?? 2;
+    this.W = p.clientWidth; this.H = p.clientHeight;
+    this.bw = Math.ceil(this.W / px); this.bh = Math.ceil(this.H / px);
+    cv.width = this.bw; cv.height = this.bh;
+    cv.style.width = this.W + 'px'; cv.style.height = this.H + 'px';
+    this.img = this.ctx.createImageData(this.bw, this.bh);
+    this.scene = new Float32Array(this.bw * this.bh);
+    this.lightM = new Float32Array(this.bw * this.bh);
+    this.barM = new Uint8Array(this.bw * this.bh);
+    this.tone = new Float32Array(this.bw * this.bh);
+    this.pxc = px;
+    const ct = this.cvTRef.current;
+    if (ct) {
+      const d = Math.min(window.devicePixelRatio || 1, 2);
+      ct.width = this.W * d; ct.height = this.H * d;
+      ct.style.width = this.W + 'px'; ct.style.height = this.H + 'px';
+      this.ctxT = ct.getContext('2d');
+      this.ctxT.setTransform(d, 0, 0, d, 0, 0);
+    }
+  }
+  fillPoly(pts, val, lit, target) {
+    const s = this.scene, L = this.lightM, bw = this.bw, bh = this.bh;
+    let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9;
+    for (const p of pts) { x0 = Math.min(x0, p[0]); y0 = Math.min(y0, p[1]); x1 = Math.max(x1, p[0]); y1 = Math.max(y1, p[1]); }
+    x0 = Math.max(0, Math.floor(x0)); y0 = Math.max(0, Math.floor(y0));
+    x1 = Math.min(bw - 1, Math.ceil(x1)); y1 = Math.min(bh - 1, Math.ceil(y1));
+    const n = pts.length;
+    for (let y = y0; y <= y1; y++) {
+      for (let x = x0; x <= x1; x++) {
+        let inside = true, sign = 0;
+        for (let i = 0; i < n; i++) {
+          const a = pts[i], b = pts[(i + 1) % n];
+          const cr = (b[0] - a[0]) * (y - a[1]) - (b[1] - a[1]) * (x - a[0]);
+          if (cr !== 0) { const sg = cr > 0 ? 1 : -1; if (sign === 0) sign = sg; else if (sg !== sign) { inside = false; break; } }
+        }
+        if (!inside) continue;
+        const idx = y * bw + x;
+        if (target) { target[idx] = 1; s[idx] = val; }
+        else { s[idx] = lit ? val * (0.65 + 0.35 * L[idx]) : val; }
+      }
+    }
+  }
+  hash(x, y) { const s = Math.sin(x * 127.1 + y * 311.7) * 43758.5453; return s - Math.floor(s); }
+  noise(x, y) {
+    const ix = Math.floor(x), iy = Math.floor(y), fx = x - ix, fy = y - iy;
+    const a = this.hash(ix, iy), b = this.hash(ix + 1, iy), c = this.hash(ix, iy + 1), d = this.hash(ix + 1, iy + 1);
+    const ux = fx * fx * (3 - 2 * fx), uy = fy * fy * (3 - 2 * fy);
+    return a + (b - a) * ux + (c - a) * uy + (a - b - c + d) * ux * uy;
+  }
+  fbm(x, y) { return this.noise(x, y) * 0.55 + this.noise(x * 2.1, y * 2.1) * 0.28 + this.noise(x * 4.3, y * 4.3) * 0.17; }
+  draw() {
+    const ctx = this.ctx, bw = this.bw, bh = this.bh;
+    if (!bw) return;
+    const s = this.scene, L = this.lightM;
+    const el = (performance.now() - this.t0) / 1000;
+    const t = this.reduced ? 0 : el;
+    const ax = -bw * 0.05, ay = -bh * 0.12;
+    let dx = 0.78, dy = 0.63;
+    const dl = Math.hypot(dx, dy); dx /= dl; dy /= dl;
+    for (let y = 0; y < bh; y++) {
+      for (let x = 0; x < bw; x++) {
+        const rx = x - ax, ry = y - ay;
+        const along = rx * dx + ry * dy;
+        const perp = Math.abs(rx * dy - ry * dx);
+        const wdt = bh * 0.26 + along * 0.07;
+        let f = 1 - perp / wdt;
+        f = f < 0 ? 0 : f * f * (3 - 2 * f);
+        const streak = 0.9 + 0.1 * Math.sin(perp * 0.55 + t * 0.7);
+        const cxn = (x - bw * 0.5) / (bw * 0.62), cyn = (y - bh * 0.5) / (bh * 0.62);
+        const vig = 1 - 0.55 * (cxn * cxn + cyn * cyn);
+        const idx = y * bw + x;
+        L[idx] = f;
+        s[idx] = (0.08 + 0.34 * f * streak) * Math.max(0.3, vig);
+        if (x > bw * 0.28 && x < bw * 0.83 && y > bh * 0.58 - bw * 0.30 && y < bh * 0.58) s[idx] *= 0.5;
+      }
+    }
+    const maxAlong = Math.hypot(bw, bh) * 1.15;
+    for (const p of this.dust) {
+      const a = ((p.a + t * p.sp) % 1) * maxAlong;
+      const wdt = bh * 0.26 + a * 0.07;
+      const off = p.p * wdt * 0.85;
+      const x = Math.round(ax + dx * a - dy * off);
+      const y = Math.round(ay + dy * a + dx * off);
+      if (x < 0 || y < 0 || x >= bw || y >= bh) continue;
+      const fl = 1 - Math.abs(p.p);
+      const tw = 0.6 + 0.4 * Math.sin(t * 2.2 + p.ph);
+      const damp = (x > bw * 0.28 && x < bw * 0.83 && y > bh * 0.58 - bw * 0.30 && y < bh * 0.58) ? 0.35 : 1;
+      const v = (0.45 + 0.5 * fl) * tw * damp;
+      const idx = y * bw + x;
+      if (v > s[idx]) s[idx] = v;
+      if (p.sz === 2 && x + 1 < bw && v * 0.8 > s[idx + 1]) s[idx + 1] = v * 0.8;
+    }
+    let hov = -1;
+    if (!this.reduced && this.mx >= 0) {
+      const mxB = this.mx * bw, myB = this.my * bh;
+      for (const hb of this.hitsNow) if (mxB >= hb.x0 && mxB <= hb.x1 && myB >= hb.y0 && myB <= hb.y1) hov = hb.i;
+    }
+    for (let li = 0; li < 5; li++) this.lifts[li] += ((li === hov ? 1 : 0) - this.lifts[li]) * 0.16;
+    this.cvRef.current.style.cursor = hov >= 0 ? 'pointer' : 'default';
+    this.hitsNow = []; this.hoverBars = []; this.tabsNow = []; this.barsNow = [];
+    const ox = this.reduced ? 0 : Math.sin(t * 0.4) * 3, oy = this.reduced ? 0 : Math.sin(t * 0.55) * 3;
+    const cx = bw * 0.55 + ox, y0 = bh * 0.58 + oy;
+    const fw = bw * 0.52, fh = fw * 0.30;
+    const Vx = cx - fw * 0.2, Vy = y0 - fw * 0.85;
+    const pj = (x, y, z) => { const tt = z * 0.30; return [x + (Vx - x) * tt, y + (Vy - y) * tt]; };
+    const F1 = [cx - fw / 2, y0], F2 = [cx + fw / 2, y0], F3 = [cx + fw / 2, y0 + fh], F4 = [cx - fw / 2, y0 + fh];
+    const B1 = pj(F1[0], F1[1], 1), B2 = pj(F2[0], F2[1], 1), B3 = pj(F3[0], F3[1], 1);
+    this.fillPoly([F1, F2, B2, B1], 0.05, false);
+    this.fillPoly([F1, B1, [B1[0] + 3, B1[1]], [F1[0] + 3, F1[1]]], 0.5, true);
+    this.fillPoly([[F2[0] - 3, F2[1]], [B2[0] - 3, B2[1]], B2, F2], 0.5, true);
+    const hashes = [0.3, 0.8, 0.55, 0.15, 0.7];
+    const tfr = [0.08, 0.28, 0.48, 0.68, 0.86];
+    for (let i = 4; i >= 0; i--) {
+      const z = 0.12 + i * 0.17;
+      const sc = 1 - z * 0.30;
+      const inset = fw * 0.44;
+      const Lp = pj(cx - inset, y0, z), Rp = pj(cx + inset, y0, z);
+      const hero = i === 0;
+      const lift = this.lifts[i] * fw * 0.11;
+      const baseTop = fw * 0.222 + i * fw * 0.058;
+      const hgt = baseTop - (y0 - Lp[1]) + lift;
+      const cwd = Rp[0] - Lp[0];
+      const p1 = [Lp[0], Lp[1] - hgt], p2 = [Rp[0], Rp[1] - hgt], p3 = [Rp[0], Rp[1] + 3], p4 = [Lp[0], Lp[1] + 3];
+      this.fillPoly([[p1[0] - 2, p1[1] - 2], [p2[0] + 2, p2[1] - 2], [p3[0] + 2, p3[1] + 2], [p4[0] - 2, p4[1] + 2]], 0.05, false);
+      const cval = hero ? 1.0 : 0.92 - 0.2 * z;
+      this.fillPoly([p1, p2, p3, p4], cval, true);
+      const tx0 = Lp[0] + cwd * tfr[i];
+      const tw2 = cwd * 0.2, th2 = 9 * sc + 3;
+      const ty = Lp[1] + (Rp[1] - Lp[1]) * tfr[i] - hgt;
+      this.fillPoly([[tx0 - 2, ty - th2 - 2], [tx0 + tw2 + 2, ty - th2 - 2], [tx0 + tw2 + 2, ty + 1], [tx0 - 2, ty + 1]], 0.05, false);
+      this.fillPoly([[tx0, ty - th2], [tx0 + tw2, ty - th2], [tx0 + tw2, ty + 1], [tx0, ty + 1]], cval, true);
+      this.tabsNow.push({ x: tx0 + tw2 / 2, y: ty - th2 / 2, label: this.LABELS[i], i: i });
+      this.hitsNow.push({ i: i, x0: Lp[0], x1: Rp[0], y0: ty - th2 - 6, y1: Lp[1] + 3 });
+      if (hero) {
+        const lx0 = Lp[0] + cwd * 0.08;
+        for (let ln = 0; ln < 5; ln++) {
+          const ly = Lp[1] - hgt + 9 + ln * 6;
+          const lw2 = cwd * (0.2 + 0.3 * hashes[ln % 5]);
+          this.fillPoly([[lx0, ly], [lx0 + lw2, ly], [lx0 + lw2, ly + 1.8], [lx0, ly + 1.8]], 0.25, false);
+        }
+        const bdef = [[0.42, 0.62], [0.58, 0.4], [0.74, 0.5]];
+        for (let b = 0; b < 3; b++) {
+          const by = Lp[1] - hgt + (hgt - lift) * bdef[b][0];
+          this.barsNow.push({ pts: [[lx0, by], [lx0 + cwd * bdef[b][1], by], [lx0 + cwd * bdef[b][1], by + 5], [lx0, by + 5]] });
+        }
+      } else {
+        if (this.lifts[i] > 0.85) {
+          const by = Lp[1] - hgt + 7;
+          this.hoverBars.push({ pts: [[Lp[0] + cwd * 0.12, by], [Lp[0] + cwd * 0.62, by], [Lp[0] + cwd * 0.62, by + 4.5], [Lp[0] + cwd * 0.12, by + 4.5]] });
+        }
+        if (i === 2) {
+          const by = Lp[1] - hgt + 5;
+          this.barsNow.push({ pts: [[Lp[0] + cwd * 0.55, by], [Lp[0] + cwd * 0.9, by], [Lp[0] + cwd * 0.9, by + 4], [Lp[0] + cwd * 0.55, by + 4]] });
+        }
+      }
+    }
+    const fx0 = Math.max(0, Math.floor(F1[0])), fx1 = Math.min(bw - 1, Math.ceil(F2[0]));
+    const fy0 = Math.max(0, Math.floor(F1[1])), fy1 = Math.min(bh - 1, Math.ceil(F3[1]));
+    for (let y = fy0; y <= fy1; y++) {
+      for (let x = fx0; x <= fx1; x++) {
+        const idx = y * bw + x;
+        const g = 0.56 + 0.09 * this.noise(x * 0.05, y * 0.55) + 0.05 * Math.sin(y * 0.85 + this.noise(x * 0.02, y * 0.03) * 5);
+        s[idx] = g * (0.65 + 0.35 * L[idx]);
+      }
+    }
+    this.fillPoly([[F1[0], F1[1]], [F2[0], F2[1]], [F2[0], F2[1] + 2.5], [F1[0], F1[1] + 2.5]], 0.85, true);
+    const lcx = cx, lcy = y0 + fh * 0.4;
+    const lw = fw * 0.21, lh = fh * 0.3;
+    this.fillPoly([[lcx - lw / 2 - 3, lcy - lh / 2 - 3], [lcx + lw / 2 + 3, lcy - lh / 2 - 3], [lcx + lw / 2 + 3, lcy + lh / 2 + 3], [lcx - lw / 2 - 3, lcy + lh / 2 + 3]], 0.18, false);
+    this.fillPoly([[lcx - lw / 2, lcy - lh / 2], [lcx + lw / 2, lcy - lh / 2], [lcx + lw / 2, lcy + lh / 2], [lcx - lw / 2, lcy + lh / 2]], 0.95, true);
+    this.plate = { x: lcx, y: lcy };
+    const pcy = y0 + fh * 0.76;
+    this.fillPoly([[lcx - fw * 0.055 - 2, pcy - 3], [lcx - fw * 0.055 + 2, pcy - 3], [lcx - fw * 0.055 + 2, pcy + 3], [lcx - fw * 0.055 - 2, pcy + 3]], 0.2, false);
+    this.fillPoly([[lcx + fw * 0.055 - 2, pcy - 3], [lcx + fw * 0.055 + 2, pcy - 3], [lcx + fw * 0.055 + 2, pcy + 3], [lcx + fw * 0.055 - 2, pcy + 3]], 0.2, false);
+    this.fillPoly([[lcx - fw * 0.07, pcy + 1], [lcx + fw * 0.07, pcy + 1], [lcx + fw * 0.07, pcy + 5], [lcx - fw * 0.07, pcy + 5]], 0.82, true);
+    this.fillPoly([[lcx - fw * 0.07, pcy + 5], [lcx + fw * 0.07, pcy + 5], [lcx + fw * 0.07, pcy + 7], [lcx - fw * 0.07, pcy + 7]], 0.08, false);
+    const nBars = this.barsNow.length;
+    const shown = this.reduced ? nBars : (el < 1.0 ? 0 : Math.min(nBars, Math.floor((el - 1.0) / 0.09) + 1));
+    this.barM.fill(0);
+    for (let b = 0; b < shown; b++) this.fillPoly(this.barsNow[b].pts, 0.0, false, this.barM);
+    for (const hb of this.hoverBars) this.fillPoly(hb.pts, 0.0, false, this.barM);
+    if (!this.reduced && el < 2.6) {
+      const sy = Math.floor((el / 2.6) * bh);
+      const sx0 = Math.max(0, Math.floor(cx - fw * 0.95)), sx1 = Math.min(bw - 1, Math.ceil(cx + fw * 0.75));
+      for (let x = sx0; x <= sx1; x++) {
+        const idx = sy * bw + x;
+        if (idx >= 0 && idx < s.length) s[idx] = Math.min(1, s[idx] + 0.4);
+      }
+    }
+    this.tone.set(s);
+    for (let y = 0; y < bh; y++) {
+      for (let x = 0; x < bw; x++) {
+        const idx = y * bw + x;
+        const o = s[idx];
+        const nv = o > 0.5 ? 1 : 0;
+        const err = (o - nv) / 8;
+        s[idx] = nv;
+        if (x + 1 < bw) s[idx + 1] += err;
+        if (x + 2 < bw) s[idx + 2] += err;
+        if (y + 1 < bh) {
+          if (x > 0) s[idx + bw - 1] += err;
+          s[idx + bw] += err;
+          if (x + 1 < bw) s[idx + bw + 1] += err;
+        }
+        if (y + 2 < bh) s[idx + 2 * bw] += err;
+      }
+    }
+    const d = this.img.data;
+    for (let y = 0; y < bh; y++) {
+      for (let x = 0; x < bw; x++) {
+        const i2 = y * bw + x;
+        const v = this.tone[i2] < 0.16 ? s[(y & ~1) * bw + (x & ~1)] : s[i2];
+        const on = v > 0.5;
+        const j = i2 * 4;
+        if (this.barM[i2]) { d[j] = 11; d[j + 1] = 10; d[j + 2] = 11; }
+        else if (on) { d[j] = 241; d[j + 1] = 239; d[j + 2] = 232; }
+        else { d[j] = 122; d[j + 1] = 24; d[j + 2] = 52; }
+        d[j + 3] = 255;
+      }
+    }
+    ctx.putImageData(this.img, 0, 0);
+    const ctT = this.ctxT, pxs = this.pxc;
+    if (ctT) {
+      ctT.clearRect(0, 0, this.W, this.H);
+      ctT.textAlign = 'center'; ctT.textBaseline = 'middle';
+      ctT.font = '600 11px "IBM Plex Mono",monospace';
+      for (const tb of this.tabsNow) {
+        const sx = tb.x * pxs, sy = tb.y * pxs;
+        const on = tb.i === hov;
+        const tw = ctT.measureText(tb.label).width + 12;
+        ctT.fillStyle = on ? '#40101F' : '#F1EFE8';
+        ctT.fillRect(sx - tw / 2, sy - 9, tw, 18);
+        ctT.strokeStyle = '#7A1834'; ctT.lineWidth = 1.5;
+        ctT.strokeRect(sx - tw / 2, sy - 9, tw, 18);
+        ctT.fillStyle = on ? '#F1EFE8' : '#40101F';
+        ctT.fillText(tb.label, sx, sy + 1);
+      }
+      if (this.plate) {
+        ctT.font = '600 10px "IBM Plex Mono",monospace';
+        ctT.fillStyle = '#40101F';
+        ctT.fillText('THE INDEX', this.plate.x * pxs, this.plate.y * pxs + 1);
+      }
+    }
+  }
+  renderVals() {
+    const i = this.state.idx, cat = this.CATS[i];
+    const cells = [];
+    for (let c = 0; c < 12; c++) cells.push({ bg: ((c * 5 + i * 7) % 11) < 5 ? '#8E2140' : 'transparent' });
+    const dashes = this.CATS.map((_, d) => ({ bg: d === i ? '#8E2140' : 'rgba(142,33,64,.25)' }));
+    return {
+      cvRef: this.cvRef,
+      cvTRef: this.cvTRef,
+      cardLabel: cat.l,
+      cardSub: cat.s,
+      cardCount: '0' + (i + 1) + ' / 06',
+      cardKey: 'card-' + i,
+      glyphCells: cells,
+      dashes: dashes,
+      showCard: this.props.showCard ?? true
+    };
+  }
+}
+</script>
+</body>
+</html>

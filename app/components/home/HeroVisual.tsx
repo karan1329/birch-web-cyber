@@ -42,10 +42,8 @@ const MONO_STACK =
   '"IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace';
 
 const LIT: [number, number, number] = [241, 238, 231]; // paper  #F1EEE7
-// Cranberry red — the SAME value as the "Book a 30-minute discovery call"
-// button (--bl-accent, #D4405A). This is the brand red everywhere; do not
-// substitute a deeper or lighter variant here.
-const GROUND: [number, number, number] = [212, 64, 90];
+// Ground red, taken from Karan's revised `Hero Image C` (#ce3850).
+const GROUND: [number, number, number] = [206, 56, 80];
 
 type Props = {
   /** Buffer downscale factor. 1 = crisp, 4 = very chunky. */
@@ -218,7 +216,7 @@ export function HeroVisual({
           const vig = 1 - 0.55 * (cxn * cxn + cyn * cyn);
           const i2 = y * bw + x;
           lightM[i2] = f;
-          scene[i2] = (0.05 + 0.72 * f * streak) * Math.max(0.35, vig);
+          scene[i2] = (0.08 + 0.34 * f * streak) * Math.max(0.3, vig);
         }
       }
 
@@ -269,7 +267,7 @@ export function HeroVisual({
       // different box. The panel is given the right aspect ratio instead
       // (see Hero.tsx); that is what keeps the scene reading as a drawer
       // rather than a white mass with colliding tabs.
-      const fw = bw * 0.72;
+      const fw = bw * 0.5;
       const fh = fw * 0.3;
       const dvx = -fw * 0.26;
       const dvy = -fw * 0.14;
@@ -413,6 +411,41 @@ export function HeroVisual({
         0.85,
         true,
       );
+
+      // ---- one-shot scanline on load ------------------------------
+      if (!reduced && el < 2.6) {
+        const sy = Math.floor((el / 2.6) * bh);
+        const sx0 = Math.max(0, Math.floor(cx - fw * 0.95));
+        const sx1 = Math.min(bw - 1, Math.ceil(cx + fw * 0.75));
+        for (let x = sx0; x <= sx1; x++) {
+          const i2 = sy * bw + x;
+          if (i2 >= 0 && i2 < scene.length) {
+            scene[i2] = Math.min(1, scene[i2] + 0.4);
+          }
+        }
+      }
+
+      // ---- error-diffusion dither to 1 bit ------------------------
+      // This IS the artwork. Without it every value is hard-thresholded
+      // and the scene collapses into flat blocks with no texture, which
+      // is exactly what happened when this loop was accidentally removed.
+      for (let y = 0; y < bh; y++) {
+        for (let x = 0; x < bw; x++) {
+          const i2 = y * bw + x;
+          const o = scene[i2];
+          const nv = o > 0.5 ? 1 : 0;
+          const err = (o - nv) / 8;
+          scene[i2] = nv;
+          if (x + 1 < bw) scene[i2 + 1] += err;
+          if (x + 2 < bw) scene[i2 + 2] += err;
+          if (y + 1 < bh) {
+            if (x > 0) scene[i2 + bw - 1] += err;
+            scene[i2 + bw] += err;
+            if (x + 1 < bw) scene[i2 + bw + 1] += err;
+          }
+          if (y + 2 < bh) scene[i2 + 2 * bw] += err;
+        }
+      }
 
       // ---- map to the three-colour palette ------------------------
       const d = img.data;
