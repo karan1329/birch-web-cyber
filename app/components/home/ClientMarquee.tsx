@@ -1,5 +1,3 @@
-"use client";
-
 import { NAMED_CLIENTS, PERMISSION_LINE } from "../../lib/clients";
 
 type Props = {
@@ -10,131 +8,133 @@ type Props = {
    * `standalone` — legacy full-width track.
    */
   variant?: "standalone" | "inline" | "hero";
-  /**
-   * Laid across the hero seam, so part of the track sits on beige and part
-   * on cranberry. Names need a colour that survives both grounds, and the
-   * label/permission line are dropped — they cannot read cleanly over two
-   * different backgrounds at once.
-   */
-  straddle?: boolean;
 };
 
 /**
- * Horizontal scrolling client strip. Names come from the canonical list in
- * lib/clients.ts — nothing here hard-codes a client.
+ * Client logo strip · two rows running in opposite directions.
  *
- * Per HP-9 the marquee now lives in the hero's first viewport, so it is
- * visible before any scroll. The duplicate that used to sit inside
- * Who We Work With has been removed.
+ * The counter-scroll is the point: a single track reads as a loop the eye
+ * can follow and dismiss, while two rows moving against each other read as
+ * a field of names that keeps renewing. The top row runs left, the bottom
+ * row runs right, at slightly different speeds so they never sync up into
+ * an obvious repeat.
+ *
+ * Logos come from the canonical list in lib/clients.ts, which excludes
+ * founder-credential marks by design — see the lane note there.
+ *
+ * Logos are greyscaled at rest so nineteen different brand palettes do not
+ * fight the page's one accent, and come to full colour on hover.
  */
-export function ClientMarquee({
-  variant = "inline",
-  straddle = false,
-}: Props) {
-  const loop = [...NAMED_CLIENTS, ...NAMED_CLIENTS, ...NAMED_CLIENTS];
-  const inline = variant === "inline";
+export function ClientMarquee({ variant = "inline" }: Props) {
   const hero = variant === "hero";
 
-  const track = (
+  // Split into two rows, then triple each so the loop has no visible seam.
+  const half = Math.ceil(NAMED_CLIENTS.length / 2);
+  const rowA = NAMED_CLIENTS.slice(0, half);
+  const rowB = NAMED_CLIENTS.slice(half);
+
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: hero ? 8 : 12 }}>
+      {hero && (
+        <span
+          style={{
+            fontFamily: "var(--font-mono)",
+            fontWeight: 600,
+            fontSize: 9.5,
+            letterSpacing: "0.18em",
+            textTransform: "uppercase",
+            color: "var(--bl-fg3)",
+          }}
+        >
+          A few of them
+        </span>
+      )}
+
+      <LogoRow items={rowA} direction="left" seconds={44} />
+      <LogoRow items={rowB} direction="right" seconds={52} />
+
+      {hero && (
+        <span
+          style={{
+            fontFamily: "var(--font-sans)",
+            fontSize: 10.5,
+            lineHeight: 1.5,
+            color: "var(--bl-fg3)",
+          }}
+        >
+          {PERMISSION_LINE}
+        </span>
+      )}
+    </div>
+  );
+}
+
+function LogoRow({
+  items,
+  direction,
+  seconds,
+}: {
+  items: typeof NAMED_CLIENTS;
+  direction: "left" | "right";
+  seconds: number;
+}) {
+  const loop = [...items, ...items, ...items];
+  return (
     <div
       style={{
         position: "relative",
         overflow: "hidden",
-        padding: hero ? "12px 0" : inline ? "20px 0" : "28px 0",
-        borderTop: inline ? "1px solid var(--bl-rule)" : undefined,
-        borderBottom: inline ? "1px solid var(--bl-rule)" : undefined,
-        WebkitMaskImage: straddle
-          ? undefined
-          : "linear-gradient(to right, transparent 0, #000 8%, #000 92%, transparent 100%)",
-        maskImage: straddle
-          ? undefined
-          : "linear-gradient(to right, transparent 0, #000 8%, #000 92%, transparent 100%)",
+        WebkitMaskImage:
+          "linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%)",
+        maskImage:
+          "linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%)",
       }}
     >
       <div
+        className="bl-marquee-track"
         style={{
           display: "flex",
           alignItems: "center",
-          gap: hero ? 40 : inline ? 48 : 72,
+          gap: "clamp(34px, 4vw, 60px)",
           width: "max-content",
-          // Slower loop on the smaller variants so the eye can settle on
-          // each name as it passes.
-          animation: `bl-ticker-move ${hero ? 46 : inline ? 42 : 55}s linear infinite`,
+          // The two rows share one keyframe pair; `reverse` is what sends
+          // the second row the other way.
+          animation: `bl-ticker-move ${seconds}s linear infinite${
+            direction === "right" ? " reverse" : ""
+          }`,
         }}
       >
-        {loop.map((p, i) => (
+        {loop.map((c, i) => (
           <span
-            key={i}
+            key={`${c.name}-${i}`}
+            className="bl-client-logo"
             style={{
               display: "inline-flex",
               alignItems: "center",
-              gap: hero ? 40 : inline ? 48 : 72,
+              justifyContent: "center",
+              flexShrink: 0,
+              height: "clamp(26px, 2.4vw, 34px)",
             }}
           >
-            <span
+            {/* Plain img: these are small transparent PNGs served from
+                /public, and next/image's optimiser adds nothing here while
+                complicating the marquee's max-content track. */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={c.logo}
+              alt={c.name}
+              loading="lazy"
+              decoding="async"
               style={{
-                fontFamily: "var(--font-sans)",
-                fontWeight: 500,
-                fontSize: hero
-                  ? "clamp(14px, 1.05vw, 16px)"
-                  : inline
-                    ? "clamp(16px, 1.4vw, 20px)"
-                    : "clamp(22px, 2.2vw, 32px)",
-                letterSpacing: "-0.015em",
-                color: "var(--bl-fg)",
-                opacity: straddle ? 0.9 : 0.72,
-                whiteSpace: "nowrap",
-              }}
-            >
-              {p}
-            </span>
-            <span
-              aria-hidden="true"
-              style={{
-                display: "inline-block",
-                width: 6,
-                height: 6,
-                borderRadius: "50%",
-                background: "var(--bl-neon)",
-                opacity: 0.55,
+                height: "100%",
+                width: "auto",
+                display: "block",
+                objectFit: "contain",
               }}
             />
           </span>
         ))}
       </div>
-    </div>
-  );
-
-  if (straddle) return track;
-  if (!hero) return track;
-
-  // HP-9 · in the hero window, the strip is labelled and carries the
-  // permission line directly beneath it.
-  return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-      <span
-        style={{
-          fontFamily: "var(--font-mono)",
-          fontWeight: 600,
-          fontSize: 9.5,
-          letterSpacing: "0.18em",
-          textTransform: "uppercase",
-          color: "var(--bl-fg3)",
-        }}
-      >
-        A few of them
-      </span>
-      {track}
-      <span
-        style={{
-          fontFamily: "var(--font-sans)",
-          fontSize: 10.5,
-          lineHeight: 1.5,
-          color: "var(--bl-fg3)",
-        }}
-      >
-        {PERMISSION_LINE}
-      </span>
     </div>
   );
 }

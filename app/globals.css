@@ -250,6 +250,18 @@ input, textarea, select {
   to   { opacity: 1; transform: translateY(0); }
 }
 
+/* Client logos · greyscale at rest so nineteen brand palettes cannot
+   fight the page's single accent, full colour on hover. */
+.bl-client-logo img {
+  filter: grayscale(1) contrast(0.9);
+  opacity: 0.62;
+  transition: filter 0.3s ease, opacity 0.3s ease;
+}
+.bl-client-logo:hover img {
+  filter: grayscale(0) contrast(1);
+  opacity: 1;
+}
+
 /* =====================================================================
    Utility shorthands
    ===================================================================== */

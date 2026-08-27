@@ -38,7 +38,7 @@ export function Hero() {
         style={{
           position: "relative",
           display: "grid",
-          gridTemplateColumns: "46fr 54fr",
+          gridTemplateColumns: "56fr 44fr",
           minHeight: "calc(100vh - var(--bl-top-offset) - 132px)",
         }}
       >
@@ -128,12 +128,18 @@ export function Hero() {
                   transition: "color 0.2s ease, border-color 0.2s ease",
                 }}
               >
-                Check out our new initiative for startups and growth
-                companies
+                Something new for founders →
               </Link>
             </div>
           </Rise>
 
+          {/* HP-9 · the strip sits in the white column only, with a clear
+              gap under the CTA. Two rows counter-scrolling. */}
+          <Rise delay={1.1} y={12}>
+            <div style={{ marginTop: "clamp(40px, 5.5vw, 68px)" }}>
+              <ClientMarquee variant="hero" />
+            </div>
+          </Rise>
         </div>
 
         {/* ---- visual · full bleed, hard cut ---------------------- */}
@@ -141,24 +147,6 @@ export function Hero() {
           <HeroVisual />
         </div>
 
-        {/* HP-9 · the client strip is laid ACROSS the bottom of the split
-            rather than under it, so it crosses the seam: the left of the
-            track runs over the beige column, the right of it over the
-            cranberry one. Transparent background — the mixture is the
-            point. */}
-        <div
-          style={{
-            position: "absolute",
-            left: 0,
-            right: 0,
-            bottom: 0,
-            zIndex: 2,
-            padding: "0 0 clamp(18px, 2.4vw, 28px)",
-            pointerEvents: "none",
-          }}
-        >
-          <ClientMarquee variant="hero" straddle />
-        </div>
       </div>
 
     </section>
