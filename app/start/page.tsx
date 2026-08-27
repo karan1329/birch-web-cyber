@@ -3,6 +3,7 @@ import { Rise } from "../components/primitives/Rise";
 import { MagButton } from "../components/primitives/MagButton";
 import { SplitText } from "../components/primitives/SplitText";
 import { ClientMarquee } from "../components/home/ClientMarquee";
+import { CabinetLoop } from "../components/start/CabinetLoop";
 import { SprintsTable } from "../components/services/SprintsTable";
 import { PERMISSION_LINE } from "../lib/clients";
 import {
@@ -40,11 +41,14 @@ export default function StartPage() {
     <>
       <Moment />
       <Bets />
+      {/* The Fractional Security Office is what this page sells, so it sits
+          directly under the bets rather than fifth. The sprints table below
+          is the on-ramp to it, not a competing menu. */}
+      <Destination />
       <Proof />
       {/* ST-4 · the same nine-engagement table the services page renders,
           from the one canonical module. */}
       <SprintsTable />
-      <Destination />
       <Terms />
       <Close />
     </>
@@ -57,74 +61,134 @@ function Moment() {
   return (
     <section
       style={{
+        position: "relative",
         background: "var(--bl-ink)",
         color: "var(--bl-fg)",
-        padding:
-          "calc(var(--bl-top-offset) + clamp(70px, 9vw, 130px)) var(--bl-page-pad) clamp(80px, 10vw, 140px)",
+        paddingTop: "var(--bl-top-offset)",
       }}
     >
-      <div className="bl-container" style={{ padding: 0 }}>
-        <h1
+      <div
+        className="bl-hero-split"
+        style={{
+          display: "grid",
+          // Narrower than the landing hero's 46/54. The film was made for
+          // this space, so the copy yields width to it rather than the
+          // other way round.
+          gridTemplateColumns: "37fr 63fr",
+          minHeight: "calc(100vh - var(--bl-top-offset))",
+        }}
+      >
+        {/* Conversion panel. Same 46/54 grammar as the landing hero. */}
+        <div
+          className="bl-hero-panel"
           style={{
-            fontFamily: "var(--font-sans)",
-            fontWeight: 600,
-            fontSize: "clamp(36px, 5.6vw, 88px)",
-            lineHeight: 0.98,
-            letterSpacing: "-0.04em",
-            margin: 0,
-            maxWidth: "var(--bl-heading-wide)",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            minWidth: 0,
+            padding:
+              "clamp(48px, 6vw, 88px) clamp(32px, 4vw, 64px) clamp(48px, 6vw, 88px) var(--bl-page-pad)",
           }}
         >
-          <SplitText text="Someone with power is about to read your security." />
-        </h1>
-        <Rise delay={0.5}>
-          <p
-            style={{
-              fontFamily: "var(--font-sans)",
-              fontStyle: "italic",
-              fontWeight: 300,
-              fontSize: "clamp(22px, 2.6vw, 40px)",
-              lineHeight: 1.15,
-              letterSpacing: "-0.025em",
-              color: "var(--bl-fg2)",
-              margin: "clamp(16px, 2vw, 24px) 0 0",
-            }}
-          >
-            We read it first. Then we run it.
-          </p>
-        </Rise>
-        <Rise delay={0.62}>
-          <p style={{ ...BODY, margin: "clamp(26px, 3vw, 40px) 0 0" }}>
-            An enterprise customer&rsquo;s questionnaire. An investor&rsquo;s
-            diligence list. A regulator&rsquo;s letter. Security becomes urgent
-            the day someone with power reads yours, and most firms discover the
-            gap the same day the reader does, which is the most expensive
-            possible moment. We exist so you discover it first.
-          </p>
-        </Rise>
-        <Rise delay={0.74}>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: 20,
-              flexWrap: "wrap",
-              marginTop: "clamp(28px, 3.4vw, 44px)",
-            }}
-          >
-            <MagButton href="/contact">Book thirty minutes</MagButton>
-            <span
+          <Rise delay={0.05} y={12}>
+            <p
               style={{
                 fontFamily: "var(--font-mono)",
-                fontSize: 11.5,
-                letterSpacing: "0.04em",
-                color: "var(--bl-fg3)",
+                fontWeight: 600,
+                fontSize: 10.5,
+                letterSpacing: "0.18em",
+                textTransform: "uppercase",
+                color: "var(--bl-accent)",
+                margin: 0,
               }}
             >
-              We will both know inside thirty minutes whether this is a fit.
-            </span>
-          </div>
-        </Rise>
+              The Fractional Security Office
+            </p>
+          </Rise>
+
+          <h1
+            style={{
+              fontFamily: "var(--font-sans)",
+              fontWeight: 600,
+              fontSize: "clamp(32px, 3.9vw, 64px)",
+              lineHeight: 0.99,
+              letterSpacing: "-0.038em",
+              margin: "clamp(18px, 2vw, 26px) 0 0",
+            }}
+          >
+            <SplitText text="Someone with power is about to read your security." />
+          </h1>
+
+          <Rise delay={0.5}>
+            <p
+              style={{
+                fontFamily: "var(--font-sans)",
+                fontStyle: "italic",
+                fontWeight: 300,
+                fontSize: "clamp(20px, 2.1vw, 32px)",
+                lineHeight: 1.15,
+                letterSpacing: "-0.025em",
+                color: "var(--bl-accent)",
+                margin: "clamp(14px, 1.6vw, 20px) 0 0",
+              }}
+            >
+              We read it first. Then we run it.
+            </p>
+          </Rise>
+
+          <Rise delay={0.62}>
+            <p
+              style={{
+                ...BODY,
+                fontSize: "clamp(15px, 1.15vw, 17px)",
+                maxWidth: "46ch",
+                margin: "clamp(22px, 2.6vw, 32px) 0 0",
+              }}
+            >
+              An enterprise customer&rsquo;s questionnaire. An
+              investor&rsquo;s diligence list. A regulator&rsquo;s letter.
+              Security becomes urgent the day someone with power reads yours,
+              and most firms discover the gap the same day the reader does,
+              which is the most expensive possible moment.{" "}
+              <strong style={{ color: "var(--bl-fg)", fontWeight: 600 }}>
+                We exist so you discover it first.
+              </strong>
+            </p>
+          </Rise>
+
+          <Rise delay={0.74}>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 20,
+                flexWrap: "wrap",
+                marginTop: "clamp(26px, 3vw, 38px)",
+              }}
+            >
+              <MagButton href="/contact">Book thirty minutes</MagButton>
+              <span
+                style={{
+                  fontFamily: "var(--font-mono)",
+                  fontSize: 11,
+                  letterSpacing: "0.04em",
+                  color: "var(--bl-fg3)",
+                  maxWidth: "34ch",
+                  lineHeight: 1.5,
+                }}
+              >
+                We will both know inside thirty minutes whether this is a fit.
+              </span>
+            </div>
+          </Rise>
+        </div>
+
+        {/* The cabinet loop · full bleed, hard cut at the seam. Rendered
+            live from the original SVG scene rather than the MP4 export, so
+            it stays crisp at any panel size. */}
+        <div className="bl-hero-visual" style={{ minWidth: 0, minHeight: 0 }}>
+          <CabinetLoop />
+        </div>
       </div>
     </section>
   );
@@ -250,7 +314,14 @@ function Proof() {
 
 function Destination() {
   return (
-    <section style={{ ...SECTION, borderTop: "1px solid var(--bl-rule)" }}>
+    <section
+      style={{
+        ...SECTION,
+        background: "var(--bl-bone)",
+        color: "var(--bl-bone-fg)",
+        borderTop: "1px solid var(--bl-rule)",
+      }}
+    >
       <div className="bl-container" style={{ padding: 0 }}>
         <Anchor number="04" label="The destination" />
 
@@ -260,7 +331,7 @@ function Destination() {
             fontWeight: 500,
             fontSize: "clamp(20px, 2.2vw, 30px)",
             letterSpacing: "-0.02em",
-            color: "var(--bl-fg2)",
+            color: "var(--bl-bone-fg2)",
             margin: "0 0 12px",
           }}
         >
@@ -275,6 +346,7 @@ function Destination() {
             lineHeight: 1,
             letterSpacing: "-0.038em",
             margin: 0,
+            color: "var(--bl-bone-fg)",
           }}
         >
           {/* Section title matches SV-4 and the one-pager exactly. */}
@@ -287,7 +359,7 @@ function Destination() {
               fontStyle: "italic",
               fontWeight: 300,
               fontSize: "clamp(17px, 1.8vw, 26px)",
-              color: "var(--bl-fg2)",
+              color: "var(--bl-bone-fg2)",
               margin: "14px 0 clamp(26px, 3vw, 38px)",
             }}
           >
@@ -296,7 +368,7 @@ function Destination() {
         </Rise>
 
         <Rise delay={0.5}>
-          <p style={BODY}>
+          <p style={BONE_BODY}>
             Some firms come to us with a known problem, and most come with a
             quieter one: nobody actually owns security, so it lives as the
             CTO&rsquo;s second job and every audit starts again from zero. The
@@ -310,7 +382,7 @@ function Destination() {
             so you are never buying a consultant and then five products and
             then finding out that nobody owns the space between them.
           </p>
-          <p style={{ ...BODY, color: "var(--bl-fg)", marginTop: 18 }}>
+          <p style={{ ...BONE_BODY, color: "var(--bl-bone-fg)", marginTop: 18 }}>
             One line on your budget. One accountable name. It scales with the
             challenge, not with headcount.
           </p>
@@ -335,7 +407,7 @@ function PriceBlock() {
     marginTop: "clamp(32px, 4vw, 48px)",
     padding: "clamp(24px, 3vw, 38px)",
     border: "1px solid var(--bl-accent)",
-    background: "rgba(var(--bl-accent-rgb), 0.05)",
+    background: "rgba(var(--bl-accent-rgb), 0.14)",
     display: "flex",
     flexDirection: "column",
     gap: 14,
@@ -344,7 +416,7 @@ function PriceBlock() {
   if (PRICE_BLOCK === "no-price") {
     return (
       <div style={wrap}>
-        <p style={{ ...BODY, color: "var(--bl-fg)" }}>
+        <p style={{ ...BONE_BODY, color: "var(--bl-bone-fg)" }}>
           Tell us your scope on a thirty-minute call and you will have a
           fixed-price proposal in writing within one business day. No day
           rates, no hourly billing, and nothing on the invoice you did not see
@@ -363,13 +435,13 @@ function PriceBlock() {
           fontWeight: 600,
           fontSize: "clamp(20px, 2.2vw, 30px)",
           letterSpacing: "-0.02em",
-          color: "var(--bl-fg)",
+          color: "var(--bl-bone-fg)",
           margin: 0,
         }}
       >
         From {FOUNDING_RATE} a month for founding clients.
       </p>
-      <p style={BODY}>
+      <p style={BONE_BODY}>
         Full rate is {FULL_RATE}. We are opening the Security Office to{" "}
         {FOUNDING_PLACES_TOTAL} companies at the founding rate, because two
         founders can own {FOUNDING_PLACES_TOTAL} programmes properly and we are
@@ -401,11 +473,11 @@ function ReadMechanic() {
   return (
     <p
       style={{
-        ...BODY,
+        ...BONE_BODY,
         fontSize: "clamp(14px, 1.1vw, 16px)",
         margin: 0,
         paddingTop: 12,
-        borderTop: "1px solid var(--bl-rule)",
+        borderTop: "1px solid var(--bl-bone-rule)",
       }}
     >
       {READ_MECHANIC_COPY[READ_MECHANIC]}
@@ -518,6 +590,16 @@ const H2: React.CSSProperties = {
   letterSpacing: "-0.032em",
   margin: 0,
   maxWidth: "var(--bl-heading-wide)",
+};
+
+/** Body copy on the inverted (near-black) destination surface. */
+const BONE_BODY: React.CSSProperties = {
+  fontFamily: "var(--font-sans)",
+  fontSize: "clamp(15px, 1.25vw, 18px)",
+  lineHeight: 1.7,
+  color: "var(--bl-bone-fg2)",
+  margin: 0,
+  maxWidth: "var(--bl-text-wide)",
 };
 
 const BODY: React.CSSProperties = {
