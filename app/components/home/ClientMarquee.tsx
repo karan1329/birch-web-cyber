@@ -1,58 +1,53 @@
 "use client";
 
-// Named clients per Birchlogic copy v2 (11 May 2026).
-// Designer note from doc: render as a clean horizontal text strip with
-// subtle separators, no logos for v1 launch.
-const ITEMS = [
-  "AMCS Group",
-  "K&S Partners",
-  "MB Solutions",
-  "The Batraa Numerology",
-  "Saarthe.ai",
-  "Fusionedge.io",
-  "Nexwave GmbH",
-  "Mintergraph Solutions",
-  "Nest Money Fintech",
-];
+import { NAMED_CLIENTS, PERMISSION_LINE } from "../../lib/clients";
 
 type Props = {
-  /** Larger track for standalone full-width use (legacy). Smaller for
-   *  inline use inside another section (Who We Work With). */
-  variant?: "standalone" | "inline";
+  /**
+   * `hero`   — inside the first viewport, under the hero text (HP-9).
+   *            Carries the "A few of them" label and the permission line.
+   * `inline` — smaller track for use inside another section.
+   * `standalone` — legacy full-width track.
+   */
+  variant?: "standalone" | "inline" | "hero";
 };
 
 /**
- * Horizontal scrolling client strip. Used inline inside the right half
- * of the Who-We-Work-With section. The `inline` variant fits a smaller
- * column, tighter font, edge-fade masks on both sides.
+ * Horizontal scrolling client strip. Names come from the canonical list in
+ * lib/clients.ts — nothing here hard-codes a client.
+ *
+ * Per HP-9 the marquee now lives in the hero's first viewport, so it is
+ * visible before any scroll. The duplicate that used to sit inside
+ * Who We Work With has been removed.
  */
 export function ClientMarquee({ variant = "inline" }: Props) {
-  const loop = [...ITEMS, ...ITEMS, ...ITEMS];
+  const loop = [...NAMED_CLIENTS, ...NAMED_CLIENTS, ...NAMED_CLIENTS];
   const inline = variant === "inline";
+  const hero = variant === "hero";
 
-  return (
+  const track = (
     <div
       style={{
         position: "relative",
         overflow: "hidden",
-        padding: inline ? "20px 0" : "28px 0",
+        padding: hero ? "12px 0" : inline ? "20px 0" : "28px 0",
         borderTop: inline ? "1px solid var(--bl-rule)" : undefined,
         borderBottom: inline ? "1px solid var(--bl-rule)" : undefined,
         WebkitMaskImage:
-          "linear-gradient(to right, transparent 0, #000 10%, #000 90%, transparent 100%)",
+          "linear-gradient(to right, transparent 0, #000 8%, #000 92%, transparent 100%)",
         maskImage:
-          "linear-gradient(to right, transparent 0, #000 10%, #000 90%, transparent 100%)",
+          "linear-gradient(to right, transparent 0, #000 8%, #000 92%, transparent 100%)",
       }}
     >
       <div
         style={{
           display: "flex",
           alignItems: "center",
-          gap: inline ? 48 : 72,
+          gap: hero ? 40 : inline ? 48 : 72,
           width: "max-content",
-          // Slower loop on the smaller inline variant so the eye can
-          // settle on each name as it passes.
-          animation: `bl-ticker-move ${inline ? 42 : 55}s linear infinite`,
+          // Slower loop on the smaller variants so the eye can settle on
+          // each name as it passes.
+          animation: `bl-ticker-move ${hero ? 46 : inline ? 42 : 55}s linear infinite`,
         }}
       >
         {loop.map((p, i) => (
@@ -61,16 +56,18 @@ export function ClientMarquee({ variant = "inline" }: Props) {
             style={{
               display: "inline-flex",
               alignItems: "center",
-              gap: inline ? 48 : 72,
+              gap: hero ? 40 : inline ? 48 : 72,
             }}
           >
             <span
               style={{
                 fontFamily: "var(--font-sans)",
                 fontWeight: 500,
-                fontSize: inline
-                  ? "clamp(16px, 1.4vw, 20px)"
-                  : "clamp(22px, 2.2vw, 32px)",
+                fontSize: hero
+                  ? "clamp(14px, 1.05vw, 16px)"
+                  : inline
+                    ? "clamp(16px, 1.4vw, 20px)"
+                    : "clamp(22px, 2.2vw, 32px)",
                 letterSpacing: "-0.015em",
                 color: "var(--bl-fg)",
                 opacity: 0.72,
@@ -93,6 +90,38 @@ export function ClientMarquee({ variant = "inline" }: Props) {
           </span>
         ))}
       </div>
+    </div>
+  );
+
+  if (!hero) return track;
+
+  // HP-9 · in the hero window, the strip is labelled and carries the
+  // permission line directly beneath it.
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+      <span
+        style={{
+          fontFamily: "var(--font-mono)",
+          fontWeight: 600,
+          fontSize: 9.5,
+          letterSpacing: "0.18em",
+          textTransform: "uppercase",
+          color: "var(--bl-fg3)",
+        }}
+      >
+        A few of them
+      </span>
+      {track}
+      <span
+        style={{
+          fontFamily: "var(--font-sans)",
+          fontSize: 10.5,
+          lineHeight: 1.5,
+          color: "var(--bl-fg3)",
+        }}
+      >
+        {PERMISSION_LINE}
+      </span>
     </div>
   );
 }

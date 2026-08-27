@@ -87,17 +87,15 @@ export function Thesis() {
                     color: "var(--bl-fg2)",
                   }}
                 >
+                  {/* HP-2 · the "mechanics of failure" sentence and its list
+                      moved to /how-we-work under principle three, where the
+                      argument already had a natural home. The footnote below
+                      stays here. */}
                   The companies that survive serious adversaries and the
                   companies that get hollowed out look indistinguishable on
                   paper. What separates them is orientation: whether security
                   is a practice the company follows or a product category it
-                  bought once and forgot. The mechanics of failure have not
-                  changed in twenty years. Cloud configurations drift,
-                  identities accumulate permissions nobody audits, a vendor
-                  with too much access falls over and pulls you down with it,
-                  and a phish that should have failed lands on the one person
-                  who clicks. None of that is the variable. The orientation of
-                  the company is.
+                  bought once and forgot. The orientation of the company is.
                 </span>
               </p>
 

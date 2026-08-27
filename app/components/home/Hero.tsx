@@ -4,6 +4,7 @@ import { Rise } from "../primitives/Rise";
 import { SplitText } from "../primitives/SplitText";
 import { MagButton } from "../primitives/MagButton";
 import { HeroVisual } from "./HeroVisual";
+import { ClientMarquee } from "./ClientMarquee";
 
 /**
  * Landing hero · asymmetric split.
@@ -142,6 +143,15 @@ export function Hero() {
               >
                 or message Karan on LinkedIn
               </a>
+            </div>
+          </Rise>
+
+          {/* HP-9 · client strip inside the first viewport, visible before
+              any scroll. Pinned to the bottom of the panel so it reads as
+              evidence under the claim rather than as another CTA. */}
+          <Rise delay={1.1} y={12}>
+            <div style={{ marginTop: "clamp(34px, 5vw, 60px)" }}>
+              <ClientMarquee variant="hero" />
             </div>
           </Rise>
         </div>

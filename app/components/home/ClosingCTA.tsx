@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { MagButton } from "../primitives/MagButton";
 import { Rise } from "../primitives/Rise";
 import { SplitText } from "../primitives/SplitText";
@@ -94,6 +95,24 @@ export function ClosingCTA() {
             do, in how many weeks. If it is not a fit, we will say so. If it
             is an emergency, we will start in seven days.
           </p>
+          {/* HP-6 · the Security Read sentence, added after the emergency
+              line. Sits closer to the CTA than the paragraph above it so it
+              reads as the concrete next step rather than more preamble. */}
+          <p
+            style={{
+              fontFamily: "var(--font-sans)",
+              fontSize: "clamp(16px, 1.35vw, 19px)",
+              fontWeight: 500,
+              color: "var(--bl-fg)",
+              maxWidth: "var(--bl-text-body)",
+              margin: "-24px auto 48px",
+              lineHeight: 1.65,
+            }}
+          >
+            Most engagements begin with the Security Read: three weeks, a
+            fixed fee, and an honest answer at the end about whether you need
+            us any further.
+          </p>
         </Rise>
 
         <Rise delay={0.3}>
@@ -133,6 +152,24 @@ export function ClosingCTA() {
             >
               Or send Karan a message on LinkedIn.
             </a>
+            {/* HP-11 · the Foreword relocates to /about; the homepage close
+                carries the link across to it. */}
+            <Link
+              href="/about"
+              className="bl-email-link"
+              style={{
+                fontFamily: "var(--font-mono)",
+                fontSize: 11,
+                letterSpacing: "0.06em",
+                textTransform: "uppercase",
+                color: "var(--bl-fg2)",
+                textDecoration: "none",
+                paddingBottom: 2,
+                borderBottom: "1px solid var(--bl-rule2)",
+              }}
+            >
+              Meet the founders →
+            </Link>
           </div>
         </Rise>
       </div>

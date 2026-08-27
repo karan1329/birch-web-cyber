@@ -6,18 +6,29 @@ import { TiltCard } from "../primitives/TiltCard";
 
 type Tier = { tier: string; label: string; meta: string; body: string };
 
+/**
+ * HP-4 (superseded) · the earlier Tier II/III renames were REVERSED per
+ * Karan's vision walkthrough, so the names here stay as they are. The only
+ * survivor of that section is the shared closing line below, which every
+ * card now carries.
+ *
+ * Sprint count corrected from twelve to nine per the Phase 3 mapping in
+ * website_overhaul_pack.md §4.
+ */
+const SHAPE_CLOSER = "Most engagements begin with the Security Read.";
+
 const TIERS: Tier[] = [
   {
     tier: "I",
     label: "Quick Sprints",
     meta: "2 to 4 wks · fixed scope",
-    body: "Twelve engagements we have run enough times to deliver in two to four weeks. Each fixes one specific thing. Senior partner in every meeting. Fixed scope, fixed delivery date.",
+    body: "Nine engagements we have run enough times to deliver in two to four weeks. Each fixes one specific thing. Senior partner in every meeting. Fixed scope, fixed delivery date.",
   },
   {
     tier: "II",
-    label: "vCISO",
+    label: "vCISO retainer",
     meta: "Month-to-month · multi-year",
-    body: "The CISO office, on retainer. Three intensities, scaled to the regulator on your back and the board cycle ahead.",
+    body: "The CISO office, on retainer. Three configurations, scaled to the regulator on your back and the board cycle ahead.",
   },
   {
     tier: "III",
@@ -163,11 +174,26 @@ function TierCard({ tier }: { tier: Tier }) {
                 fontSize: 15,
                 color: "var(--bl-fg2)",
                 lineHeight: 1.55,
-                margin: "0 0 28px",
+                margin: "0 0 14px",
                 maxWidth: 320,
               }}
             >
               {tier.body}
+            </p>
+            {/* HP-4 · the one surviving line from the superseded rename:
+                every shape card closes on the same sentence. */}
+            <p
+              style={{
+                fontFamily: "var(--font-sans)",
+                fontSize: 15,
+                fontWeight: 500,
+                color: "var(--bl-fg)",
+                lineHeight: 1.55,
+                margin: "0 0 28px",
+                maxWidth: 320,
+              }}
+            >
+              {SHAPE_CLOSER}
             </p>
             <div
               style={{

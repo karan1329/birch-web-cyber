@@ -19,7 +19,8 @@ const PRINCIPLES: Principle[] = [
     number: "01",
     heading: "We are a reliable long-term partner.",
     body: [
-      "We did not invent the consulting model. We did not invent the security-team-on-retainer model. We assembled the discipline of one and the practicality of the other into a firm that does both.",
+      // HP-3 · principle one, first paragraph rewritten.
+      "We did not invent the consulting model or the security-team-on-retainer model, and we are not pretending otherwise. What we did was take the discipline of the first and the practicality of the second and build one firm that actually does both.",
       "Our engagements last years. We are month-to-month commercially because confident firms do not need lock-in. We are multi-year operationally because the work compounds and the senior partner stays on the engagement from kickoff through the third board cycle.",
     ],
   },
@@ -35,6 +36,10 @@ const PRINCIPLES: Principle[] = [
     number: "03",
     heading: "The right intervention at the right time.",
     body: [
+      // HP-2 · relocated from the homepage thesis, where it was crowding the
+      // orientation argument. It belongs here: the mechanics are the reason
+      // an annual assessment is the wrong instrument.
+      "The mechanics of failure have not changed in twenty years. Cloud configurations drift, identities accumulate permissions nobody audits, a vendor with too much access falls over and pulls you down with it, and a phish that should have failed lands on the one person who clicks.",
       "A two-week annual security assessment is the wrong format for almost every company we work with. Embedded ongoing review is the right format.",
       "Instead of a one-shot application security review at year-end, we participate in product design conversations when a feature is being scoped, review PRs as they happen, and run tightly scoped assessments when a feature is shipping. You get faster, cheaper, more relevant assessments.",
     ],
@@ -59,7 +64,8 @@ const PRINCIPLES: Principle[] = [
     number: "06",
     heading: "We own the program. We coordinate your specialists.",
     body: [
-      "Some firms try to own everything in-house: pentest, MDR, IR, managed IT, vCISO, compliance, training, all of it. The math does not work. Quality compresses. Margin compresses. Talent leaves.",
+      // HP-3 · principle six rewritten.
+      "Some firms try to own everything in-house: pentest, MDR, IR, managed IT, vCISO, compliance, training, all of it. The maths does not work, because when one firm tries to own pentest and MDR and IR and managed IT all at once, quality and margin get squeezed at the same time and the good people leave first.",
       "We made a different choice. We own the program. We coordinate best-in-class specialists for penetration testing, managed detection and response, incident response, and managed IT. One accountable partner across all of it.",
     ],
   },

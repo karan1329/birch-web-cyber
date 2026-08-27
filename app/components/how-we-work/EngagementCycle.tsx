@@ -49,7 +49,7 @@ export function EngagementCycle() {
       }}
     >
       <div className="bl-container" style={{ padding: 0 }}>
-        <Anchor number="02" label="How an engagement runs" />
+        <Anchor number="03" label="How an engagement runs" />
 
         <h2
           style={{

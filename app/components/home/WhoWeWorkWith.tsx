@@ -4,7 +4,6 @@ import Link from "next/link";
 import { Anchor } from "../primitives/Anchor";
 import { Rise } from "../primitives/Rise";
 import { SplitText } from "../primitives/SplitText";
-import { ClientMarquee } from "./ClientMarquee";
 
 /**
  * Section 5 of the home page. Now hosts the client carousel that used
@@ -101,42 +100,83 @@ export function WhoWeWorkWith() {
             </Link>
           </Rise>
 
+          {/* HP-9 · the client marquee that used to sit here has moved into
+              the hero's first viewport. This section keeps its paragraph and
+              loses the duplicate. */}
+
+          {/* HP-10 · founder segment */}
           <Rise delay={0.1}>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: 16,
-              }}
-            >
-              <span
-                style={{
-                  fontFamily: "var(--font-mono)",
-                  fontSize: 10,
-                  letterSpacing: "0.18em",
-                  textTransform: "uppercase",
-                  color: "var(--bl-fg3)",
-                }}
-              >
-                A few of them
-              </span>
-              <ClientMarquee />
-              <p
-                style={{
-                  fontFamily: "var(--font-mono)",
-                  fontSize: 11,
-                  letterSpacing: "0.04em",
-                  color: "var(--bl-fg3)",
-                  margin: 0,
-                  lineHeight: 1.5,
-                }}
-              >
-                Names listed with permission. Most engagements stay private.
-              </p>
-            </div>
+            <FounderBlock />
           </Rise>
         </div>
       </div>
     </section>
+  );
+}
+
+/**
+ * HP-10 · the founder sub-block that closes Who We Work With. Routes to
+ * /start, which is deliberately absent from the nav and footer — this card
+ * and the homepage close are its only entry points.
+ */
+function FounderBlock() {
+  return (
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        gap: 14,
+        padding: "clamp(26px, 3vw, 38px)",
+        background: "var(--bl-ink2)",
+        border: "1px solid var(--bl-rule)",
+      }}
+    >
+      <h3
+        style={{
+          fontFamily: "var(--font-sans)",
+          fontWeight: 600,
+          fontSize: "clamp(20px, 1.9vw, 26px)",
+          letterSpacing: "-0.018em",
+          lineHeight: 1.15,
+          color: "var(--bl-fg)",
+          margin: 0,
+        }}
+      >
+        Building a startup?
+      </h3>
+      <p
+        style={{
+          fontFamily: "var(--font-sans)",
+          fontSize: "clamp(14px, 1.1vw, 16px)",
+          lineHeight: 1.6,
+          color: "var(--bl-fg2)",
+          margin: 0,
+          maxWidth: "var(--bl-text-body)",
+        }}
+      >
+        If you are a founder somewhere between bootstrapped and Series B, with
+        an enterprise deal, an audit or an investor&rsquo;s diligence list
+        somewhere on the horizon, we built something specifically for you, and
+        it is priced for where you are rather than where you are going.
+      </p>
+      <Link
+        href="/start"
+        className="bl-email-link"
+        style={{
+          alignSelf: "flex-start",
+          marginTop: 4,
+          fontFamily: "var(--font-mono)",
+          fontSize: 12,
+          letterSpacing: "0.06em",
+          textTransform: "uppercase",
+          color: "var(--bl-accent)",
+          textDecoration: "none",
+          borderBottom: "1px solid var(--bl-accent)",
+          paddingBottom: 3,
+        }}
+      >
+        See the founding offer →
+      </Link>
+    </div>
   );
 }

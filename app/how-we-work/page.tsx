@@ -4,6 +4,7 @@ import { Rise } from "../components/primitives/Rise";
 import { SplitText } from "../components/primitives/SplitText";
 import { StickyPrinciples } from "../components/how-we-work/StickyPrinciples";
 import { EngagementCycle } from "../components/how-we-work/EngagementCycle";
+import { ComposableOffice } from "../components/how-we-work/ComposableOffice";
 import { pageMeta } from "../lib/seo";
 
 export const metadata = pageMeta({
@@ -22,6 +23,8 @@ export default function HowWeWorkPage() {
         subtitle="Six principles that decide who we are. Read them before you book a call. If they fit, we will probably work well together. If they do not, we will not."
       />
       <StickyPrinciples />
+      {/* HW-1 · after the six principles, before "How an engagement runs". */}
+      <ComposableOffice />
       <EngagementCycle />
       <ClosingCTASection />
     </>
