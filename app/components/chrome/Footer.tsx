@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 
+import { OFFICES, SHOW_STREET_ADDRESSES } from "../../lib/offices";
+
 const NAV = [
   ["/", "Home"],
   ["/how-we-work", "How We Work"],
@@ -12,22 +14,30 @@ const NAV = [
   ["/contact", "Contact"],
 ] as const;
 
-type Office = { city: string; country?: string; note?: string; href?: string };
-
-const OFFICES: Office[] = [
-  { city: "Delhi", country: "India" },
-  { city: "Singapore", href: "/singapore" },
-];
-
-// Plain list, single middle-dot separators. No links. Geist Mono small.
-const OPERATES_ACROSS = [
+/**
+ * HP-7 · the regime strip.
+ *
+ * Was "Operating across RBI · SEBI · MAS TRM · Notice 658 · EU AI Act ·
+ * NIS2 · DPDP". Two problems: "operating across" claims presence rather
+ * than competence, and the list was shorter than the truth. This is the
+ * line from Karan's one-pagers, verbatim and unabridged, which is the
+ * claim the firm actually makes: fluency, not jurisdiction.
+ *
+ * Notice 658 drops out because it is a subset of MAS TRM's world, and
+ * UAE PDPL · DESC stays out per todo 1.7 until the UAE work earns a
+ * sentence elsewhere on the site. Footers get read by the people who
+ * check claims.
+ */
+const FLUENT_IN = [
   "RBI",
-  "SEBI",
+  "SEBI CSCRF",
   "MAS TRM",
-  "Notice 658",
-  "EU AI Act",
-  "NIS2",
   "DPDP",
+  "NIS2",
+  "EU AI Act",
+  "SOC 2",
+  "ISO 27001",
+  "CERT-In",
 ];
 
 // Only LinkedIn for now. X and GitHub are off until we have an active
@@ -40,7 +50,7 @@ export function Footer() {
   return (
     <footer
       style={{
-        background: "var(--bl-ink)",
+        background: "var(--bl-section-veil)",
         color: "var(--bl-fg2)",
         padding: "clamp(80px, 10vw, 120px) var(--bl-page-pad) 40px",
         borderTop: "1px solid var(--bl-rule)",
@@ -111,10 +121,7 @@ export function Footer() {
           <FooterColumn label="Offices">
             {OFFICES.map((o) => {
               const cityLabel = (
-                <span>
-                  {o.city}
-                  {o.country ? `, ${o.country}` : ""}
-                </span>
+                <span style={{ color: "var(--bl-fg)" }}>{o.city}</span>
               );
               return (
                 <div
@@ -122,12 +129,8 @@ export function Footer() {
                   style={{
                     fontFamily: "var(--font-sans)",
                     fontSize: 14,
-                    marginBottom: 10,
+                    marginBottom: 18,
                     color: "var(--bl-fg2)",
-                    display: "flex",
-                    alignItems: "baseline",
-                    gap: 8,
-                    flexWrap: "wrap",
                   }}
                 >
                   {o.href ? (
@@ -140,19 +143,18 @@ export function Footer() {
                   ) : (
                     cityLabel
                   )}
-                  {o.note && (
-                    <span
-                      style={{
-                        fontFamily: "var(--font-mono)",
-                        fontSize: 10,
-                        letterSpacing: "0.06em",
-                        color: "var(--bl-neon)",
-                        textTransform: "uppercase",
-                      }}
-                    >
-                      {o.note}
-                    </span>
-                  )}
+                  <span
+                    style={{
+                      display: "block",
+                      marginTop: 4,
+                      fontSize: 13,
+                      lineHeight: 1.5,
+                      color: "var(--bl-fg3)",
+                      maxWidth: 260,
+                    }}
+                  >
+                    {SHOW_STREET_ADDRESSES ? o.address : o.region}
+                  </span>
                 </div>
               );
             })}
@@ -194,7 +196,7 @@ export function Footer() {
           </FooterColumn>
         </div>
 
-        {/* Operating-across regulator list. Plain text, no links, single
+        {/* HP-7 · the fluency strip. Plain text, no links, single
             middle-dot separators. Sits above the copyright row. */}
         <div
           style={{
@@ -207,26 +209,17 @@ export function Footer() {
             alignItems: "baseline",
           }}
         >
-          <span
-            style={{
-              fontFamily: "var(--font-mono)",
-              fontSize: 10,
-              letterSpacing: "0.18em",
-              textTransform: "uppercase",
-              color: "var(--bl-fg3)",
-            }}
-          >
-            Operating across
+          <span className="bl-label" style={{ color: "var(--bl-fg3)" }}>
+            Fluent in
           </span>
           <span
             style={{
-              fontFamily: "var(--font-mono)",
-              fontSize: 11,
-              letterSpacing: "0.06em",
+              fontFamily: "var(--font-sans)",
+              fontSize: 14,
               color: "var(--bl-fg2)",
             }}
           >
-            {OPERATES_ACROSS.join(" · ")}
+            {FLUENT_IN.join(" · ")}
           </span>
         </div>
 
@@ -286,14 +279,8 @@ function FooterColumn({
   return (
     <div>
       <div
-        style={{
-          fontFamily: "var(--font-mono)",
-          fontSize: 10,
-          letterSpacing: "0.14em",
-          textTransform: "uppercase",
-          color: "var(--bl-fg3)",
-          marginBottom: 20,
-        }}
+        className="bl-label"
+        style={{ color: "var(--bl-fg3)", marginBottom: 20 }}
       >
         {label}
       </div>

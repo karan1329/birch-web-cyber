@@ -17,12 +17,14 @@ type Props = {
  * as a field that keeps renewing. Top row runs left, bottom row right, at
  * different speeds so they never sync into an obvious repeat.
  *
- * Headed "Companies that trust our work" rather than a claim of clientship,
- * which is the honest framing for a list that mixes engagements of the firm
- * with institutions from the founders' prior roles.
+ * Headed "Selected clients and credentials" rather than a flat claim of
+ * clientship. The list mixes engagements of the firm with institutions from
+ * the founders' prior roles, and the two nouns keep both lanes honest:
+ * some of these are clients, the rest are credentials. Anywhere the copy
+ * actually says "client", filter on kind === "firm".
  *
- * Logos sit greyscaled at rest so nineteen brand palettes cannot fight the
- * page's single cranberry accent, and come to full colour on hover.
+ * Logos render at full colour and full opacity. Desaturating a client's
+ * mark reads as a placeholder, and the strip IS the credential.
  */
 export function ClientMarquee({ variant = "inline" }: Props) {
   const hero = variant === "hero";
@@ -33,18 +35,19 @@ export function ClientMarquee({ variant = "inline" }: Props) {
 
   return (
     <div
-      style={{ display: "flex", flexDirection: "column", gap: hero ? 10 : 12 }}
+      style={{ display: "flex", flexDirection: "column", gap: hero ? 16 : 12 }}
     >
       {hero && (
         <span
           style={{
             fontFamily: "var(--font-sans)",
-            fontWeight: 400,
-            fontSize: 13.5,
-            color: "var(--bl-fg3)",
+            fontWeight: 500,
+            fontSize: "clamp(14px, 1.05vw, 18px)",
+            letterSpacing: "-0.01em",
+            color: "var(--bl-fg2)",
           }}
         >
-          Companies that trust our work
+          Selected clients and credentials
         </span>
       )}
 
@@ -81,7 +84,7 @@ function LogoRow({
         style={{
           display: "flex",
           alignItems: "center",
-          gap: "clamp(44px, 5vw, 78px)",
+          gap: "clamp(52px, 5.7vw, 108px)",
           width: "max-content",
           // Both rows share one keyframe pair; `reverse` sends the second
           // row the other way.
@@ -99,7 +102,7 @@ function LogoRow({
               alignItems: "center",
               justifyContent: "center",
               flexShrink: 0,
-              height: "clamp(30px, 2.7vw, 40px)",
+              height: "clamp(41px, 3.9vw, 72px)",
             }}
           >
             {/* Plain img: small transparent PNGs from /public. next/image's

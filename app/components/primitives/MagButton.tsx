@@ -38,10 +38,13 @@ export function MagButton({
     alignItems: "center",
     gap: 12,
     fontFamily: "var(--font-sans)",
-    fontSize: 14,
+    // Scales with the page on large panels; a 14px pill next to a 200px
+    // headline reads as a mistake on a 4K monitor.
+    fontSize: "clamp(14px, 0.9vw, 17px)",
     fontWeight: 500,
     letterSpacing: "-0.005em",
-    padding: "16px 26px 16px 28px",
+    padding:
+      "clamp(16px, 1vw, 22px) clamp(26px, 1.7vw, 38px) clamp(16px, 1vw, 22px) clamp(28px, 1.8vw, 40px)",
     background: primary ? "var(--bl-neon)" : "transparent",
     color: primary ? "var(--bl-ink)" : "var(--bl-fg)",
     border: primary ? "none" : "1px solid var(--bl-rule-2, var(--bl-rule2))",

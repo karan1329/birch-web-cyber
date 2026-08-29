@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Archivo } from "next/font/google";
 import { Nav } from "./components/chrome/Nav";
 import { Footer } from "./components/chrome/Footer";
 import { GlobalMeshBackdrop } from "./components/chrome/GlobalMeshBackdrop";
@@ -16,6 +16,24 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
   weight: ["400", "500"],
+});
+
+/**
+ * Display grotesque, used ONLY for small uppercase labels: section
+ * eyebrows, column heads, quote attributions.
+ *
+ * Those labels used to be Geist Mono, uppercase, tracked out to 0.14-0.18em.
+ * That exact combination (mono + very wide tracking + all caps) is the
+ * typographic tic that reads as machine-generated, and it was killing the
+ * page. A bold grotesque set in caps at tight tracking reads the opposite
+ * way: newspaper section head, not generated label. Archivo is a true
+ * grotesque with enough weight at 11-13px to hold its own against Geist
+ * without muddying it.
+ */
+const archivo = Archivo({
+  variable: "--font-archivo",
+  subsets: ["latin"],
+  weight: ["600", "700"],
 });
 
 const ROOT_DESCRIPTION =
@@ -62,7 +80,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable}`}
+      className={`${geistSans.variable} ${geistMono.variable} ${archivo.variable}`}
       suppressHydrationWarning
     >
       <body>

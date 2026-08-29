@@ -49,9 +49,14 @@
      surface only read near the footer, which made the rest of the scroll
      look flat. At 0.72 the mesh carries through every section while the
      cranberry lines stay far enough under the body copy to keep paragraphs
-     comfortable. Hero-style sections are opaque (they have their own
-     visual); bone sections stay solid. */
-  --bl-section-veil: rgba(var(--bl-ink-rgb), 0.72);
+     comfortable. Bone sections stay solid.
+
+     At 0.72 the mesh only really read near the footer. It is now the page's
+     continuous ground: the hero and the footer dropped their opaque fills
+     too, so the grid and its cursor halo run unbroken from the first screen
+     to the last. 0.55 is the floor that keeps body copy comfortable; going
+     lower starts to cost paragraph legibility, which the grid is not worth. */
+  --bl-section-veil: rgba(var(--bl-ink-rgb), 0.55);
 
   /* =================================================================
      Accent · cranberry. The canonical names are `--bl-accent*`.
@@ -106,6 +111,11 @@
     --bl-max-width: 1480px;
     --bl-page-pad: clamp(56px, 4.5vw, 120px);
     --bl-section-gap: clamp(120px, 9vw, 200px);
+    --bl-heading-wide: 1300px;
+    --bl-text-wide: 900px;
+    --bl-text-body: 790px;
+    --bl-text-narrow: 700px;
+    --bl-text-tight: 520px;
   }
 }
 
@@ -114,6 +124,11 @@
     --bl-max-width: 1760px;
     --bl-page-pad: clamp(96px, 4vw, 180px);
     --bl-section-gap: clamp(180px, 8vw, 280px);
+    --bl-heading-wide: 1540px;
+    --bl-text-wide: 980px;
+    --bl-text-body: 850px;
+    --bl-text-narrow: 760px;
+    --bl-text-tight: 560px;
   }
 }
 
@@ -122,6 +137,11 @@
     --bl-max-width: 2080px;
     --bl-page-pad: clamp(140px, 3.5vw, 220px);
     --bl-section-gap: clamp(240px, 8vw, 360px);
+    --bl-heading-wide: 1820px;
+    --bl-text-wide: 1060px;
+    --bl-text-body: 910px;
+    --bl-text-narrow: 820px;
+    --bl-text-tight: 600px;
   }
 }
 
@@ -152,6 +172,8 @@
 
   --font-sans: var(--font-geist-sans), "Inter", -apple-system, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), "JetBrains Mono", monospace;
+  /* Display grotesque · small uppercase labels only. See layout.tsx. */
+  --font-display: var(--font-archivo), "Archivo", "Helvetica Neue", Arial, sans-serif;
 
   --container-bl: 1240px;
 }
@@ -252,14 +274,27 @@ input, textarea, select {
 
 /* Client logos · greyscale at rest so nineteen brand palettes cannot
    fight the page's single accent, full colour on hover. */
+/* Logos render in their own colours. They used to sit greyscaled at 0.62
+   so nineteen brand palettes could not fight the cranberry, but washing a
+   client's mark out is the wrong trade: the strip is the credential, and a
+   credential you have desaturated reads as a placeholder. Full colour, full
+   opacity, no hover reveal to discover. */
 .bl-client-logo img {
-  filter: grayscale(1) contrast(0.9);
-  opacity: 0.62;
-  transition: filter 0.3s ease, opacity 0.3s ease;
-}
-.bl-client-logo:hover img {
-  filter: grayscale(0) contrast(1);
+  filter: none;
   opacity: 1;
+}
+
+/* Label caps · the ONE recipe for small uppercase labels (section
+   eyebrows, column heads, attributions). Bold grotesque at tight tracking.
+   Never mono, and never tracked past 0.06em: mono + wide tracking + caps
+   is the combination that reads as machine-generated. */
+.bl-label {
+  font-family: var(--font-display);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.055em;
+  font-size: 12px;
+  line-height: 1.1;
 }
 
 /* =====================================================================
@@ -322,6 +357,11 @@ input, textarea, select {
      Let the ratio govern at every width. */
   .bl-hero-visual {
     width: 100%;
+  }
+  /* The strip's negative pull exists to cancel the panel's asymmetric
+     right padding. That padding is symmetric here, so the pull goes. */
+  .bl-hero-strip {
+    margin-right: 0 !important;
   }
 }
 

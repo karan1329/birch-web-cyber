@@ -26,7 +26,7 @@ export function Anchor({
   inverted = false,
   className,
 }: Props) {
-  const labelColor = inverted ? "var(--bl-bone-fg-2)" : "var(--bl-fg3)";
+  const labelColor = inverted ? "var(--bl-bone-fg2)" : "var(--bl-fg3)";
   const ruleColor = inverted ? "var(--bl-bone-rule)" : "var(--bl-rule)";
   return (
     <div

@@ -7,9 +7,17 @@ import { useEffect, useState } from "react";
 /**
  * HP-11 · nav restructure.
  *
- * Contact leaves the tab list — the top-right button carries it alone as
- * "Book a call". `/start` stays out of the nav (and the footer) entirely;
- * its only entry points are the homepage founder block and the FSO section.
+ * Contact leaves the tab list, the top-right button carries it alone as
+ * "Contact us".
+ *
+ * Field Notes came out of the tab list: seven tabs plus a button read as
+ * clutter, and Field Notes is the one a first-time reader is least likely
+ * to be hunting for. It keeps its footer link and its route.
+ *
+ * `/start` NOW HAS A TAB. HP-11 specified it stay out of the nav, reachable
+ * only from the homepage founder block and the FSO section; Karan reversed
+ * that on 2026-08-28 because those two entry points buried it. It sits next
+ * to Services, since it is an offer rather than a section.
  *
  * AI Research renders in its own colour, permanently, and is the only
  * coloured item in the nav.
@@ -17,7 +25,7 @@ import { useEffect, useState } from "react";
 const ITEMS: { href: string; label: string; accent?: boolean }[] = [
   { href: "/how-we-work", label: "How We Work" },
   { href: "/services", label: "Services" },
-  { href: "/field-notes", label: "Field Notes" },
+  { href: "/start", label: "For Startups" },
   { href: "/research", label: "AI Research", accent: true },
   { href: "/careers", label: "Careers" },
   { href: "/about", label: "About Us" },
@@ -118,14 +126,26 @@ export function Nav() {
                       fontFamily: "var(--font-sans)",
                       fontSize: 13,
                       fontWeight: 500,
-                      color: item.accent
-                        ? "var(--bl-accent-research)"
-                        : active
-                          ? "var(--bl-accent)"
-                          : "var(--bl-fg)",
                       textDecoration: "none",
-                      transition: "color 0.2s",
+                      transition: "color 0.2s, background 0.2s",
                       position: "relative",
+                      // The research tab is the one coloured item in the nav
+                      // and it now carries the accent as a FILL rather than
+                      // as text colour, so it reads at a glance instead of
+                      // needing to be noticed. Beige on cranberry is the same
+                      // pairing the accent surfaces already use.
+                      ...(item.accent
+                        ? {
+                            color: "var(--bl-ink)",
+                            background: "var(--bl-accent)",
+                            padding: "6px 12px",
+                            borderRadius: 999,
+                          }
+                        : {
+                            color: active
+                              ? "var(--bl-accent)"
+                              : "var(--bl-fg)",
+                          }),
                     }}
                   >
                     {item.label}
@@ -157,7 +177,7 @@ export function Nav() {
                 textDecoration: "none",
               }}
             >
-              Book a call
+              Contact us
             </Link>
           )}
           {isMobile && (
@@ -252,9 +272,10 @@ function MobileMenu({
               fontFamily: "var(--font-sans)",
               fontSize: "clamp(32px, 7vw, 48px)",
               fontWeight: 500,
-              color: item.accent
-                ? "var(--bl-accent-research)"
-                : currentPath === item.href
+              // At 48px a filled chip would be a slab. The sheet carries the
+              // same cranberry as colour instead.
+              color:
+                item.accent || currentPath === item.href
                   ? "var(--bl-accent)"
                   : "var(--bl-fg)",
               background: "none",

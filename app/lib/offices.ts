@@ -1,21 +1,22 @@
 /**
  * Office locations · single source for the footer, /contact and RS-8.
  *
- * GATED · Phase 6.1. The street addresses are written and correct per HP-7
- * and the S1–S8 address table, but they ship ONLY on Karan's approval. Flip
- * SHOW_STREET_ADDRESSES to true and every surface that renders an office
- * upgrades from the region line to the full address at once — no hunting
- * through components.
+ * Phase 6.1 is CLOSED. Karan approved the street addresses on 2026-08-27 and
+ * supplied them in `Cyber-one-pagers.pdf`, whose footer carries both
+ * verbatim; they match the HP-7 / S1-S8 table exactly. Every surface that
+ * renders an office now shows the full address.
  */
 
-export const SHOW_STREET_ADDRESSES = false;
+export const SHOW_STREET_ADDRESSES = true;
 
 export type Office = {
   city: string;
   /** Shown while the street address is gated. */
   region: string;
-  /** HP-7 · ships on approval. */
+  /** HP-7 · approved, live. */
   address: string;
+  /** Optional internal route for cities that have their own page. */
+  href?: string;
 };
 
 export const OFFICES: Office[] = [
@@ -28,5 +29,6 @@ export const OFFICES: Office[] = [
     city: "Singapore",
     region: "Scotts Road, Singapore",
     address: "1 Scotts Road, #24-10, Shaw Centre, Singapore 228208",
+    href: "/singapore",
   },
 ];

@@ -1,6 +1,21 @@
 "use client";
 
 import { Anchor } from "../primitives/Anchor";
+
+/**
+ * A dedicated head-and-shoulders crop, not the full portrait.
+ *
+ * The full frame is square, so `object-fit: cover` into a round square box
+ * crops nothing and the head lands tiny. Zooming with a CSS transform fixed
+ * the size but clipped the top of the head, because the hairline sits about
+ * 4% down the source and the zoom window started at 12%. Cropping the file
+ * once, offline, is the version that cannot drift: the avatar is already
+ * framed, so the CSS is a plain cover with no transform.
+ *
+ * Cropped from `design/source-assets/karan-bhandari-original.jpg`.
+ */
+const PORTRAIT_SRC = "/karan-bhandari-avatar.jpg";
+
 import { Rise } from "../primitives/Rise";
 import { SplitText } from "../primitives/SplitText";
 
@@ -10,7 +25,7 @@ import { SplitText } from "../primitives/SplitText";
  * Layout:
  *   Full-width anchor + headline.
  *   Below, two columns:
- *     Left  = the orientation argument as prose + footnoted vector data.
+ *     Left  = the orientation argument as prose.
  *     Right = a sticky accent-coloured card carrying the Karan quote and
  *             the framing that it is the founding principle behind
  *             Birchlogic. The card stays in view while the prose scrolls.
@@ -22,7 +37,7 @@ export function Thesis() {
         position: "relative",
         background: "var(--bl-section-veil)",
         color: "var(--bl-fg)",
-        padding: "clamp(120px, 16vw, 200px) var(--bl-page-pad)",
+        padding: "clamp(88px, 11vw, 140px) var(--bl-page-pad)",
         overflow: "hidden",
       }}
     >
@@ -33,10 +48,10 @@ export function Thesis() {
           style={{
             fontFamily: "var(--font-sans)",
             fontWeight: 500,
-            fontSize: "clamp(34px, 5.4vw, 84px)",
+            fontSize: "clamp(34px, 5.4vw, 120px)",
             lineHeight: 1,
             letterSpacing: "-0.035em",
-            margin: "0 0 clamp(56px, 7vw, 96px)",
+            margin: "0 0 clamp(44px, 5.5vw, 72px)",
             maxWidth: "var(--bl-heading-wide)",
           }}
         >
@@ -64,7 +79,7 @@ export function Thesis() {
             alignItems: "start",
           }}
         >
-          {/* Left — argument as prose + footnote */}
+          {/* Left, the argument as prose, plus a one-line source note. */}
           <Rise>
             <div style={{ maxWidth: "var(--bl-text-narrow)" }}>
               <p style={{ margin: 0 }}>
@@ -72,7 +87,7 @@ export function Thesis() {
                   style={{
                     display: "block",
                     marginBottom: 18,
-                    fontSize: "clamp(20px, 1.7vw, 26px)",
+                    fontSize: "clamp(20px, 1.7vw, 29px)",
                     lineHeight: 1.3,
                     letterSpacing: "-0.012em",
                     color: "var(--bl-fg)",
@@ -86,7 +101,7 @@ export function Thesis() {
                 <span
                   style={{
                     fontFamily: "var(--font-sans)",
-                    fontSize: "clamp(16px, 1.3vw, 19px)",
+                    fontSize: "clamp(16px, 1.3vw, 23px)",
                     lineHeight: 1.7,
                     color: "var(--bl-fg2)",
                   }}
@@ -98,38 +113,32 @@ export function Thesis() {
                   with too much access, and someone getting phished on an
                   ordinary Tuesday. The tools were never the problem. What
                   separates the companies that survive from the companies
-                  that get hollowed out is whether the team actually
-                  practises security, or whether it is just a checklist and
-                  a procurement exercise.
+                  that get hollowed out is whether somebody actually runs
+                  security, week after week, or whether it was bought once,
+                  wired in, and forgotten about until the day it mattered.
                 </span>
               </p>
 
+              {/* HP-2 · the footnote carries SOURCES ONLY now. The long
+                  version restated the six causes the paragraph above had
+                  just named; the causes are the argument, not a citation,
+                  so they live in the body and this is one line. */}
               <aside
                 style={{
-                  marginTop: "clamp(40px, 5vw, 64px)",
-                  paddingTop: 20,
+                  marginTop: "clamp(28px, 3.2vw, 40px)",
+                  paddingTop: 16,
                   borderTop: "1px solid var(--bl-rule)",
-                  fontFamily: "var(--font-mono)",
-                  fontSize: 12,
-                  lineHeight: 1.65,
+                  fontFamily: "var(--font-sans)",
+                  fontSize: 13,
+                  lineHeight: 1.6,
                   color: "var(--bl-fg3)",
-                  letterSpacing: "0.01em",
                 }}
               >
-                <span
-                  style={{
-                    color: "var(--bl-fg2)",
-                    marginRight: 6,
-                    letterSpacing: "0.06em",
-                  }}
-                >
+                <span style={{ color: "var(--bl-fg2)", marginRight: 6 }}>
                   [1]
                 </span>
-                The same six categories account for the majority of incidents
-                in every major report since 2008: stolen credentials, cloud
-                misconfiguration, identity errors, personal accounts,
-                third-party access, social engineering. Sources: Verizon
-                DBIR, Mandiant M-Trends, IBM Cost of a Data Breach Report.
+                Sources: Verizon DBIR, Mandiant M-Trends, IBM Cost of a Data
+                Breach Report, every year since 2008.
               </aside>
             </div>
           </Rise>
@@ -149,6 +158,56 @@ export function Thesis() {
         </div>
       </div>
     </section>
+  );
+}
+
+/**
+ * Circle-cropped portrait beside the attribution.
+ *
+ * The source is a square head-and-shoulders frame, so `object-fit: cover`
+ * alone would crop nothing and the head would land tiny inside the circle.
+ * The scale + origin pair zooms toward the face instead, which is what
+ * gives a head crop rather than a shrunken full frame.
+ *
+ * Hides itself if the file is not there, so the card degrades to the
+ * attribution alone rather than showing a broken-image glyph.
+ */
+function Portrait() {
+  return (
+    <span
+      style={{
+        display: "block",
+        // 44, not 54. The pre-cropped avatar carries headroom and shoulders,
+        // so at 54 the circle sat heavier next to the attribution than the
+        // attribution itself. Change both numbers together.
+        width: 44,
+        height: 44,
+        flexShrink: 0,
+        borderRadius: "50%",
+        overflow: "hidden",
+        // Reads as a struck plate on the cranberry rather than a pasted-in
+        // JPEG. Deliberately not a drop shadow, which the brief bans.
+        boxShadow: "inset 0 0 0 1px rgba(0, 0, 0, 0.18)",
+      }}
+    >
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={PORTRAIT_SRC}
+        alt="Karan Bhandari"
+        loading="lazy"
+        decoding="async"
+        onError={(e) => {
+          const el = e.currentTarget.parentElement;
+          if (el) el.style.display = "none";
+        }}
+        style={{
+          width: "100%",
+          height: "100%",
+          display: "block",
+          objectFit: "cover",
+        }}
+      />
+    </span>
   );
 }
 
@@ -184,7 +243,7 @@ function FoundingPrincipleCard() {
           top: "clamp(8px, 1vw, 16px)",
           left: "clamp(18px, 2.4vw, 36px)",
           fontFamily: "var(--font-sans)",
-          fontSize: "clamp(120px, 14vw, 200px)",
+          fontSize: "clamp(120px, 14vw, 240px)",
           lineHeight: 0.6,
           fontWeight: 500,
           color: "rgba(0, 0, 0, 0.1)",
@@ -197,15 +256,12 @@ function FoundingPrincipleCard() {
 
       {/* Top mono label */}
       <span
+        className="bl-label"
         style={{
           position: "relative",
           display: "block",
-          fontFamily: "var(--font-mono)",
-          fontSize: 11,
-          letterSpacing: "0.18em",
-          textTransform: "uppercase",
-          color: "rgba(0, 0, 0, 0.55)",
-          marginBottom: "clamp(32px, 4vw, 56px)",
+          color: "rgba(0, 0, 0, 0.62)",
+          marginBottom: "clamp(28px, 3.4vw, 48px)",
         }}
       >
         Founding principle
@@ -218,14 +274,14 @@ function FoundingPrincipleCard() {
           margin: 0,
           fontFamily: "var(--font-sans)",
           fontWeight: 500,
-          fontSize: "clamp(20px, 2vw, 30px)",
+          fontSize: "clamp(20px, 2vw, 33px)",
           lineHeight: 1.28,
           letterSpacing: "-0.015em",
           color: "var(--bl-ink)",
         }}
       >
-        Serious cybersecurity work is not a marketplace problem to be
-        procured. It is a craft problem, to be practised.
+        Cybersecurity is a craft that is meant to be practised, not
+        something you procure.
       </blockquote>
 
       {/* Divider */}
@@ -242,31 +298,16 @@ function FoundingPrincipleCard() {
         style={{
           position: "relative",
           display: "flex",
-          flexDirection: "column",
-          gap: 14,
+          alignItems: "center",
+          gap: 12,
         }}
       >
+        <Portrait />
         <span
-          style={{
-            fontFamily: "var(--font-mono)",
-            fontSize: 12,
-            letterSpacing: "0.08em",
-            color: "rgba(0, 0, 0, 0.78)",
-            textTransform: "uppercase",
-          }}
+          className="bl-label"
+          style={{ color: "rgba(0, 0, 0, 0.82)" }}
         >
           Karan Bhandari · Co-founder, Birchlogic
-        </span>
-        <span
-          style={{
-            fontFamily: "var(--font-sans)",
-            fontSize: "clamp(13px, 1vw, 15px)",
-            lineHeight: 1.5,
-            color: "rgba(0, 0, 0, 0.62)",
-            maxWidth: 360,
-          }}
-        >
-          The founding principle behind Birchlogic.
         </span>
       </figcaption>
     </figure>

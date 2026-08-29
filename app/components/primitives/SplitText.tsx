@@ -12,6 +12,16 @@ type Props = {
   style?: CSSProperties;
   dim?: boolean;
   threshold?: number;
+  /**
+   * Index of the first WORD (0-based, whitespace not counted) that takes
+   * the accent colour. Lets one SplitText carry a two-colour headline.
+   *
+   * Two adjacent SplitTexts cannot do this: each renders as an atomic
+   * inline-block, so the second starts on a fresh line whenever the tail
+   * of the first does not leave room. That is what stranded "people" on
+   * its own line in Who We Work With. One instance wraps word by word.
+   */
+  accentFrom?: number;
 };
 
 /**
@@ -34,10 +44,12 @@ export function SplitText({
   style,
   dim = false,
   threshold = 0.2,
+  accentFrom,
 }: Props) {
   const [ref, inView] = useInView<HTMLSpanElement>(threshold);
   const lines = String(text).split("\n");
   let idx = 0;
+  let wordIdx = 0;
 
   return (
     <Tag
@@ -98,12 +110,16 @@ export function SplitText({
               }
               // Word: keep characters together so the line can break
               // BETWEEN words but never inside a word.
+              const thisWord = wordIdx++;
+              const accented =
+                accentFrom !== undefined && thisWord >= accentFrom;
               return (
                 <span
                   key={ti}
                   style={{
                     display: "inline-block",
                     whiteSpace: "nowrap",
+                    color: accented ? "var(--bl-accent)" : undefined,
                   }}
                 >
                   {Array.from(tok).map((ch, ci) => {

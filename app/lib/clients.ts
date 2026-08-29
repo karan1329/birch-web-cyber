@@ -14,10 +14,9 @@
  * are founder-credential institutions from Karan's prior roles, because the
  * distinction matters wherever we make a claim about clientship.
  *
- * The hero strip no longer makes that claim. It is headed "Companies that
- * trust our work", which is true of both lanes and is the framing Karan
- * chose deliberately — so both render there. Anywhere that says "client",
- * filter on kind === "firm".
+ * The hero strip no longer makes that claim. It is headed "Selected clients
+ * and credentials", which is true of both lanes and names each of them, so
+ * both render there. Anywhere that says "client", filter on kind === "firm".
  */
 
 export type Client = {

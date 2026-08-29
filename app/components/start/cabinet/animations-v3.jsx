@@ -378,7 +378,11 @@ function Stage({
   const playTimes = playback && playback.mode === 'times' ? playback.count : null;
   const loopEff = playback ? playback.mode === 'loop' : loop;
 
+  // persistKey === null disables resume entirely. Two reasons a public page
+  // wants that: the piece must open on frame zero rather than wherever the
+  // last visit left it, and the write below stops happening.
   const [time, setTime] = React.useState(() => {
+    if (!persistKey) return 0;
     try {
       const v = parseFloat(localStorage.getItem(persistKey + ':t') || '0');
       return isFinite(v) ? clamp(v, 0, duration) : 0;
@@ -404,6 +408,12 @@ function Stage({
 
   // Persist playhead
   React.useEffect(() => {
+    // This effect is keyed on `time`, which changes every animation frame, so
+    // without the guard it performs a synchronous localStorage write sixty
+    // times a second for as long as the piece is on screen. That is an
+    // editor affordance; on a marketing page it is pure cost, and it is
+    // costliest exactly where the judder was reported.
+    if (!persistKey) return;
     try { localStorage.setItem(persistKey + ':t', String(time)); } catch {}
   }, [time, persistKey]);
 
@@ -1139,6 +1149,9 @@ function CompositionStage(props) {
     <React.Fragment>
       <Stage width={width} height={height} duration={derived.total} background={bg}
              autoplay={autoplay} loop={loop} playback={pb}
+             {...(props.persistKey !== undefined
+               ? { persistKey: props.persistKey }
+               : null)}
              controls={props.controls !== false}>
         <SceneSync raw={raw} onUpdate={setRaw} />
         {typeof praw === 'string' && praw !== '' && (

@@ -45,7 +45,7 @@ export function Engagement() {
         position: "relative",
         background: "var(--bl-bone)",
         color: "var(--bl-bone-fg)",
-        padding: "clamp(100px, 14vw, 180px) var(--bl-page-pad)",
+        padding: "clamp(88px, 11vw, 150px) var(--bl-page-pad)",
       }}
     >
       <div
@@ -58,7 +58,7 @@ export function Engagement() {
           style={{
             fontFamily: "var(--font-sans)",
             fontWeight: 500,
-            fontSize: "clamp(40px, 6vw, 96px)",
+            fontSize: "clamp(40px, 6vw, 130px)",
             lineHeight: 0.94,
             letterSpacing: "-0.04em",
             margin: "0 0 clamp(48px, 6vw, 80px)",
@@ -110,7 +110,7 @@ function TierCard({ tier }: { tier: Tier }) {
               bottom: -32,
               fontFamily: "var(--font-sans)",
               fontWeight: 700,
-              fontSize: "clamp(220px, 26vw, 360px)",
+              fontSize: "clamp(220px, 26vw, 400px)",
               lineHeight: 0.85,
               letterSpacing: "-0.08em",
               color: "rgba(var(--bl-neon-rgb),0.05)",

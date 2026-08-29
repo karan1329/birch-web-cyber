@@ -25,11 +25,13 @@ const CUTTING_EDGE: Principle[] = [
 /**
  * Editorial principle list. Latacora-restrained typography:
  *   - Small mono numbers, not enlarged
- *   - Mono section labels with a thin rule, not highlighted
+ *   - Column headers in bold grotesque caps with a thin rule
  *   - Lead claims in display sans, no cards, no glow
  *
- * The previous version (giant neon numbers + marker-pen column headers)
- * read as too loud for this brand voice. This is the corrected discipline.
+ * The headers keep their full wording. What changed is the setting: they
+ * were Geist Mono, uppercase, tracked to 0.14em, which is the combination
+ * that reads as machine-generated. `.bl-label` sets them in Archivo bold
+ * at 0.055em instead, which reads as a newspaper section head.
  */
 export function HowWeWork() {
   return (
@@ -38,7 +40,7 @@ export function HowWeWork() {
         position: "relative",
         background: "var(--bl-section-veil)",
         color: "var(--bl-fg)",
-        padding: "clamp(120px, 16vw, 200px) var(--bl-page-pad)",
+        padding: "clamp(88px, 11vw, 140px) var(--bl-page-pad)",
         borderTop: "1px solid var(--bl-rule)",
       }}
     >
@@ -49,10 +51,10 @@ export function HowWeWork() {
           style={{
             fontFamily: "var(--font-sans)",
             fontWeight: 500,
-            fontSize: "clamp(36px, 5.4vw, 84px)",
+            fontSize: "clamp(36px, 5.4vw, 120px)",
             lineHeight: 1,
             letterSpacing: "-0.035em",
-            margin: "0 0 clamp(64px, 8vw, 112px)",
+            margin: "0 0 clamp(40px, 5vw, 64px)",
             maxWidth: "var(--bl-heading-wide)",
           }}
         >
@@ -73,7 +75,7 @@ export function HowWeWork() {
             display: "grid",
             gridTemplateColumns: "repeat(2, minmax(280px, 1fr))",
             columnGap: "clamp(48px, 6vw, 96px)",
-            rowGap: "clamp(48px, 6vw, 72px)",
+            rowGap: "clamp(40px, 4.5vw, 56px)",
           }}
         >
           <Rise>
@@ -85,7 +87,7 @@ export function HowWeWork() {
         </div>
 
         {/* CTA */}
-        <div style={{ marginTop: "clamp(56px, 7vw, 88px)" }}>
+        <div style={{ marginTop: "clamp(40px, 4.5vw, 56px)" }}>
           <Rise>
             <Link
               href="/how-we-work"
@@ -123,18 +125,12 @@ function Column({ label, items }: { label: string; items: Principle[] }) {
           display: "flex",
           alignItems: "center",
           gap: 14,
-          marginBottom: "clamp(24px, 3vw, 36px)",
+          marginBottom: "clamp(18px, 2vw, 24px)",
         }}
       >
         <span
-          style={{
-            fontFamily: "var(--font-mono)",
-            fontSize: 11,
-            letterSpacing: "0.14em",
-            textTransform: "uppercase",
-            color: "var(--bl-fg3)",
-            whiteSpace: "nowrap",
-          }}
+          className="bl-label"
+          style={{ color: "var(--bl-fg2)", whiteSpace: "nowrap" }}
         >
           {label}
         </span>
@@ -168,7 +164,7 @@ function PrincipleRow({
         display: "grid",
         gridTemplateColumns: "minmax(40px, 56px) 1fr",
         gap: 20,
-        padding: "clamp(20px, 2.2vw, 28px) 0",
+        padding: "clamp(15px, 1.5vw, 19px) 0",
         borderBottom: isLast ? "none" : "1px solid var(--bl-rule)",
         alignItems: "baseline",
       }}
@@ -187,7 +183,7 @@ function PrincipleRow({
         style={{
           fontFamily: "var(--font-sans)",
           fontWeight: 500,
-          fontSize: "clamp(18px, 1.7vw, 23px)",
+          fontSize: "clamp(18px, 1.7vw, 27px)",
           lineHeight: 1.22,
           letterSpacing: "-0.012em",
           color: "var(--bl-fg)",

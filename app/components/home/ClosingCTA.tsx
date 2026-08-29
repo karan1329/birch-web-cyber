@@ -17,7 +17,7 @@ export function ClosingCTA() {
         position: "relative",
         background: "var(--bl-section-veil)",
         color: "var(--bl-fg)",
-        padding: "clamp(120px, 16vw, 220px) var(--bl-page-pad)",
+        padding: "clamp(88px, 11vw, 150px) var(--bl-page-pad)",
         borderTop: "1px solid var(--bl-rule)",
         overflow: "hidden",
       }}
@@ -50,7 +50,7 @@ export function ClosingCTA() {
           style={{
             fontFamily: "var(--font-sans)",
             fontWeight: 500,
-            fontSize: "clamp(48px, 8.5vw, 144px)",
+            fontSize: "clamp(48px, 8.5vw, 190px)",
             lineHeight: 0.94,
             letterSpacing: "-0.045em",
             margin: "0 0 clamp(36px, 5vw, 56px)",
@@ -70,7 +70,7 @@ export function ClosingCTA() {
           <p
             style={{
               fontFamily: "var(--font-sans)",
-              fontSize: "clamp(16px, 1.35vw, 19px)",
+              fontSize: "clamp(16px, 1.35vw, 23px)",
               color: "var(--bl-fg2)",
               maxWidth: "var(--bl-text-body)",
               margin: "0 auto 48px",
@@ -87,7 +87,7 @@ export function ClosingCTA() {
           <p
             style={{
               fontFamily: "var(--font-sans)",
-              fontSize: "clamp(16px, 1.35vw, 19px)",
+              fontSize: "clamp(16px, 1.35vw, 23px)",
               fontWeight: 500,
               color: "var(--bl-fg)",
               maxWidth: "var(--bl-text-body)",
@@ -144,10 +144,10 @@ export function ClosingCTA() {
               href="/about"
               className="bl-email-link"
               style={{
-                fontFamily: "var(--font-mono)",
-                fontSize: 11,
-                letterSpacing: "0.06em",
-                textTransform: "uppercase",
+                fontFamily: "var(--font-sans)",
+                fontWeight: 500,
+                fontSize: 14,
+                letterSpacing: "-0.008em",
                 color: "var(--bl-fg2)",
                 textDecoration: "none",
                 paddingBottom: 2,

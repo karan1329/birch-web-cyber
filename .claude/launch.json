@@ -4,8 +4,8 @@
     {
       "name": "birchlogic-web",
       "runtimeExecutable": "npx",
-      "runtimeArgs": ["next", "dev", "--port", "3100"],
-      "port": 3100
+      "runtimeArgs": ["next", "dev", "--port", "3500"],
+      "port": 3500
     }
   ]
 }

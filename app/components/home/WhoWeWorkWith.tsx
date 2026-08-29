@@ -21,7 +21,7 @@ export function WhoWeWorkWith() {
         position: "relative",
         background: "var(--bl-section-veil)",
         color: "var(--bl-fg)",
-        padding: "clamp(120px, 16vw, 200px) var(--bl-page-pad)",
+        padding: "clamp(88px, 11vw, 140px) var(--bl-page-pad)",
         borderTop: "1px solid var(--bl-rule)",
       }}
     >
@@ -32,25 +32,22 @@ export function WhoWeWorkWith() {
           style={{
             fontFamily: "var(--font-sans)",
             fontWeight: 500,
-            fontSize: "clamp(34px, 5vw, 76px)",
+            fontSize: "clamp(34px, 5vw, 112px)",
             lineHeight: 1.02,
             letterSpacing: "-0.03em",
-            margin: "0 0 clamp(56px, 7vw, 96px)",
+            margin: "0 0 clamp(44px, 5.5vw, 72px)",
             maxWidth: "var(--bl-heading-wide)",
           }}
         >
-          {/* One sentence, no forced break. It was split across a <br/>
-              mid-clause, which stranded "who treat the craft seriously." on
-              its own line. Let it wrap where the measure wants to. */}
+          {/* ONE instance, not two. Each SplitText is an atomic
+              inline-block, so a second one starts on a fresh line whenever
+              the tail of the first leaves no room — which stranded "people"
+              alone on line two. A single instance wraps word by word and
+              `accentFrom` carries the colour change from "who" onward. */}
           <SplitText
-            text="We build security programs with people"
+            text="We build security programs with people who treat the craft seriously."
             perChar={0.01}
-          />{" "}
-          <SplitText
-            text="who treat the craft seriously."
-            perChar={0.01}
-            delay={0.32}
-            style={{ color: "var(--bl-accent)" }}
+            accentFrom={6}
           />
         </h2>
 
@@ -68,7 +65,7 @@ export function WhoWeWorkWith() {
               style={{
                 fontFamily: "var(--font-sans)",
                 fontWeight: 400,
-                fontSize: "clamp(16px, 1.3vw, 19px)",
+                fontSize: "clamp(16px, 1.3vw, 23px)",
                 lineHeight: 1.65,
                 color: "var(--bl-fg2)",
                 margin: 0,
@@ -90,12 +87,12 @@ export function WhoWeWorkWith() {
               style={{
                 display: "inline-block",
                 marginTop: 24,
-                fontFamily: "var(--font-mono)",
-                fontSize: 11,
-                letterSpacing: "0.08em",
-                color: "var(--bl-neon)",
+                fontFamily: "var(--font-sans)",
+                fontWeight: 500,
+                fontSize: 14,
+                letterSpacing: "-0.008em",
+                color: "var(--bl-accent)",
                 textDecoration: "none",
-                textTransform: "uppercase",
               }}
             >
               Singapore practice →
@@ -144,7 +141,7 @@ function FounderBlock() {
           top: "clamp(-18px, -1vw, -8px)",
           right: "clamp(10px, 1.6vw, 22px)",
           fontFamily: "var(--font-sans)",
-          fontSize: "clamp(110px, 12vw, 170px)",
+          fontSize: "clamp(110px, 12vw, 205px)",
           lineHeight: 0.7,
           fontWeight: 500,
           color: "rgba(0, 0, 0, 0.10)",
@@ -155,14 +152,8 @@ function FounderBlock() {
         +
       </span>
       <span
-        style={{
-          position: "relative",
-          fontFamily: "var(--font-mono)",
-          fontSize: 10,
-          letterSpacing: "0.18em",
-          textTransform: "uppercase",
-          color: "rgba(0, 0, 0, 0.55)",
-        }}
+        className="bl-label"
+        style={{ position: "relative", color: "rgba(0, 0, 0, 0.62)" }}
       >
         For founders
       </span>
@@ -170,7 +161,7 @@ function FounderBlock() {
         style={{
           fontFamily: "var(--font-sans)",
           fontWeight: 600,
-          fontSize: "clamp(20px, 1.9vw, 26px)",
+          fontSize: "clamp(20px, 1.9vw, 29px)",
           letterSpacing: "-0.018em",
           lineHeight: 1.15,
           color: "var(--bl-ink)",
@@ -183,7 +174,7 @@ function FounderBlock() {
       <p
         style={{
           fontFamily: "var(--font-sans)",
-          fontSize: "clamp(14px, 1.1vw, 16px)",
+          fontSize: "clamp(14px, 1.1vw, 18px)",
           lineHeight: 1.6,
           color: "rgba(18, 18, 18, 0.78)",
           margin: 0,
@@ -202,10 +193,10 @@ function FounderBlock() {
         style={{
           alignSelf: "flex-start",
           marginTop: 4,
-          fontFamily: "var(--font-mono)",
-          fontSize: 12,
-          letterSpacing: "0.06em",
-          textTransform: "uppercase",
+          fontFamily: "var(--font-sans)",
+          fontWeight: 500,
+          fontSize: 13.5,
+          letterSpacing: "-0.008em",
           color: "var(--bl-ink)",
           background: "var(--bl-fg)",
           textDecoration: "none",

@@ -10,6 +10,10 @@ import { SplitText } from "../primitives/SplitText";
  * Section 04 — the senior-partner promise. A pull quote that lands as the
  * foundational commercial commitment.
  *
+ * The claim is set in ink and only the second statement carries the accent.
+ * Both lines used to be cranberry, inherited from the section, which made
+ * the whole block one flat wall of red with no emphasis left to spend.
+ *
  * Typography tuned so the headline fits cleanly in two visual lines across
  * viewports. `textWrap: balance` keeps wrapping balanced when the browser
  * has to break the longer first sentence. Each statement sits on its own
@@ -22,8 +26,8 @@ export function SeniorPartnerPromise() {
       style={{
         position: "relative",
         background: "var(--bl-section-veil)",
-        color: "var(--bl-accent)",
-        padding: "clamp(120px, 16vw, 200px) var(--bl-page-pad)",
+        color: "var(--bl-fg)",
+        padding: "clamp(88px, 11vw, 140px) var(--bl-page-pad)",
         borderTop: "1px solid var(--bl-rule)",
         overflow: "hidden",
       }}
@@ -60,7 +64,7 @@ export function SeniorPartnerPromise() {
           >
             <div
               style={{
-                fontSize: "clamp(30px, 5.4vw, 84px)",
+                fontSize: "clamp(30px, 5.4vw, 120px)",
                 marginBottom: "clamp(14px, 1.5vw, 20px)",
                 textWrap: "balance",
               }}
@@ -73,7 +77,7 @@ export function SeniorPartnerPromise() {
             </div>
             <div
               style={{
-                fontSize: "clamp(24px, 4vw, 64px)",
+                fontSize: "clamp(24px, 4vw, 89px)",
                 color: "var(--bl-accent)",
                 textWrap: "balance",
               }}
@@ -93,7 +97,7 @@ export function SeniorPartnerPromise() {
           <p
             style={{
               fontFamily: "var(--font-sans)",
-              fontSize: "clamp(15px, 1.25vw, 18px)",
+              fontSize: "clamp(15px, 1.25vw, 22px)",
               lineHeight: 1.7,
               color: "var(--bl-fg2)",
               maxWidth: "var(--bl-text-body)",

@@ -1,10 +1,11 @@
+import Link from "next/link";
+
 import { Anchor } from "../components/primitives/Anchor";
 import { Rise } from "../components/primitives/Rise";
 import { MagButton } from "../components/primitives/MagButton";
 import { SplitText } from "../components/primitives/SplitText";
 import { ClientMarquee } from "../components/home/ClientMarquee";
 import { CabinetLoop } from "../components/start/CabinetLoop";
-import { SprintsTable } from "../components/services/SprintsTable";
 import { PERMISSION_LINE } from "../lib/clients";
 import {
   FOUNDING_PLACES_TAKEN,
@@ -19,36 +20,37 @@ import { pageMeta } from "../lib/seo";
 
 // ST-8
 export const metadata = pageMeta({
-  title: "Someone with power is about to read your security.",
+  title: "The Fractional Security Office",
   description:
-    "We read it first, then we run it. Senior-led, agent-run security programmes. Fixed scope, fixed dates, first-pass acceptance as the contracted outcome.",
+    "An entire security department, delivered as one engagement. A named senior partner, our agents underneath, every tool packaged in. From \u20B980,000 a month for founding clients.",
   path: "/start",
-  bare: true,
 });
 
 /**
- * /start · the conversion page.
+ * /start · the single-offer page. It sells the Fractional Security Office
+ * and nothing else.
  *
- * Deliberately NOT in the nav or footer. Every campaign lands here — cold
- * email, LinkedIn, the one-pager QR, outbound DMs — while the homepage keeps
- * doing quiet diligence work. Two different jobs.
+ * Reachable from the "For Startups" nav tab, the homepage founder block and
+ * the FSO section on /services.
  *
- * Sections in page order: ST-1 moment, ST-2 bets, ST-3 proof, ST-4 work,
- * ST-5 destination (+ price block and Read mechanic), ST-6 terms, ST-7 close.
+ * Order is ST-9 exactly: ST-1 hero, ST-1a the problem, ST-2 the bets, ST-3
+ * proof, ST-4 what the department is, ST-5 the founding offer, ST-5d how it
+ * starts, ST-6 terms, ST-7 close.
+ *
+ * The nine-engagement table used to sit in the middle of this page. ST-9 is
+ * explicit that it "appears nowhere on this page; it lives on /services
+ * only". A menu of nine alternatives in the middle of a single-offer page
+ * competes with the offer instead of supporting it.
  */
 export default function StartPage() {
   return (
     <>
       <Moment />
+      <Problem />
       <Bets />
-      {/* The Fractional Security Office is what this page sells, so it sits
-          directly under the bets rather than fifth. The sprints table below
-          is the on-ramp to it, not a competing menu. */}
-      <Destination />
       <Proof />
-      {/* ST-4 · the same nine-engagement table the services page renders,
-          from the one canonical module. */}
-      <SprintsTable />
+      <Department />
+      <Read />
       <Terms />
       <Close />
     </>
@@ -94,33 +96,17 @@ function Moment() {
               "clamp(48px, 6vw, 88px) clamp(32px, 4vw, 64px) clamp(48px, 6vw, 88px) var(--bl-page-pad)",
           }}
         >
-          <Rise delay={0.05} y={12}>
-            <p
-              style={{
-                fontFamily: "var(--font-mono)",
-                fontWeight: 600,
-                fontSize: 10.5,
-                letterSpacing: "0.18em",
-                textTransform: "uppercase",
-                color: "var(--bl-accent)",
-                margin: 0,
-              }}
-            >
-              The Fractional Security Office
-            </p>
-          </Rise>
-
           <h1
             style={{
               fontFamily: "var(--font-sans)",
               fontWeight: 600,
-              fontSize: "clamp(32px, 3.9vw, 64px)",
-              lineHeight: 0.99,
+              fontSize: "clamp(38px, 4.9vw, 82px)",
+              lineHeight: 0.98,
               letterSpacing: "-0.038em",
-              margin: "clamp(18px, 2vw, 26px) 0 0",
+              margin: 0,
             }}
           >
-            <SplitText text="Someone with power is about to read your security." />
+            <SplitText text="The Fractional Security Office." />
           </h1>
 
           <Rise delay={0.5}>
@@ -129,14 +115,14 @@ function Moment() {
                 fontFamily: "var(--font-sans)",
                 fontStyle: "italic",
                 fontWeight: 300,
-                fontSize: "clamp(20px, 2.1vw, 32px)",
-                lineHeight: 1.15,
+                fontSize: "clamp(22px, 2.5vw, 38px)",
+                lineHeight: 1.18,
                 letterSpacing: "-0.025em",
                 color: "var(--bl-accent)",
-                margin: "clamp(14px, 1.6vw, 20px) 0 0",
+                margin: "clamp(20px, 2.4vw, 30px) 0 0",
               }}
             >
-              We read it first. Then we run it.
+              Cybersecurity needs an owner, not another project.
             </p>
           </Rise>
 
@@ -144,19 +130,17 @@ function Moment() {
             <p
               style={{
                 ...BODY,
-                fontSize: "clamp(15px, 1.15vw, 17px)",
-                maxWidth: "46ch",
-                margin: "clamp(22px, 2.6vw, 32px) 0 0",
+                fontSize: "clamp(16px, 1.35vw, 21px)",
+                lineHeight: 1.72,
+                maxWidth: "44ch",
+                margin: "clamp(28px, 3.4vw, 42px) 0 0",
               }}
             >
-              An enterprise customer&rsquo;s questionnaire. An
-              investor&rsquo;s diligence list. A regulator&rsquo;s letter.
-              Security becomes urgent the day someone with power reads yours,
-              and most firms discover the gap the same day the reader does,
-              which is the most expensive possible moment.{" "}
-              <strong style={{ color: "var(--bl-fg)", fontWeight: 600 }}>
-                We exist so you discover it first.
-              </strong>
+              An entire security department, delivered as one engagement: a
+              senior partner who answers for it by name, our agents running
+              the work underneath, and every tool the department needs,
+              packaged in. Built for companies that were never going to hire
+              one.
             </p>
           </Rise>
 
@@ -165,20 +149,19 @@ function Moment() {
               style={{
                 display: "flex",
                 alignItems: "center",
-                gap: 20,
+                gap: 22,
                 flexWrap: "wrap",
-                marginTop: "clamp(26px, 3vw, 38px)",
+                marginTop: "clamp(34px, 4vw, 50px)",
               }}
             >
               <MagButton href="/contact">Book thirty minutes</MagButton>
               <span
                 style={{
-                  fontFamily: "var(--font-mono)",
-                  fontSize: 11,
-                  letterSpacing: "0.04em",
+                  fontFamily: "var(--font-sans)",
+                  fontSize: 13.5,
                   color: "var(--bl-fg3)",
-                  maxWidth: "34ch",
-                  lineHeight: 1.5,
+                  maxWidth: "30ch",
+                  lineHeight: 1.55,
                 }}
               >
                 We will both know inside thirty minutes whether this is a fit.
@@ -202,6 +185,55 @@ function Moment() {
         >
           <CabinetLoop />
         </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── ST-1a ───────────────────────────────────────────────────────────── */
+
+/**
+ * The problem the offer exists for. Two beats: the moment security turns
+ * urgent, and the quieter structural reason it was never owned in the first
+ * place. The hero used to carry a compressed version of the first beat as
+ * its headline; the copy runs at full length here, where it belongs.
+ */
+function Problem() {
+  return (
+    <section style={SECTION}>
+      <div className="bl-container" style={{ padding: 0 }}>
+        <Anchor number="01" label="The problem" />
+        <Rise>
+          <p
+            style={{
+              fontFamily: "var(--font-sans)",
+              fontWeight: 500,
+              fontSize: "clamp(20px, 2vw, 28px)",
+              lineHeight: 1.32,
+              letterSpacing: "-0.018em",
+              color: "var(--bl-fg)",
+              margin: 0,
+              maxWidth: "var(--bl-heading-wide)",
+            }}
+          >
+            Security becomes urgent the day someone with power reads yours. An
+            enterprise customer&rsquo;s questionnaire, an investor&rsquo;s
+            diligence list, a regulator&rsquo;s letter, and most firms discover
+            the gap the same day the reader does, which is the most expensive
+            possible moment.
+          </p>
+        </Rise>
+        <Rise delay={0.1}>
+          <p style={{ ...BODY, marginTop: "clamp(24px, 3vw, 34px)" }}>
+            And underneath that moment there is a quieter problem: nobody
+            actually owns security. It lives as the CTO&rsquo;s second job, the
+            tooling was bought at different times by different people, and
+            every audit starts again from zero. Hiring the person who fixes
+            this costs sixty lakh to a crore a year, takes six months to find,
+            and is more seniority than a fifty-person company can keep busy. So
+            the job stays unowned, right up until the day it cannot.
+          </p>
+        </Rise>
       </div>
     </section>
   );
@@ -231,7 +263,7 @@ function Bets() {
   return (
     <section style={SECTION}>
       <div className="bl-container" style={{ padding: 0 }}>
-        <Anchor number="01" label="The bets" />
+        <Anchor number="02" label="The bets" />
         <h2 style={H2}>
           <SplitText text="The three bets you are making by working with us." />
         </h2>
@@ -301,7 +333,7 @@ function Proof() {
   return (
     <section style={{ ...SECTION, borderTop: "1px solid var(--bl-rule)" }}>
       <div className="bl-container" style={{ padding: 0 }}>
-        <Anchor number="02" label="Proof" />
+        <Anchor number="03" label="Proof" />
         <h2 style={H2}>
           <SplitText text="The same bets, placed before you, by people who checked." />
         </h2>
@@ -323,9 +355,24 @@ function Proof() {
   );
 }
 
-/* ── ST-5 ────────────────────────────────────────────────────────────── */
+/* ── ST-4 · the department, ST-5 · the offer ────────────────────────── */
 
-function Destination() {
+/**
+ * ST-4 · what the department actually is.
+ *
+ * This block used to be titled "The Fractional Security Office." with the
+ * "needs an owner" deck under it. Both moved up to the hero, where ST-1 puts
+ * them, so this section carries ST-4's own heading and stops repeating the
+ * page title a second time.
+ *
+ * The lead line "But the sprints end. This is what stays." came off with the
+ * nine-engagement table it referred to.
+ *
+ * Copy is ST-4 verbatim, with one punctuation change: the spec's em dash
+ * before "one for DevSecOps" is a comma here, because em dashes are banned
+ * in user-facing copy and the list reads the same without it.
+ */
+function Department() {
   return (
     <section
       style={{
@@ -336,72 +383,52 @@ function Destination() {
       }}
     >
       <div className="bl-container" style={{ padding: 0 }}>
-        <Anchor number="04" label="The destination" />
-
-        <p
-          style={{
-            fontFamily: "var(--font-sans)",
-            fontWeight: 500,
-            fontSize: "clamp(20px, 2.2vw, 30px)",
-            letterSpacing: "-0.02em",
-            color: "var(--bl-bone-fg2)",
-            margin: "0 0 12px",
-          }}
-        >
-          But the sprints end. This is what stays.
-        </p>
+        <Anchor number="04" label="The department" inverted />
 
         <h2
           style={{
             fontFamily: "var(--font-sans)",
             fontWeight: 600,
-            fontSize: "clamp(32px, 4.8vw, 72px)",
-            lineHeight: 1,
-            letterSpacing: "-0.038em",
+            fontSize: "clamp(30px, 4.2vw, 64px)",
+            lineHeight: 1.02,
+            letterSpacing: "-0.035em",
             margin: 0,
             color: "var(--bl-bone-fg)",
+            maxWidth: "var(--bl-heading-wide)",
           }}
         >
-          {/* Section title matches SV-4 and the one-pager exactly. */}
-          <SplitText text="The Fractional Security Office." />
+          <SplitText text="Everything a security department does. One line on your budget." />
         </h2>
+
         <Rise delay={0.4}>
-          <p
-            style={{
-              fontFamily: "var(--font-sans)",
-              fontStyle: "italic",
-              fontWeight: 300,
-              fontSize: "clamp(17px, 1.8vw, 26px)",
-              color: "var(--bl-bone-fg2)",
-              margin: "14px 0 clamp(26px, 3vw, 38px)",
-            }}
-          >
-            Cybersecurity needs an owner, not another project.
+          <p style={{ ...BONE_BODY, marginTop: "clamp(26px, 3vw, 38px)" }}>
+            Every Fractional Security Office deploys the same way: one
+            forward-deployed engineer and one virtual CISO arrive as the fixed
+            core, and around them we compose whatever your programme actually
+            needs from our bench of specialised agents, one for DevSecOps that
+            lives in your pipeline, one for vulnerability management that never
+            stops watching, one for incident response that drills your runbook
+            instead of letting it rot in a drawer. The agents run the volume
+            work continuously: evidence collection, policies that stay current,
+            controls watched for drift, the questionnaires answered. The senior
+            people carry the judgment and the accountability, and every word
+            that leaves the department has been read by someone whose name is
+            on it.
+          </p>
+          <p style={{ ...BONE_BODY, marginTop: 18 }}>
+            And whatever tools, platforms and OEM licences the department
+            needs, we package and run inside the same engagement, so you are
+            never buying a consultant and then five products and then finding
+            out that nobody owns the space between them. You scale the
+            department up when an audit lands or a deal demands it, and back
+            down the month after, because you are paying for a security
+            capability, not for headcount that sits there between crises.
           </p>
         </Rise>
 
+        {/* ST-5 · the founding offer sits directly under the description of
+            what is being offered. */}
         <Rise delay={0.5}>
-          <p style={BONE_BODY}>
-            Some firms come to us with a known problem, and most come with a
-            quieter one: nobody actually owns security, so it lives as the
-            CTO&rsquo;s second job and every audit starts again from zero. The
-            Security Office is how we fix that for good. A named senior partner
-            owns your programme and answers for it. Our agents run the volume
-            work underneath, collecting evidence, keeping policies current,
-            watching controls for drift and answering the questionnaires, all
-            of it continuously rather than in the fortnight before an audit.
-            And whatever tools, platforms and OEM licences the programme
-            actually needs, we package and run as part of the same engagement,
-            so you are never buying a consultant and then five products and
-            then finding out that nobody owns the space between them.
-          </p>
-          <p style={{ ...BONE_BODY, color: "var(--bl-bone-fg)", marginTop: 18 }}>
-            One line on your budget. One accountable name. It scales with the
-            challenge, not with headcount.
-          </p>
-        </Rise>
-
-        <Rise delay={0.58}>
           <PriceBlock />
         </Rise>
       </div>
@@ -435,7 +462,6 @@ function PriceBlock() {
           rates, no hourly billing, and nothing on the invoice you did not see
           coming.
         </p>
-        <ReadMechanic />
       </div>
     );
   }
@@ -476,7 +502,6 @@ function PriceBlock() {
           {FOUNDING_PLACES_TAKEN} of {FOUNDING_PLACES_TOTAL} places taken
         </p>
       )}
-      <ReadMechanic />
     </div>
   );
 }
@@ -486,15 +511,72 @@ function ReadMechanic() {
   return (
     <p
       style={{
-        ...BONE_BODY,
+        ...BODY,
         fontSize: "clamp(14px, 1.1vw, 16px)",
-        margin: 0,
-        paddingTop: 12,
-        borderTop: "1px solid var(--bl-bone-rule)",
+        color: "var(--bl-fg)",
+        marginTop: "clamp(26px, 3vw, 36px)",
+        paddingTop: 18,
+        borderTop: "1px solid var(--bl-rule2)",
       }}
     >
       {READ_MECHANIC_COPY[READ_MECHANIC]}
     </p>
+  );
+}
+
+/* ── ST-5d ───────────────────────────────────────────────────────────── */
+
+/**
+ * How the engagement opens. This is where ST-5c lands, per ST-5d, rather
+ * than inside the price block where it used to sit: the mechanic is about
+ * the Read, so it belongs beside the Read.
+ */
+function Read() {
+  return (
+    <section style={{ ...SECTION, borderTop: "1px solid var(--bl-rule)" }}>
+      <div className="bl-container" style={{ padding: 0 }}>
+        <Anchor number="05" label="How it starts" />
+        <h2 style={H2}>
+          <SplitText text="It starts with three weeks of reading." />
+        </h2>
+        <Rise delay={0.35}>
+          <p style={{ ...BODY, marginTop: "clamp(28px, 3.4vw, 40px)" }}>
+            Every Fractional Security Office opens with the Security Read:
+            three weeks in which we read your security programme the way the
+            person who will judge it reads it, whether that is your enterprise
+            customer&rsquo;s security team, your investor&rsquo;s technical
+            diligence, or your regulator. It ends in a working session with
+            your team rather than a PDF, with findings in the order the reader
+            would raise them and a plan with owners and dates against every
+            item. It is how the department learns your company before it starts
+            running it, and if the honest answer at the end is that your own
+            people can execute the plan without us, we will say so in the room.
+          </p>
+        </Rise>
+        <Rise delay={0.45}>
+          <ReadMechanic />
+        </Rise>
+        <Rise delay={0.55}>
+          <p style={{ marginTop: "clamp(22px, 2.6vw, 30px)" }}>
+            <Link
+              href="/security-read"
+              className="bl-email-link"
+              style={{
+                fontFamily: "var(--font-sans)",
+                fontSize: 14,
+                fontWeight: 500,
+                color: "var(--bl-accent)",
+                textDecoration: "none",
+                borderBottom: "1px solid var(--bl-accent)",
+                paddingBottom: 2,
+              }}
+            >
+              Everything the Security Read covers →
+            </Link>
+          </p>
+        </Rise>
+      </div>
+    </section>
   );
 }
 
@@ -504,7 +586,7 @@ function Terms() {
   return (
     <section style={{ ...SECTION, borderTop: "1px solid var(--bl-rule)" }}>
       <div className="bl-container" style={{ padding: 0 }}>
-        <Anchor number="05" label="The terms" />
+        <Anchor number="06" label="The terms" />
         <h2 style={H2}>
           <SplitText text="The terms, because they are part of the product." />
         </h2>

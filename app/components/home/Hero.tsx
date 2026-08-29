@@ -17,8 +17,9 @@ import { ClientMarquee } from "./ClientMarquee";
  * design bundle, that hard join is the point — the image is a window in
  * the page, not a picture placed on it.
  *
- * The section is opaque so the global mesh backdrop stays strictly below
- * the hero and the visual is the only event above the fold.
+ * The section is transparent so the global mesh backdrop reads through the
+ * copy column. The artwork's own canvas is opaque, so the grid lives on the
+ * left half and the hard cut into cranberry is unchanged.
  *
  * Below 960px the split collapses: type first, visual beneath it at a
  * fixed height, because a 54% column of canvas is unreadable on a phone.
@@ -28,7 +29,11 @@ export function Hero() {
     <section
       style={{
         position: "relative",
-        background: "var(--bl-ink)",
+        // Transparent, NOT --bl-ink. The site-wide mesh is fixed behind the
+        // whole document; an opaque hero was the one place it was fully
+        // blacked out, which is why the grid appeared to start below the
+        // fold. The copy column now sits on the live grid.
+        background: "transparent",
         color: "var(--bl-fg)",
         paddingTop: "var(--bl-top-offset)",
       }}
@@ -39,11 +44,22 @@ export function Hero() {
           position: "relative",
           display: "grid",
           gridTemplateColumns: "47fr 53fr",
-          // Row height comes from the copy column's content. Both columns
-          // stretch to that one row, so the cranberry panel and the logo
-          // strip END ON THE SAME LINE by construction rather than by
-          // matching numbers that drift the moment the copy changes.
-          minHeight: 0,
+          // The hero owns the first screen. Both columns stretch to ONE row, so the
+          // cranberry panel and the logo strip still end on the same line
+          // by construction — the floor is on the shared grid row, never
+          // on one column, which is what made them drift before.
+          //
+          // The artwork re-composes from its box (constants are relative
+          // to bw/bh), and it was checked at the taller ratio this
+          // produces before the floor went in. Below 960px globals.css
+          // resets this to 0 and the columns stack.
+          // 16:9. The hero block is a standard widescreen crop rather than
+          // whatever the viewport happens to be (1440x900 is 16:10, which
+          // is what made the foot of it look stretched). Capped at the
+          // viewport so a short window never pushes the strip below the
+          // fold. Below 960px globals.css resets this and the columns stack.
+          minHeight:
+            "min(calc(100svh - var(--bl-nav-h)), calc(56.25vw - var(--bl-nav-h)))",
         }}
       >
         {/* ---- conversion panel ---------------------------------- */}
@@ -65,7 +81,7 @@ export function Hero() {
             style={{
               fontFamily: "var(--font-sans)",
               fontWeight: 600,
-              fontSize: "clamp(42px, 5.4vw, 96px)",
+              fontSize: "clamp(42px, 5.4vw, 132px)",
               lineHeight: 0.98,
               letterSpacing: "-0.038em",
               margin: "clamp(18px, 2vw, 26px) 0 0",
@@ -84,7 +100,7 @@ export function Hero() {
               perChar={0.018}
               style={{
                 fontWeight: 200,
-                fontSize: "clamp(44px, 5.7vw, 101px)",
+                fontSize: "clamp(44px, 5.7vw, 139px)",
                 color: "var(--bl-accent)",
               }}
             />
@@ -95,7 +111,7 @@ export function Hero() {
               style={{
                 fontFamily: "var(--font-sans)",
                 fontWeight: 400,
-                fontSize: "clamp(16px, 1.35vw, 20px)",
+                fontSize: "clamp(16px, 1.35vw, 23px)",
                 lineHeight: 1.55,
                 color: "var(--bl-fg2)",
                 maxWidth: "46ch",
@@ -126,7 +142,7 @@ export function Hero() {
                 className="bl-email-link"
                 style={{
                   fontFamily: "var(--font-sans)",
-                  fontSize: 13.5,
+                  fontSize: "clamp(13.5px, 0.85vw, 17px)",
                   fontWeight: 500,
                   color: "var(--bl-fg2)",
                   textDecoration: "none",
@@ -144,7 +160,12 @@ export function Hero() {
               CTA by real space, so the headline keeps the centre. */}
           <Rise delay={1.1} y={12} style={{ marginTop: "auto" }}>
             <div
+              className="bl-hero-strip"
               style={{
+                // Runs past the panel's right padding to the column edge,
+                // so the two tracks get the full measure. Cancelled at
+                // 960px, where the panel's padding is symmetric again.
+                marginRight: "calc(-1 * clamp(32px, 4vw, 64px))",
                 // Pinned to the foot of the panel. The column's bottom
                 // padding is 0, so the last logo row IS the bottom edge and
                 // the cranberry panel beside it ends on the same line.

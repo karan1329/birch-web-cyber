@@ -369,9 +369,16 @@ function Piece({chubby}){
     <Puff T={T} t0={ST+2.79} x={1042} y={902}></Puff>
     
     <g style={{pointerEvents:"none"}}>
-      <rect width="1600" height="1000" filter="url(#gr0)" opacity={gph===0?0.09:0}></rect>
-      <rect width="1600" height="1000" filter="url(#gr1)" opacity={gph===1?0.09:0}></rect>
-      <rect width="1600" height="1000" filter="url(#gr2)" opacity={gph===2?0.09:0}></rect>
+      {/* ONE grain plate, not three.
+          This used to render all three turbulence rects on every frame and
+          toggle their opacity between 0.09 and 0. An element at opacity 0 is
+          still rendered, so that asked the browser for three full-canvas
+          feTurbulence rasterisations per frame, sixty times a second. Chrome
+          absorbed it; Safari did not, and that is where the judder came from.
+          Swapping the filter reference on a single rect means one turbulence
+          is live at a time, and because the attribute only changes nine times
+          a second the raster is reusable in between. Identical output. */}
+      <rect width="1600" height="1000" filter={`url(#gr${gph})`} opacity="0.09"></rect>
       <rect width="1600" height="1000" fill="url(#scanp)"></rect>
       <rect width="1600" height="1000" fill="url(#vig)"></rect>
     </g>
@@ -387,6 +394,7 @@ function CabinetLoopRoot(){
       scenes={OM_SCENES}
       playback={OM_PLAYBACK}
       controls={false}
+      persistKey={null}
     >
       <Piece chubby={CHUBBY}></Piece>
     </CompositionStage>

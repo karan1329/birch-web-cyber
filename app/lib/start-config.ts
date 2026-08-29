@@ -32,10 +32,16 @@ export const FULL_RATE = "₹1,25,000";
 /**
  * ST-5c · the Read mechanic.
  *
- * GATED · 6.5. Both variants are written; the credit version is the default
- * pending Karan's credit-versus-guarantee call.
+ * Gate 6.5 is CLOSED, resolved to "guarantee" by the research in
+ * `security_read_page_v2_and_funnel_playbook.md` Part 1, finding 1: nobody
+ * in the category runs a fee credit, Enns argues against it explicitly, and
+ * a full credit reframes the Read as a deposit rather than a purchase, which
+ * is the thing that makes paid diagnostics convert. The guarantee carries
+ * the same risk reversal at almost no cost.
+ *
+ * Set this back to "credit" to revert; both variants stay written.
  */
-export const READ_MECHANIC: "credit" | "guarantee" = "credit";
+export const READ_MECHANIC: "credit" | "guarantee" = "guarantee";
 
 export const READ_MECHANIC_COPY: Record<"credit" | "guarantee", string> = {
   credit:
@@ -43,3 +49,18 @@ export const READ_MECHANIC_COPY: Record<"credit" | "guarantee", string> = {
   guarantee:
     "The Security Read is a fixed fee, and if the readout does not give you at least one decision you can act on, we refund it in full.",
 };
+
+/* ─────────────────────────────────────────────────────────────────────
+   The Security Read · /security-read
+   Prices per `security_read_page_v2_and_funnel_playbook.md`. The Read is
+   priced at the diagnostic-to-retainer ratio the same file settles at
+   5-15% of the follow-on, and the capacity line is the scarcity device
+   that replaces a countdown timer or an application gate.
+   ───────────────────────────────────────────────────────────────────── */
+
+export const READ_FEE = "\u20B91,25,000";
+export const READS_PER_QUARTER = 4;
+
+/** What comes after the Read: the Security Office retainer. */
+export const OFFICE_RATE_INDIA = "\u20B91,00,000";
+export const OFFICE_RATE_SINGAPORE = "SGD 4,500";
