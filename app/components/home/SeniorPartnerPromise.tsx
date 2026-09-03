@@ -64,7 +64,7 @@ export function SeniorPartnerPromise() {
           >
             <div
               style={{
-                fontSize: "clamp(30px, 5.4vw, 120px)",
+                fontSize: "max(clamp(30px, 5.4vw, 84px), min(2.62vw, 105px))",
                 marginBottom: "clamp(14px, 1.5vw, 20px)",
                 textWrap: "balance",
               }}
@@ -77,7 +77,7 @@ export function SeniorPartnerPromise() {
             </div>
             <div
               style={{
-                fontSize: "clamp(24px, 4vw, 89px)",
+                fontSize: "max(clamp(24px, 4vw, 64px), min(2vw, 80px))",
                 color: "var(--bl-accent)",
                 textWrap: "balance",
               }}
@@ -97,7 +97,7 @@ export function SeniorPartnerPromise() {
           <p
             style={{
               fontFamily: "var(--font-sans)",
-              fontSize: "clamp(15px, 1.25vw, 22px)",
+              fontSize: "max(clamp(15px, 1.25vw, 18px), min(0.56vw, 23px))",
               lineHeight: 1.7,
               color: "var(--bl-fg2)",
               maxWidth: "var(--bl-text-body)",

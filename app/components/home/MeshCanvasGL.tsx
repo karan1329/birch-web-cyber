@@ -94,7 +94,7 @@ export function MeshCanvasGL({ onContextLost }: Props = {}) {
     // Native resolution. A sub-resolution buffer made the vertices read as
     // oversized blocks; the pixel-dither language lives in the hero canvas,
     // where it is the subject, not here in the ambient backdrop.
-    renderer.setPixelRatio(Math.min(2, window.devicePixelRatio || 1));
+    renderer.setPixelRatio(Math.min(1.5, window.devicePixelRatio || 1));
     renderer.setClearColor(0x000000, 0);
 
     const scene = new Scene();
@@ -183,9 +183,41 @@ export function MeshCanvasGL({ onContextLost }: Props = {}) {
     let lastTierCheckAt = performance.now();
 
     let raf = 0;
+    /**
+     * The accent, read ONCE.
+     *
+     * This used to run `getComputedStyle(...).getPropertyValue()` inside the
+     * frame loop so a live neon swap would repaint without a remount. That
+     * switcher is gone and the palette is locked, so the only thing the
+     * per-frame read still bought was a forced style recalculation sixty
+     * times a second, on a page that now shows this canvas through every
+     * translucent section. Chrome hid the cost; Safari did not.
+     */
+    {
+      const raw = rootStyle.getPropertyValue("--bl-accent-rgb").trim();
+      const parts = raw.split(",").map(Number);
+      if (parts.length === 3 && parts.every((n) => !Number.isNaN(n))) {
+        uniforms.uNeon.value.set(parts[0] / 255, parts[1] / 255, parts[2] / 255);
+      }
+      // One hue family: the wireframe shares the cranberry accent rather
+      // than introducing a second chroma.
+      uniforms.uInk.value.copy(uniforms.uNeon.value);
+    }
+
     let lastT = performance.now();
+    // The mesh is ambient and slow. Every section is translucent over it now,
+    // so each of its frames costs a full-page recomposite; at 30fps that bill
+    // halves and the motion is indistinguishable.
+    const MIN_FRAME_MS = 1000 / 30;
+    let lastDraw = 0;
 
     const loop = (now: number) => {
+      if (now - lastDraw < MIN_FRAME_MS) {
+        raf = requestAnimationFrame(loop);
+        return;
+      }
+      lastDraw = now;
+
       const dt = (now - lastT) / 1000;
       lastT = now;
 
@@ -207,27 +239,6 @@ export function MeshCanvasGL({ onContextLost }: Props = {}) {
         baseCam.z,
       );
       camera.lookAt(lookAt);
-
-      // Live theme uniforms. Reads happen before the draw so the frame
-      // is internally consistent (no mid-frame colour seam).
-      const neonRaw = rootStyle.getPropertyValue("--bl-accent-rgb").trim();
-      if (neonRaw) {
-        const parts = neonRaw.split(",").map(Number);
-        if (
-          parts.length === 3 &&
-          parts.every((n) => !Number.isNaN(n))
-        ) {
-          uniforms.uNeon.value.set(
-            parts[0] / 255,
-            parts[1] / 255,
-            parts[2] / 255,
-          );
-        }
-      }
-      // One hue family: the wireframe shares the cranberry accent rather
-      // than introducing a second chroma. Alpha in the shader keeps it far
-      // quieter than the cursor highlight.
-      uniforms.uInk.value.copy(uniforms.uNeon.value);
 
       renderer.render(scene, camera);
 

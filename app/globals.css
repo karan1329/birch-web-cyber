@@ -111,11 +111,6 @@
     --bl-max-width: 1480px;
     --bl-page-pad: clamp(56px, 4.5vw, 120px);
     --bl-section-gap: clamp(120px, 9vw, 200px);
-    --bl-heading-wide: 1300px;
-    --bl-text-wide: 900px;
-    --bl-text-body: 790px;
-    --bl-text-narrow: 700px;
-    --bl-text-tight: 520px;
   }
 }
 
@@ -124,11 +119,6 @@
     --bl-max-width: 1760px;
     --bl-page-pad: clamp(96px, 4vw, 180px);
     --bl-section-gap: clamp(180px, 8vw, 280px);
-    --bl-heading-wide: 1540px;
-    --bl-text-wide: 980px;
-    --bl-text-body: 850px;
-    --bl-text-narrow: 760px;
-    --bl-text-tight: 560px;
   }
 }
 
@@ -137,11 +127,11 @@
     --bl-max-width: 2080px;
     --bl-page-pad: clamp(140px, 3.5vw, 220px);
     --bl-section-gap: clamp(240px, 8vw, 360px);
-    --bl-heading-wide: 1820px;
-    --bl-text-wide: 1060px;
-    --bl-text-body: 910px;
-    --bl-text-narrow: 820px;
-    --bl-text-tight: 600px;
+    --bl-heading-wide: 1500px;
+    --bl-text-wide: 940px;
+    --bl-text-body: 830px;
+    --bl-text-narrow: 740px;
+    --bl-text-tight: 560px;
   }
 }
 
@@ -246,9 +236,34 @@ input, textarea, select {
    Keyframes
    ===================================================================== */
 
+/* translate3d keeps the track on the compositor in Safari; translateX alone
+   is enough for Chrome but Safari will happily repaint instead. */
 @keyframes bl-ticker-move {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
+}
+
+/* The marquee's edge fade. This was a mask on the scrolling container, which
+   forces Safari to re-rasterise the whole row every frame. As a painted
+   overlay it costs nothing: it never animates, and the row underneath stays
+   a plain composited layer. */
+.bl-marquee-row::before,
+.bl-marquee-row::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 6%;
+  z-index: 1;
+  pointer-events: none;
+}
+.bl-marquee-row::before {
+  left: 0;
+  background: linear-gradient(to right, var(--bl-ink), rgba(var(--bl-ink-rgb), 0));
+}
+.bl-marquee-row::after {
+  right: 0;
+  background: linear-gradient(to left, var(--bl-ink), rgba(var(--bl-ink-rgb), 0));
 }
 
 @keyframes bl-pulse-dot {

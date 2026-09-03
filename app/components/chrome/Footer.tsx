@@ -50,7 +50,11 @@ export function Footer() {
   return (
     <footer
       style={{
-        background: "var(--bl-section-veil)",
+        // A shade deeper than the page. It was the same veil every section
+        // uses, so the footer read as one more section rather than as the
+        // end of the document. The mesh still shows through, just less.
+        background: "rgba(var(--bl-ink-rgb), 0.86)",
+        boxShadow: "inset 0 1px 0 var(--bl-rule2)",
         color: "var(--bl-fg2)",
         padding: "clamp(80px, 10vw, 120px) var(--bl-page-pad) 40px",
         borderTop: "1px solid var(--bl-rule)",
@@ -74,12 +78,12 @@ export function Footer() {
           <div>
             <div
               style={{
-                fontFamily: "var(--font-sans)",
-                fontSize: 20,
-                fontWeight: 600,
-                letterSpacing: "-0.02em",
+                fontFamily: "var(--font-mono)",
+                fontSize: 17,
+                letterSpacing: "0.12em",
+                textTransform: "uppercase",
                 color: "var(--bl-fg)",
-                marginBottom: 16,
+                marginBottom: 18,
               }}
             >
               Birchlogic

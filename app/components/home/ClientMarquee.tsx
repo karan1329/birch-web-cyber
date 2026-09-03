@@ -42,7 +42,7 @@ export function ClientMarquee({ variant = "inline" }: Props) {
           style={{
             fontFamily: "var(--font-sans)",
             fontWeight: 500,
-            fontSize: "clamp(14px, 1.05vw, 18px)",
+            fontSize: "clamp(14px, 1.05vw, 16px)",
             letterSpacing: "-0.01em",
             color: "var(--bl-fg2)",
           }}
@@ -70,22 +70,22 @@ function LogoRow({
   const loop = [...items, ...items, ...items];
   return (
     <div
-      style={{
-        position: "relative",
-        overflow: "hidden",
-        WebkitMaskImage:
-          "linear-gradient(to right, transparent 0, #000 5%, #000 95%, transparent 100%)",
-        maskImage:
-          "linear-gradient(to right, transparent 0, #000 5%, #000 95%, transparent 100%)",
-      }}
+      className="bl-marquee-row"
+      style={{ position: "relative", overflow: "hidden" }}
     >
       <div
         className="bl-marquee-track"
         style={{
           display: "flex",
           alignItems: "center",
-          gap: "clamp(52px, 5.7vw, 108px)",
+          gap: "clamp(52px, 5.7vw, 90px)",
           width: "max-content",
+          // Own compositing layer, so the loop is a layer transform rather
+          // than a repaint. translate3d and backface-visibility are what
+          // actually get Safari to promote it.
+          willChange: "transform",
+          backfaceVisibility: "hidden",
+          transform: "translate3d(0,0,0)",
           // Both rows share one keyframe pair; `reverse` sends the second
           // row the other way.
           animation: `bl-ticker-move ${seconds}s linear infinite${
@@ -102,7 +102,7 @@ function LogoRow({
               alignItems: "center",
               justifyContent: "center",
               flexShrink: 0,
-              height: "clamp(41px, 3.9vw, 72px)",
+              height: "max(clamp(41px, 3.9vw, 57px), min(1.78vw, 71px))",
             }}
           >
             {/* Plain img: small transparent PNGs from /public. next/image's
@@ -112,7 +112,7 @@ function LogoRow({
             <img
               src={c.logo}
               alt={c.name}
-              loading="lazy"
+              loading={i < items.length ? "eager" : "lazy"}
               decoding="async"
               style={{
                 height: "100%",

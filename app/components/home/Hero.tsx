@@ -81,7 +81,7 @@ export function Hero() {
             style={{
               fontFamily: "var(--font-sans)",
               fontWeight: 600,
-              fontSize: "clamp(42px, 5.4vw, 132px)",
+              fontSize: "max(clamp(42px, 5.4vw, 96px), min(3vw, 120px))",
               lineHeight: 0.98,
               letterSpacing: "-0.038em",
               margin: "clamp(18px, 2vw, 26px) 0 0",
@@ -100,7 +100,7 @@ export function Hero() {
               perChar={0.018}
               style={{
                 fontWeight: 200,
-                fontSize: "clamp(44px, 5.7vw, 139px)",
+                fontSize: "max(clamp(44px, 5.7vw, 101px), min(3.16vw, 126px))",
                 color: "var(--bl-accent)",
               }}
             />
@@ -111,7 +111,7 @@ export function Hero() {
               style={{
                 fontFamily: "var(--font-sans)",
                 fontWeight: 400,
-                fontSize: "clamp(16px, 1.35vw, 23px)",
+                fontSize: "max(clamp(16px, 1.35vw, 20px), min(0.62vw, 25px))",
                 lineHeight: 1.55,
                 color: "var(--bl-fg2)",
                 maxWidth: "46ch",
@@ -142,7 +142,7 @@ export function Hero() {
                 className="bl-email-link"
                 style={{
                   fontFamily: "var(--font-sans)",
-                  fontSize: "clamp(13.5px, 0.85vw, 17px)",
+                  fontSize: 13.5,
                   fontWeight: 500,
                   color: "var(--bl-fg2)",
                   textDecoration: "none",

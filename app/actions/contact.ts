@@ -95,6 +95,43 @@ async function sendMail(args: { subject: string; text: string; replyTo?: string 
   });
 }
 
+/**
+ * The acknowledgement the SUBMITTER gets.
+ *
+ * Separate from `sendMail`, which only ever writes to the internal inboxes.
+ * Deliberately best-effort: a failure here is logged and swallowed, because
+ * the submission itself already succeeded and telling someone their message
+ * failed when it did not is worse than a missing receipt.
+ *
+ * Reply-to is the team inbox rather than the no-reply sender, so a reply to
+ * the receipt lands somewhere a person reads.
+ */
+async function sendAck(args: { to: string; subject: string; text: string }) {
+  const body = [
+    args.text,
+    ``,
+    `Birchlogic`,
+    `Cybersecurity, done seriously.`,
+    `${MAIL_TO[0] ?? "hi@birchlogic.com"} · Delhi · Singapore`,
+  ].join("\n");
+
+  if (!resend) {
+    console.log("[email:no-key] ack ->", args.to);
+    return;
+  }
+  try {
+    await resend.emails.send({
+      from: MAIL_FROM,
+      to: [args.to],
+      subject: args.subject,
+      text: body,
+      replyTo: MAIL_TO[0],
+    });
+  } catch (err) {
+    console.error("[email] acknowledgement failed", err);
+  }
+}
+
 // ─── Field validation ─────────────────────────────────────────────────────
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 function isEmail(v: string): boolean {
@@ -186,6 +223,29 @@ export async function submitContact(formData: FormData): Promise<ActionResult> {
         "We received your note but mail delivery hiccuped. We will follow up at the email you provided.",
     };
   }
+
+  await sendAck({
+    to: payload.email,
+    subject: "We have your message · Birchlogic",
+    text: [
+      `Thank you for writing to us.`,
+      ``,
+      `This confirms your message reached Birchlogic. A senior partner reads`,
+      `every enquiry that comes through this form, so the reply you get will`,
+      `be from a person.`,
+      ``,
+      `What you sent:`,
+      ``,
+      `Name:     ${fullName || "(not provided)"}`,
+      `Company:  ${payload.company || "(not provided)"}`,
+      `Subject:  ${subjectLabel}`,
+      ``,
+      `Message:`,
+      payload.message,
+      ``,
+      `If any of that is wrong, reply to this email and it reaches us directly.`,
+    ].join("\n"),
+  });
 
   return { ok: true };
 }
@@ -304,6 +364,26 @@ export async function submitApplication(
         "We received your application but mail delivery hiccuped. We will follow up at the email you provided.",
     };
   }
+
+  await sendAck({
+    to: payload.email,
+    subject: `We have your application · ${role.title} · Birchlogic`,
+    text: [
+      `Thank you for applying.`,
+      ``,
+      `This confirms your application for ${role.title} (${role.location})`,
+      `reached us. We read every application ourselves, and we will come back`,
+      `to you either way rather than leaving you to wonder.`,
+      ``,
+      `What you sent:`,
+      ``,
+      `Name:     ${payload.name}`,
+      `LinkedIn: ${payload.linkedin}`,
+      `Phone:    ${payload.phone || "(not provided)"}`,
+      ``,
+      `If any of that is wrong, reply to this email and it reaches us directly.`,
+    ].join("\n"),
+  });
 
   return { ok: true };
 }

@@ -58,7 +58,7 @@ export function Engagement() {
           style={{
             fontFamily: "var(--font-sans)",
             fontWeight: 500,
-            fontSize: "clamp(40px, 6vw, 130px)",
+            fontSize: "max(clamp(40px, 6vw, 96px), min(3vw, 120px))",
             lineHeight: 0.94,
             letterSpacing: "-0.04em",
             margin: "0 0 clamp(48px, 6vw, 80px)",
@@ -110,7 +110,7 @@ function TierCard({ tier }: { tier: Tier }) {
               bottom: -32,
               fontFamily: "var(--font-sans)",
               fontWeight: 700,
-              fontSize: "clamp(220px, 26vw, 400px)",
+              fontSize: "clamp(220px, 26vw, 360px)",
               lineHeight: 0.85,
               letterSpacing: "-0.08em",
               color: "rgba(var(--bl-neon-rgb),0.05)",

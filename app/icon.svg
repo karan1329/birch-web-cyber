@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Birchlogic">
+  <!--
+    INTERIM MARK. This is the wordmark's initial set on the brand ground, not
+    a logo: there is no logo file in this repository, and inventing one is not
+    mine to do. It exists because the alternative was shipping the Next.js
+    starter favicon, which is what the site was serving in production.
+
+    Replace this file the moment the real mark lands. Next serves app/icon.svg
+    automatically, so dropping in the artwork is the whole job.
+  -->
+  <rect width="32" height="32" rx="6" fill="#D4405A"/>
+  <text
+    x="16" y="23"
+    text-anchor="middle"
+    font-family="Helvetica Neue, Helvetica, Arial, sans-serif"
+    font-size="21"
+    font-weight="700"
+    letter-spacing="0.5"
+    fill="#F1EEE7"
+  >B</text>
+</svg>

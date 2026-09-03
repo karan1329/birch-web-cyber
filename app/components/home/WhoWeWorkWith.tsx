@@ -32,7 +32,7 @@ export function WhoWeWorkWith() {
           style={{
             fontFamily: "var(--font-sans)",
             fontWeight: 500,
-            fontSize: "clamp(34px, 5vw, 112px)",
+            fontSize: "max(clamp(34px, 5vw, 76px), min(2.37vw, 95px))",
             lineHeight: 1.02,
             letterSpacing: "-0.03em",
             margin: "0 0 clamp(44px, 5.5vw, 72px)",
@@ -65,7 +65,7 @@ export function WhoWeWorkWith() {
               style={{
                 fontFamily: "var(--font-sans)",
                 fontWeight: 400,
-                fontSize: "clamp(16px, 1.3vw, 23px)",
+                fontSize: "max(clamp(16px, 1.3vw, 19px), min(0.59vw, 24px))",
                 lineHeight: 1.65,
                 color: "var(--bl-fg2)",
                 margin: 0,
@@ -141,7 +141,7 @@ function FounderBlock() {
           top: "clamp(-18px, -1vw, -8px)",
           right: "clamp(10px, 1.6vw, 22px)",
           fontFamily: "var(--font-sans)",
-          fontSize: "clamp(110px, 12vw, 205px)",
+          fontSize: "clamp(110px, 12vw, 170px)",
           lineHeight: 0.7,
           fontWeight: 500,
           color: "rgba(0, 0, 0, 0.10)",
@@ -161,7 +161,7 @@ function FounderBlock() {
         style={{
           fontFamily: "var(--font-sans)",
           fontWeight: 600,
-          fontSize: "clamp(20px, 1.9vw, 29px)",
+          fontSize: "clamp(20px, 1.9vw, 26px)",
           letterSpacing: "-0.018em",
           lineHeight: 1.15,
           color: "var(--bl-ink)",
@@ -174,7 +174,7 @@ function FounderBlock() {
       <p
         style={{
           fontFamily: "var(--font-sans)",
-          fontSize: "clamp(14px, 1.1vw, 18px)",
+          fontSize: "clamp(14px, 1.1vw, 16px)",
           lineHeight: 1.6,
           color: "rgba(18, 18, 18, 0.78)",
           margin: 0,

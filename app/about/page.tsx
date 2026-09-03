@@ -33,191 +33,20 @@ export default function AboutPage() {
         subtitle="Birchlogic exists so that the first person to read your security the way a regulator would is on your side of the table."
       />
 
-      <Foreword />
       <Founders />
-      <WhatWeBuilt />
+      <Achievements />
       <Close />
     </>
   );
 }
 
-/* ── Block 1 · the Foreword ──────────────────────────────────────────── */
-
-function Foreword() {
-  return (
-    <section style={SECTION}>
-      <div className="bl-container" style={{ padding: 0 }}>
-        <Anchor number="01" label="A note from Karan" />
-
-        <div
-          className="bl-stack-md"
-          style={{
-            display: "grid",
-            gridTemplateColumns: "minmax(240px, 0.62fr) minmax(320px, 1fr)",
-            gap: "clamp(32px, 5vw, 72px)",
-            alignItems: "start",
-          }}
-        >
-          <Rise>
-            <PhotographSlot />
-          </Rise>
-
-          <Rise delay={0.06}>
-            <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-              <p style={{ ...BODY, fontWeight: 500, color: "var(--bl-fg)" }}>
-                A note from Karan Bhandari.
-              </p>
-              <p style={BODY}>
-                I have been working in offensive and defensive security since
-                2015, and the years since have taken me through ISO 27001
-                inside the Bank of Montreal&rsquo;s CISO office, sovereign
-                security architecture for a department of the Netherlands
-                government, ransomware response for regional enterprises, and
-                board-level risk work across six countries.
-              </p>
-              <p style={BODY}>
-                For a good part of that time I was the person on the other side
-                of the table, reading a company&rsquo;s security before the
-                regulator did, before the deal closed, before the
-                investor&rsquo;s technical team started asking questions. And
-                what undoes companies in that room is almost never a missing
-                control. It is that the policy says one thing, the systems do
-                another, and the person answering in the meeting gives a third
-                version, not because anyone is lying but because nobody inside
-                had ever read all of it together in the order a reviewer reads
-                it.
-              </p>
-              <p style={{ ...BODY, color: "var(--bl-fg)" }}>
-                Birchlogic exists so that the first person to read your
-                security that way is on your side of the table.
-              </p>
-              <p
-                style={{
-                  fontFamily: "var(--font-sans)",
-                  fontSize: 15,
-                  fontWeight: 600,
-                  color: "var(--bl-fg)",
-                  margin: 0,
-                }}
-              >
-                — Karan Bhandari,{" "}
-                <span style={{ fontWeight: 400, color: "var(--bl-fg2)" }}>
-                  Co-founder · Delhi and Singapore
-                </span>
-              </p>
-              <PressLines />
-            </div>
-          </Rise>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/**
- * GATED · Phase 6.7. One duotone photograph, captioned in small caps with a
- * credit and date. Until the image exists this renders as a ruled slot at
- * the correct aspect ratio so the layout is final and only the asset is
- * missing — rather than shipping a stock photograph or collapsing the grid.
- */
-function PhotographSlot() {
-  return (
-    <figure style={{ margin: 0 }}>
-      <div
-        style={{
-          aspectRatio: "4 / 5",
-          border: "1px dashed var(--bl-rule2)",
-          background: "var(--bl-ink2)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          padding: 24,
-        }}
-      >
-        <span
-          style={{
-            fontFamily: "var(--font-mono)",
-            fontSize: 10,
-            letterSpacing: "0.16em",
-            textTransform: "uppercase",
-            color: "var(--bl-fg3)",
-            textAlign: "center",
-            lineHeight: 1.7,
-          }}
-        >
-          Photograph
-          <br />
-          duotone · 4:5
-        </span>
-      </div>
-      <figcaption
-        style={{
-          fontFamily: "var(--font-mono)",
-          fontSize: 9.5,
-          letterSpacing: "0.14em",
-          textTransform: "uppercase",
-          color: "var(--bl-fg3)",
-          marginTop: 10,
-        }}
-      >
-        Karan Bhandari · credit and date to follow
-      </figcaption>
-    </figure>
-  );
-}
-
-function PressLines() {
-  return (
-    <ul
-      style={{
-        listStyle: "none",
-        padding: 0,
-        margin: "8px 0 0",
-        display: "flex",
-        flexDirection: "column",
-        gap: 6,
-      }}
-    >
-      {PRESS.map((p) => (
-        <li
-          key={p.claim}
-          style={{
-            fontFamily: "var(--font-mono)",
-            fontSize: 10.5,
-            lineHeight: 1.6,
-            letterSpacing: "0.04em",
-            color: "var(--bl-fg3)",
-          }}
-        >
-          {p.href ? (
-            <a
-              href={p.href}
-              target="_blank"
-              rel="noreferrer"
-              className="bl-email-link"
-              style={{ color: "var(--bl-fg2)", textDecoration: "underline" }}
-            >
-              {p.claim} — {p.outlet}, {p.year}
-            </a>
-          ) : (
-            // No href yet: rendered as text, never as a dead link.
-            <>
-              {p.claim} — {p.outlet}, {p.year}
-            </>
-          )}
-        </li>
-      ))}
-    </ul>
-  );
-}
-
-/* ── Block 2 · the two founders ──────────────────────────────────────── */
+/* ── Block 1 · the two founders ──────────────────────────────────────── */
 
 function Founders() {
   return (
     <section style={{ ...SECTION, borderTop: "1px solid var(--bl-rule)" }}>
       <div className="bl-container" style={{ padding: 0 }}>
-        <Anchor number="02" label="The founders" />
+        <Anchor number="01" label="The founders" />
         <h2 style={H2}>
           <SplitText text="Two people, one bench." />
         </h2>
@@ -232,7 +61,11 @@ function Founders() {
           }}
         >
           <Rise>
-            <FounderPanel name="Karan Bhandari" role="Co-founder">
+            <FounderPanel
+              name="Karan Bhandari"
+              role="Co-founder"
+              portrait="/karan-bhandari-avatar.jpg"
+            >
               <p style={BODY}>
                 CEH at fifteen, one of the youngest in India at the time. That
                 dateline matters less as a credential than as a runway: it is
@@ -293,13 +126,58 @@ function Founders() {
   );
 }
 
+/**
+ * Karan's portrait moved here when the opening note was removed. Jaskaran's
+ * slot is ruled and empty rather than filled with a stand-in: the page
+ * already handles his missing copy that way, and one founder with a face
+ * beside one founder with a placeholder face would read worse than two
+ * reserved slots.
+ */
+function FounderPortrait({ src }: { src: string | null }) {
+  const box: React.CSSProperties = {
+    width: "clamp(84px, 8vw, 112px)",
+    aspectRatio: "1 / 1",
+    borderRadius: 4,
+    overflow: "hidden",
+    flexShrink: 0,
+  };
+  if (!src) {
+    return (
+      <span
+        aria-hidden="true"
+        style={{ ...box, border: "1px dashed var(--bl-rule2)" }}
+      />
+    );
+  }
+  return (
+    <span style={{ ...box, boxShadow: "inset 0 0 0 1px var(--bl-rule)" }}>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={src}
+        alt=""
+        aria-hidden="true"
+        loading="lazy"
+        decoding="async"
+        style={{
+          width: "100%",
+          height: "100%",
+          display: "block",
+          objectFit: "cover",
+        }}
+      />
+    </span>
+  );
+}
+
 function FounderPanel({
   name,
   role,
+  portrait = null,
   children,
 }: {
   name: string;
   role: string;
+  portrait?: string | null;
   children: React.ReactNode;
 }) {
   return (
@@ -314,7 +192,9 @@ function FounderPanel({
         height: "100%",
       }}
     >
-      <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+        <FounderPortrait src={portrait} />
+        <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
         <h3
           style={{
             fontFamily: "var(--font-sans)",
@@ -338,98 +218,190 @@ function FounderPanel({
         >
           {role}
         </span>
+        </div>
       </div>
       {children}
     </div>
   );
 }
 
-/* ── Block 3 · what the firm has built ───────────────────────────────── */
+/* ── Block 2 · the record ───────────────────────────────── */
 
-function WhatWeBuilt() {
+/**
+ * The record.
+ *
+ * Three lanes, kept apart on purpose. Recognition is third-party and dated,
+ * so it carries its outlet. The middle lane is founder credentials from
+ * prior roles, which is the honest frame for BMO and the Netherlands
+ * department: they are not clients of this firm, and the same distinction
+ * `lib/clients.ts` draws with its `kind` field applies here. The last lane
+ * is what Birchlogic itself has built.
+ *
+ * Undated entries carry no year rather than an invented one.
+ */
+type RecordItem = { year?: string; claim: string; note?: string; href?: string };
+
+const CREDENTIALS: RecordItem[] = [
+  {
+    claim: "ISO 27001 inside the Bank of Montreal's CISO office",
+    note: "Founder credential, prior role",
+  },
+  {
+    claim:
+      "Sovereign security architecture for a department of the Netherlands government",
+    note: "Founder credential, prior role",
+  },
+  {
+    claim: "Ransomware response for regional enterprises",
+    note: "Founder credential, prior role",
+  },
+  {
+    claim: "Board-level risk work across six countries",
+    note: "Founder credential, prior role",
+  },
+  {
+    year: "2015",
+    claim: "Offensive and defensive security practice begins",
+    note: "CEH at fifteen, one of the youngest in India at the time",
+  },
+];
+
+const FIRM: RecordItem[] = [
+  {
+    year: "2026",
+    claim: "The research lab",
+    note: "Our own, publishing against a public standard",
+  },
+  {
+    year: "2026",
+    claim: "The internal AI workbench",
+    note: "Agents that carry the volume work under a senior signature",
+  },
+  {
+    claim: "Singapore practice open",
+    note: "Delhi office active; Pte Ltd entity in formation",
+  },
+];
+
+function RecordRow({ item, delay }: { item: RecordItem; delay: number }) {
+  return (
+    <Rise
+      as="li"
+      delay={delay}
+      style={{
+        display: "grid",
+        gridTemplateColumns: "minmax(64px, 92px) minmax(240px, 1fr)",
+        gap: "clamp(18px, 3vw, 44px)",
+        padding: "clamp(18px, 2.2vw, 26px) 0",
+        borderBottom: "1px solid var(--bl-rule)",
+        alignItems: "baseline",
+      }}
+    >
+      <span className="bl-label" style={{ color: "var(--bl-fg3)" }}>
+        {item.year ?? ""}
+      </span>
+      <span style={{ ...BODY, color: "var(--bl-fg)" }}>
+        {item.href ? (
+          <a
+            href={item.href}
+            target="_blank"
+            rel="noreferrer"
+            className="bl-email-link"
+            style={{
+              color: "var(--bl-fg)",
+              textDecoration: "none",
+              borderBottom: "1px solid var(--bl-accent)",
+            }}
+          >
+            {item.claim}
+          </a>
+        ) : (
+          item.claim
+        )}
+        {item.note && (
+          <span style={{ display: "block", color: "var(--bl-fg3)", marginTop: 4 }}>
+            {item.note}
+          </span>
+        )}
+      </span>
+    </Rise>
+  );
+}
+
+function RecordGroup({
+  label,
+  items,
+}: {
+  label: string;
+  items: RecordItem[];
+}) {
+  return (
+    <div style={{ marginTop: "clamp(40px, 5vw, 64px)" }}>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: 14,
+          marginBottom: "clamp(14px, 1.6vw, 20px)",
+        }}
+      >
+        <span className="bl-label" style={{ color: "var(--bl-fg2)", whiteSpace: "nowrap" }}>
+          {label}
+        </span>
+        <span
+          aria-hidden="true"
+          style={{ flex: 1, height: 1, background: "var(--bl-rule)" }}
+        />
+      </div>
+      <ol
+        style={{
+          listStyle: "none",
+          padding: 0,
+          margin: 0,
+          borderTop: "1px solid var(--bl-rule)",
+        }}
+      >
+        {items.map((it, i) => (
+          <RecordRow key={it.claim} item={it} delay={i * 0.04} />
+        ))}
+      </ol>
+    </div>
+  );
+}
+
+function Achievements() {
+  const recognition: RecordItem[] = PRESS.map((p) => ({
+    year: p.year,
+    claim: p.claim,
+    note: p.outlet,
+    href: p.href,
+  }));
+
   return (
     <section style={{ ...SECTION, borderTop: "1px solid var(--bl-rule)" }}>
       <div className="bl-container" style={{ padding: 0 }}>
-        <Anchor number="03" label="What the firm has built" />
+        <Anchor number="02" label="The record" />
         <h2 style={H2}>
           <SplitText text="The record, dated." />
         </h2>
+        <Rise delay={0.3}>
+          <p style={{ ...BODY, marginTop: "clamp(20px, 2.4vw, 30px)" }}>
+            Recognition is third-party and linked. The middle section is
+            credential the founders carry from earlier roles rather than work
+            of this firm, and it is labelled that way because footers and
+            about pages get read by exactly the people who check.
+          </p>
+        </Rise>
 
-        <ol
-          style={{
-            listStyle: "none",
-            padding: 0,
-            margin: "clamp(32px, 4vw, 48px) 0 0",
-            borderTop: "1px solid var(--bl-rule)",
-          }}
-        >
-          {PRESS.map((p, i) => (
-            <Rise
-              key={p.claim}
-              as="li"
-              delay={i * 0.04}
-              style={{
-                display: "grid",
-                gridTemplateColumns: "minmax(80px, 110px) minmax(240px, 1fr)",
-                gap: "clamp(20px, 3vw, 48px)",
-                padding: "clamp(22px, 2.6vw, 32px) 0",
-                borderBottom: "1px solid var(--bl-rule)",
-                alignItems: "baseline",
-              }}
-            >
-              <span
-                style={{
-                  fontFamily: "var(--font-mono)",
-                  fontSize: 12,
-                  letterSpacing: "0.08em",
-                  color: "var(--bl-fg3)",
-                }}
-              >
-                {p.year}
-              </span>
-              <span style={{ ...BODY, color: "var(--bl-fg)" }}>
-                {p.claim}
-                <span style={{ color: "var(--bl-fg3)" }}> — {p.outlet}</span>
-              </span>
-            </Rise>
-          ))}
-          <Rise
-            as="li"
-            delay={PRESS.length * 0.04}
-            style={{
-              display: "grid",
-              gridTemplateColumns: "minmax(80px, 110px) minmax(240px, 1fr)",
-              gap: "clamp(20px, 3vw, 48px)",
-              padding: "clamp(22px, 2.6vw, 32px) 0",
-              borderBottom: "1px solid var(--bl-rule)",
-              alignItems: "baseline",
-            }}
-          >
-            <span
-              style={{
-                fontFamily: "var(--font-mono)",
-                fontSize: 12,
-                letterSpacing: "0.08em",
-                color: "var(--bl-fg3)",
-              }}
-            >
-              2026
-            </span>
-            <span style={{ ...BODY, color: "var(--bl-fg)" }}>
-              The research lab
-              <span style={{ color: "var(--bl-fg3)" }}>
-                {" "}
-                — our own, publishing against a public standard
-              </span>
-            </span>
-          </Rise>
-        </ol>
+        <RecordGroup label="Recognition" items={recognition} />
+        <RecordGroup label="Founder credentials" items={CREDENTIALS} />
+        <RecordGroup label="Built by the firm" items={FIRM} />
       </div>
     </section>
   );
 }
 
-/* ── Block 4 · close ─────────────────────────────────────────────────── */
+/* ── Block 3 · close ─────────────────────────────────────────────────── */
 
 function Close() {
   return (

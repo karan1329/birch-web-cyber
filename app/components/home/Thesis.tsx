@@ -48,7 +48,7 @@ export function Thesis() {
           style={{
             fontFamily: "var(--font-sans)",
             fontWeight: 500,
-            fontSize: "clamp(34px, 5.4vw, 120px)",
+            fontSize: "max(clamp(34px, 5.4vw, 84px), min(2.62vw, 105px))",
             lineHeight: 1,
             letterSpacing: "-0.035em",
             margin: "0 0 clamp(44px, 5.5vw, 72px)",
@@ -87,7 +87,7 @@ export function Thesis() {
                   style={{
                     display: "block",
                     marginBottom: 18,
-                    fontSize: "clamp(20px, 1.7vw, 29px)",
+                    fontSize: "clamp(20px, 1.7vw, 26px)",
                     lineHeight: 1.3,
                     letterSpacing: "-0.012em",
                     color: "var(--bl-fg)",
@@ -101,7 +101,7 @@ export function Thesis() {
                 <span
                   style={{
                     fontFamily: "var(--font-sans)",
-                    fontSize: "clamp(16px, 1.3vw, 23px)",
+                    fontSize: "max(clamp(16px, 1.3vw, 19px), min(0.59vw, 24px))",
                     lineHeight: 1.7,
                     color: "var(--bl-fg2)",
                   }}
@@ -243,7 +243,7 @@ function FoundingPrincipleCard() {
           top: "clamp(8px, 1vw, 16px)",
           left: "clamp(18px, 2.4vw, 36px)",
           fontFamily: "var(--font-sans)",
-          fontSize: "clamp(120px, 14vw, 240px)",
+          fontSize: "clamp(120px, 14vw, 200px)",
           lineHeight: 0.6,
           fontWeight: 500,
           color: "rgba(0, 0, 0, 0.1)",
@@ -274,7 +274,7 @@ function FoundingPrincipleCard() {
           margin: 0,
           fontFamily: "var(--font-sans)",
           fontWeight: 500,
-          fontSize: "clamp(20px, 2vw, 33px)",
+          fontSize: "clamp(20px, 2vw, 30px)",
           lineHeight: 1.28,
           letterSpacing: "-0.015em",
           color: "var(--bl-ink)",

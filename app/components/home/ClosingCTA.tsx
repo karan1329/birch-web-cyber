@@ -50,7 +50,7 @@ export function ClosingCTA() {
           style={{
             fontFamily: "var(--font-sans)",
             fontWeight: 500,
-            fontSize: "clamp(48px, 8.5vw, 190px)",
+            fontSize: "max(clamp(48px, 8.5vw, 144px), min(4.5vw, 180px))",
             lineHeight: 0.94,
             letterSpacing: "-0.045em",
             margin: "0 0 clamp(36px, 5vw, 56px)",
@@ -70,7 +70,7 @@ export function ClosingCTA() {
           <p
             style={{
               fontFamily: "var(--font-sans)",
-              fontSize: "clamp(16px, 1.35vw, 23px)",
+              fontSize: "max(clamp(16px, 1.35vw, 19px), min(0.59vw, 24px))",
               color: "var(--bl-fg2)",
               maxWidth: "var(--bl-text-body)",
               margin: "0 auto 48px",
@@ -87,7 +87,7 @@ export function ClosingCTA() {
           <p
             style={{
               fontFamily: "var(--font-sans)",
-              fontSize: "clamp(16px, 1.35vw, 23px)",
+              fontSize: "max(clamp(16px, 1.35vw, 19px), min(0.59vw, 24px))",
               fontWeight: 500,
               color: "var(--bl-fg)",
               maxWidth: "var(--bl-text-body)",

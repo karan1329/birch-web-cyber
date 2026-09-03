@@ -51,7 +51,7 @@ export function HowWeWork() {
           style={{
             fontFamily: "var(--font-sans)",
             fontWeight: 500,
-            fontSize: "clamp(36px, 5.4vw, 120px)",
+            fontSize: "max(clamp(36px, 5.4vw, 84px), min(2.62vw, 105px))",
             lineHeight: 1,
             letterSpacing: "-0.035em",
             margin: "0 0 clamp(40px, 5vw, 64px)",
@@ -183,7 +183,7 @@ function PrincipleRow({
         style={{
           fontFamily: "var(--font-sans)",
           fontWeight: 500,
-          fontSize: "clamp(18px, 1.7vw, 27px)",
+          fontSize: "clamp(18px, 1.7vw, 23px)",
           lineHeight: 1.22,
           letterSpacing: "-0.012em",
           color: "var(--bl-fg)",

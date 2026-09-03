@@ -183,18 +183,22 @@ export function Nav() {
           {isMobile && (
             <button
               onClick={() => setMenuOpen((v) => !v)}
+              aria-label={menuOpen ? "Close menu" : "Open menu"}
+              aria-expanded={menuOpen}
               style={{
-                fontFamily: "var(--font-mono)",
-                fontSize: 11,
-                letterSpacing: "0.1em",
-                textTransform: "uppercase",
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                width: 40,
+                height: 40,
+                margin: "-8px",
                 color: "var(--bl-fg)",
                 background: "none",
                 border: "none",
                 cursor: "pointer",
               }}
             >
-              {menuOpen ? "Close" : "Menu"}
+              <MenuGlyph open={menuOpen} />
             </button>
           )}
         </div>
@@ -204,6 +208,35 @@ export function Nav() {
         <MobileMenu currentPath={path} onClose={() => setMenuOpen(false)} />
       )}
     </div>
+  );
+}
+
+/**
+ * Hamburger, and a cross when open. The words "Menu" and "Close" were doing
+ * the same job in more space, and a text button in a nav bar reads as a link
+ * rather than a control.
+ */
+function MenuGlyph({ open }: { open: boolean }) {
+  const line: React.CSSProperties = {
+    stroke: "currentColor",
+    strokeWidth: 1.6,
+    strokeLinecap: "round",
+  };
+  return (
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+      {open ? (
+        <>
+          <line x1="5" y1="5" x2="15" y2="15" style={line} />
+          <line x1="15" y1="5" x2="5" y2="15" style={line} />
+        </>
+      ) : (
+        <>
+          <line x1="3" y1="6" x2="17" y2="6" style={line} />
+          <line x1="3" y1="10" x2="17" y2="10" style={line} />
+          <line x1="3" y1="14" x2="17" y2="14" style={line} />
+        </>
+      )}
+    </svg>
   );
 }
 
@@ -248,18 +281,21 @@ function MobileMenu({
         </span>
         <button
           onClick={onClose}
+          aria-label="Close menu"
           style={{
-            fontFamily: "var(--font-mono)",
-            fontSize: 11,
-            color: "var(--bl-fg3)",
-            letterSpacing: "0.1em",
-            textTransform: "uppercase",
+            display: "inline-flex",
+            alignItems: "center",
+            justifyContent: "center",
+            width: 40,
+            height: 40,
+            margin: "-8px",
+            color: "var(--bl-fg)",
             background: "none",
             border: "none",
             cursor: "pointer",
           }}
         >
-          Close
+          <MenuGlyph open />
         </button>
       </div>
       <div style={{ display: "flex", flexDirection: "column", flex: 1 }}>
@@ -272,12 +308,13 @@ function MobileMenu({
               fontFamily: "var(--font-sans)",
               fontSize: "clamp(32px, 7vw, 48px)",
               fontWeight: 500,
-              // At 48px a filled chip would be a slab. The sheet carries the
-              // same cranberry as colour instead.
+              // Current page wins. The research tab is permanently accented
+              // on desktop, but in the sheet that made TWO rows cranberry at
+              // once (the page you are on, plus AI Research), so both read as
+              // selected. Current page is the accent here; the research tab
+              // keeps its distinction from the chip beside its label instead.
               color:
-                item.accent || currentPath === item.href
-                  ? "var(--bl-accent)"
-                  : "var(--bl-fg)",
+                currentPath === item.href ? "var(--bl-accent)" : "var(--bl-fg)",
               background: "none",
               border: "none",
               borderBottom: "1px solid var(--bl-rule)",
@@ -290,6 +327,20 @@ function MobileMenu({
             }}
           >
             {item.label}
+            {item.accent && currentPath !== item.href && (
+              <span
+                aria-hidden="true"
+                style={{
+                  display: "inline-block",
+                  verticalAlign: "middle",
+                  marginLeft: 14,
+                  width: 10,
+                  height: 10,
+                  borderRadius: "50%",
+                  background: "var(--bl-accent)",
+                }}
+              />
+            )}
           </Link>
         ))}
       </div>
