@@ -217,7 +217,7 @@ function PhaseRow({
     <li
       style={{
         display: "grid",
-        gridTemplateColumns: "minmax(140px, 200px) minmax(260px, 1fr)",
+        gridTemplateColumns: "minmax(140px, 200px) minmax(0, 1fr)",
         gap: "clamp(24px, 4vw, 64px)",
         padding: "clamp(24px, 3vw, 36px) 0",
         borderBottom: "1px solid var(--bl-rule)",
@@ -273,9 +273,7 @@ function ClosingCTASection() {
         position: "relative",
         background: "var(--bl-section-veil)",
         color: "var(--bl-fg)",
-        padding: "clamp(120px, 16vw, 220px) var(--bl-page-pad)",
-        borderTop: "1px solid var(--bl-rule)",
-        textAlign: "center",
+        padding: "var(--bl-section-gap) var(--bl-page-pad)",textAlign: "center",
       }}
     >
       <div className="bl-container" style={{ padding: 0 }}>

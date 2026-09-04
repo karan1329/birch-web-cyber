@@ -178,9 +178,7 @@ export function ApplyForm({ role }: { role: Role }) {
           display: "flex",
           flexDirection: "column",
           gap: 24,
-          paddingTop: 20,
-          borderTop: "1px solid var(--bl-rule)",
-        }}
+          paddingTop: 20,}}
       >
         <TurnstileWidget sitekey={TURNSTILE_SITE_KEY} onToken={onToken} />
 

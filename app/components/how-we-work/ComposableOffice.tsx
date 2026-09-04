@@ -35,9 +35,7 @@ export function ComposableOffice() {
       style={{
         background: "var(--bl-section-veil)",
         color: "var(--bl-fg)",
-        padding: "clamp(100px, 13vw, 170px) var(--bl-page-pad)",
-        borderTop: "1px solid var(--bl-rule)",
-      }}
+        padding: "var(--bl-section-gap) var(--bl-page-pad)",}}
     >
       <div className="bl-container" style={{ padding: 0 }}>
         <Anchor number="02" label="The composable Security Office" />

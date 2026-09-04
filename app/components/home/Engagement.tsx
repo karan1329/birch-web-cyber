@@ -45,7 +45,7 @@ export function Engagement() {
         position: "relative",
         background: "var(--bl-bone)",
         color: "var(--bl-bone-fg)",
-        padding: "clamp(88px, 11vw, 150px) var(--bl-page-pad)",
+        padding: "var(--bl-section-gap) var(--bl-page-pad)",
       }}
     >
       <div

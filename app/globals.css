@@ -66,8 +66,10 @@
      ================================================================= */
   --bl-accent: #D4405A;
   --bl-accent-rgb: 212, 64, 90;
-  --bl-accent-deep: #A32B42;   /* pressed states, deeper fills */
-  --bl-accent-bright: #E35B73; /* hover only */
+  --bl-accent-deep: #A32B42;
+  /* pressed states, deeper fills */
+  --bl-accent-bright: #E35B73;
+  /* hover only */
 
   /* HP-11 · the ONE sanctioned second chroma on the site. The AI Research
      nav tab is specified to render in its own colour permanently, so it
@@ -82,7 +84,7 @@
   /* spacing / sizing */
   --bl-max-width: 1240px;
   --bl-page-pad: clamp(24px, 5vw, 80px);
-  --bl-section-gap: clamp(80px, 10vw, 140px);
+  --bl-section-gap: clamp(40px, 5vw, 80px);
   --bl-nav-h: 60px;
   --bl-top-offset: var(--bl-nav-h);
 
@@ -91,11 +93,16 @@
      `maxWidth: NNN` values (~22 distinct, often differing by 20-40px for
      no functional reason). Card-tier widths (320-420 region) remain
      inline because each card is tuned individually. */
-  --bl-heading-wide: 1100px;   /* section H2 + intro paragraph container */
-  --bl-text-wide: 820px;       /* hero subtitles, long-form body */
-  --bl-text-body: 720px;       /* standard body paragraphs */
-  --bl-text-narrow: 640px;     /* dense sections, denser layouts */
-  --bl-text-tight: 480px;      /* tight paragraphs, brief copy */
+  --bl-heading-wide: 1100px;
+  /* section H2 + intro paragraph container */
+  --bl-text-wide: 820px;
+  /* hero subtitles, long-form body */
+  --bl-text-body: 720px;
+  /* standard body paragraphs */
+  --bl-text-narrow: 640px;
+  /* dense sections, denser layouts */
+  --bl-text-tight: 480px;
+  /* tight paragraphs, brief copy */
 }
 
 /* =====================================================================
@@ -110,7 +117,7 @@
   :root {
     --bl-max-width: 1480px;
     --bl-page-pad: clamp(56px, 4.5vw, 120px);
-    --bl-section-gap: clamp(120px, 9vw, 200px);
+    --bl-section-gap: clamp(60px, 4vw, 100px);
   }
 }
 
@@ -118,7 +125,7 @@
   :root {
     --bl-max-width: 1760px;
     --bl-page-pad: clamp(96px, 4vw, 180px);
-    --bl-section-gap: clamp(180px, 8vw, 280px);
+    --bl-section-gap: clamp(80px, 4vw, 140px);
   }
 }
 
@@ -126,7 +133,7 @@
   :root {
     --bl-max-width: 2080px;
     --bl-page-pad: clamp(140px, 3.5vw, 220px);
-    --bl-section-gap: clamp(240px, 8vw, 360px);
+    --bl-section-gap: clamp(120px, 4vw, 180px);
     --bl-heading-wide: 1500px;
     --bl-text-wide: 940px;
     --bl-text-body: 830px;
@@ -206,25 +213,37 @@ body {
   width: 6px;
   height: 6px;
 }
-::-webkit-scrollbar-track { background: transparent; }
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
 ::-webkit-scrollbar-thumb {
   background: var(--bl-rule2);
   border-radius: 999px;
 }
-::-webkit-scrollbar-thumb:hover { background: var(--bl-fg3); }
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--bl-fg3);
+}
 
 button {
   font-family: inherit;
   color: inherit;
 }
 
-input, textarea, select {
+input,
+textarea,
+select {
   font-family: inherit;
   color: inherit;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
@@ -239,8 +258,13 @@ input, textarea, select {
 /* translate3d keeps the track on the compositor in Safari; translateX alone
    is enough for Chrome but Safari will happily repaint instead. */
 @keyframes bl-ticker-move {
-  from { transform: translate3d(0, 0, 0); }
-  to   { transform: translate3d(-50%, 0, 0); }
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
 }
 
 /* The marquee's edge fade. This was a mask on the scrolling container, which
@@ -257,34 +281,66 @@ input, textarea, select {
   z-index: 1;
   pointer-events: none;
 }
+
 .bl-marquee-row::before {
   left: 0;
   background: linear-gradient(to right, var(--bl-ink), rgba(var(--bl-ink-rgb), 0));
 }
+
 .bl-marquee-row::after {
   right: 0;
   background: linear-gradient(to left, var(--bl-ink), rgba(var(--bl-ink-rgb), 0));
 }
 
 @keyframes bl-pulse-dot {
-  0%, 100% { opacity: 0.45; transform: scale(1); }
-  50%      { opacity: 0.9;  transform: scale(1.25); }
+
+  0%,
+  100% {
+    opacity: 0.45;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.9;
+    transform: scale(1.25);
+  }
 }
 
 @keyframes bl-pulse-line {
-  0%, 100% { opacity: 0.3; }
-  50%      { opacity: 1; }
+
+  0%,
+  100% {
+    opacity: 0.3;
+  }
+
+  50% {
+    opacity: 1;
+  }
 }
 
 @keyframes bl-fade-up {
-  from { opacity: 0; transform: translateY(16px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Hero index card · stepped so it reads as a dithered cut, not a fade. */
 @keyframes bl-index-card {
-  from { opacity: 0; transform: translateY(6px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Client logos · greyscale at rest so nineteen brand palettes cannot
@@ -349,9 +405,9 @@ input, textarea, select {
    the client marquee track) cannot force its grid cell to grow wider
    than the parent column. Without this, max-content content blows out
    the page horizontally on small screens. */
-.bl-stack-md > *,
-.bl-stack-sm > *,
-.bl-footer-grid > * {
+.bl-stack-md>*,
+.bl-stack-sm>*,
+.bl-footer-grid>* {
   min-width: 0;
 }
 
@@ -362,10 +418,12 @@ input, textarea, select {
     grid-template-columns: 1fr !important;
     min-height: 0 !important;
   }
+
   .bl-hero-panel {
     padding-right: var(--bl-page-pad) !important;
     padding-bottom: clamp(36px, 7vw, 56px) !important;
   }
+
   /* Do NOT set a height here. The visual column carries the artwork's
      aspect-ratio inline, and a fixed height fights it — at most viewport
      heights that reintroduces the letterbox the ratio exists to remove.
@@ -373,6 +431,7 @@ input, textarea, select {
   .bl-hero-visual {
     width: 100%;
   }
+
   /* The strip's negative pull exists to cancel the panel's asymmetric
      right padding. That padding is symmetric here, so the pull goes. */
   .bl-hero-strip {
@@ -388,6 +447,7 @@ input, textarea, select {
     grid-template-columns: repeat(2, 1fr) !important;
   }
 }
+
 @media (max-width: 600px) {
   .bl-practices-row {
     grid-template-columns: 1fr !important;
@@ -400,6 +460,7 @@ input, textarea, select {
     grid-template-columns: 1fr !important;
     row-gap: clamp(40px, 6vw, 64px) !important;
   }
+
   /* Sticky right-rail items become static so they sit below the body
      rather than floating in an empty column. */
   .bl-stack-sticky-md {
@@ -414,6 +475,7 @@ input, textarea, select {
     grid-template-columns: 1fr !important;
     row-gap: clamp(24px, 5vw, 40px) !important;
   }
+
   .bl-footer-grid {
     grid-template-columns: 1fr 1fr !important;
     gap: 32px !important;
@@ -425,10 +487,12 @@ input, textarea, select {
   :root {
     --bl-page-pad: 22px;
   }
+
   .bl-footer-grid {
     grid-template-columns: 1fr !important;
     gap: 28px !important;
   }
+
   /* Marquee tracks at smaller font / tighter gaps */
   .bl-marquee-track {
     gap: 28px !important;

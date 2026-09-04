@@ -27,7 +27,7 @@ export default function CareersPage() {
         style={{
           background: "var(--bl-section-veil)",
           color: "var(--bl-fg)",
-          padding: "clamp(100px, 14vw, 180px) var(--bl-page-pad)",
+          padding: "var(--bl-section-gap) var(--bl-page-pad)",
         }}
       >
         <div className="bl-container" style={{ padding: 0 }}>
@@ -55,9 +55,7 @@ export default function CareersPage() {
         style={{
           background: "var(--bl-section-veil)",
           color: "var(--bl-fg)",
-          padding: "clamp(100px, 12vw, 160px) var(--bl-page-pad)",
-          borderTop: "1px solid var(--bl-rule)",
-          textAlign: "center",
+          padding: "var(--bl-section-gap) var(--bl-page-pad)",textAlign: "center",
         }}
       >
         <div className="bl-container" style={{ padding: 0 }}>

@@ -42,9 +42,7 @@ export function FractionalSecurityOffice() {
       style={{
         background: "var(--bl-section-veil)",
         color: "var(--bl-fg)",
-        padding: "clamp(120px, 16vw, 200px) var(--bl-page-pad)",
-        borderTop: "1px solid var(--bl-rule)",
-      }}
+        padding: "var(--bl-section-gap) var(--bl-page-pad)",}}
     >
       <div className="bl-container" style={{ padding: 0 }}>
         <Anchor number="06" label="Fractional Security Office" />

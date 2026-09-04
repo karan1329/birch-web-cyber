@@ -17,9 +17,7 @@ export function ClosingCTA() {
         position: "relative",
         background: "var(--bl-section-veil)",
         color: "var(--bl-fg)",
-        padding: "clamp(88px, 11vw, 150px) var(--bl-page-pad)",
-        borderTop: "1px solid var(--bl-rule)",
-        overflow: "hidden",
+        padding: "var(--bl-section-gap) var(--bl-page-pad)",overflow: "hidden",
       }}
     >
       <div

@@ -36,7 +36,7 @@ export function SprintBlock({
         position: "relative",
         background: inverted ? "var(--bl-bone)" : "var(--bl-section-veil)",
         color: inverted ? "var(--bl-bone-fg)" : "var(--bl-fg)",
-        padding: "clamp(80px, 11vw, 140px) var(--bl-page-pad)",
+        padding: "var(--bl-section-gap) var(--bl-page-pad)",
         borderTop: inverted ? "none" : "1px solid var(--bl-rule)",
       }}
     >

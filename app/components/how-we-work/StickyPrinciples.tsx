@@ -86,7 +86,6 @@ export function StickyPrinciples() {
         background: "var(--bl-section-veil)",
         color: "var(--bl-fg)",
         height: `${total * 85}vh`,
-        borderTop: "1px solid var(--bl-rule)",
       }}
     >
       <div
@@ -96,8 +95,7 @@ export function StickyPrinciples() {
           height: "calc(100vh - var(--bl-top-offset))",
           display: "flex",
           flexDirection: "column",
-          padding:
-            "clamp(48px, 6vw, 80px) var(--bl-page-pad) clamp(40px, 5vw, 60px)",
+          padding: "var(--bl-section-gap) var(--bl-page-pad) clamp(40px, 5vw, 60px)",
           overflow: "hidden",
         }}
       >

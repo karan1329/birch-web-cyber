@@ -47,7 +47,7 @@ export function CommercialTiers() {
         position: "relative",
         background: "var(--bl-bone)",
         color: "var(--bl-bone-fg)",
-        padding: "clamp(100px, 14vw, 180px) var(--bl-page-pad)",
+        padding: "var(--bl-section-gap) var(--bl-page-pad)",
       }}
     >
       <div className="bl-container" style={{ padding: 0 }}>

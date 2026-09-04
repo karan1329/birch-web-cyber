@@ -93,16 +93,12 @@ export function Nav() {
         <Link
           href="/"
           style={{
-            fontFamily: "var(--font-mono)",
-            fontSize: 13,
-            fontWeight: 500,
-            letterSpacing: "0.12em",
-            textTransform: "uppercase",
-            color: "var(--bl-fg)",
+            display: "flex",
+            alignItems: "center",
             textDecoration: "none",
           }}
         >
-          Birchlogic
+          <img src="/birchlogicicon.png" alt="Birchlogic" style={{ height: 32, width: "auto" }} />
         </Link>
 
         {!isMobile && (
@@ -136,16 +132,16 @@ export function Nav() {
                       // pairing the accent surfaces already use.
                       ...(item.accent
                         ? {
-                            color: "var(--bl-ink)",
-                            background: "var(--bl-accent)",
-                            padding: "6px 12px",
-                            borderRadius: 999,
-                          }
+                          color: "var(--bl-ink)",
+                          background: "var(--bl-accent)",
+                          padding: "6px 12px",
+                          borderRadius: 999,
+                        }
                         : {
-                            color: active
-                              ? "var(--bl-accent)"
-                              : "var(--bl-fg)",
-                          }),
+                          color: active
+                            ? "var(--bl-accent)"
+                            : "var(--bl-fg)",
+                        }),
                     }}
                   >
                     {item.label}
@@ -166,11 +162,11 @@ export function Nav() {
                 fontFamily: "var(--font-sans)",
                 fontSize: 13,
                 fontWeight: 500,
-                color: "var(--bl-fg)",
-                background: "none",
+                color: "var(--bl-ink)",
+                background: "var(--bl-accent)",
+                padding: "8px 16px",
+                borderRadius: 999,
                 border: "none",
-                borderBottom: "1px solid var(--bl-rule2)",
-                paddingBottom: 2,
                 letterSpacing: "0.01em",
                 cursor: "pointer",
                 transition: "opacity 0.2s",
@@ -270,14 +266,11 @@ function MobileMenu({
       >
         <span
           style={{
-            fontFamily: "var(--font-mono)",
-            fontSize: 13,
-            letterSpacing: "0.12em",
-            textTransform: "uppercase",
-            color: "var(--bl-fg)",
+            display: "flex",
+            alignItems: "center",
           }}
         >
-          BIRCHLOGIC
+          <img src="/birchlogicicon.png" alt="Birchlogic" style={{ height: 28, width: "auto" }} />
         </span>
         <button
           onClick={onClose}

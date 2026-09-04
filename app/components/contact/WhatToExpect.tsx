@@ -31,9 +31,7 @@ export function WhatToExpect() {
       style={{
         background: "var(--bl-section-veil)",
         color: "var(--bl-fg)",
-        padding: "clamp(100px, 14vw, 180px) var(--bl-page-pad)",
-        borderTop: "1px solid var(--bl-rule)",
-      }}
+        padding: "var(--bl-section-gap) var(--bl-page-pad)",}}
     >
       <div className="bl-container" style={{ padding: 0 }}>
         <Anchor number="02" label="What to expect" />
@@ -67,10 +65,11 @@ export function WhatToExpect() {
           {PHASES.map((p, i) => (
             <Rise key={i} delay={i * 0.04}>
               <li
+                className="bl-stack-sm"
                 style={{
                   display: "grid",
                   gridTemplateColumns:
-                    "minmax(120px, 180px) minmax(260px, 1fr)",
+                    "minmax(120px, 180px) minmax(0, 1fr)",
                   gap: "clamp(24px, 4vw, 64px)",
                   padding: "clamp(24px, 3vw, 36px) 0",
                   borderBottom: "1px solid var(--bl-rule)",

@@ -126,7 +126,7 @@ function Moment() {
             </p>
           </Rise>
 
-          <Rise delay={0.62}>
+          {/* <Rise delay={0.62}>
             <p
               style={{
                 ...BODY,
@@ -142,7 +142,7 @@ function Moment() {
               packaged in. Built for companies that were never going to hire
               one.
             </p>
-          </Rise>
+          </Rise> */}
 
           <Rise delay={0.74}>
             <div
@@ -174,7 +174,7 @@ function Moment() {
             live from the original SVG scene rather than the MP4 export, so
             it stays crisp at any panel size. */}
         <div
-          className="bl-hero-visual"
+          className="bl-hero-visual hidden min-[960px]:flex"
           style={{
             minWidth: 0,
             minHeight: 0,
@@ -284,7 +284,7 @@ function Bets() {
               delay={i * 0.05}
               style={{
                 display: "grid",
-                gridTemplateColumns: "minmax(56px, 90px) minmax(260px, 1fr)",
+                gridTemplateColumns: "minmax(56px, 90px) minmax(0, 1fr)",
                 gap: "clamp(20px, 4vw, 56px)",
                 padding: "clamp(26px, 3.2vw, 40px) 0",
                 borderBottom: "1px solid var(--bl-rule)",
@@ -331,7 +331,7 @@ function Bets() {
 
 function Proof() {
   return (
-    <section style={{ ...SECTION, borderTop: "1px solid var(--bl-rule)" }}>
+    <section style={{ ...SECTION,}}>
       <div className="bl-container" style={{ padding: 0 }}>
         <Anchor number="03" label="Proof" />
         <h2 style={H2}>
@@ -378,9 +378,7 @@ function Department() {
       style={{
         ...SECTION,
         background: "var(--bl-bone)",
-        color: "var(--bl-bone-fg)",
-        borderTop: "1px solid var(--bl-rule)",
-      }}
+        color: "var(--bl-bone-fg)",}}
     >
       <div className="bl-container" style={{ padding: 0 }}>
         <Anchor number="04" label="The department" inverted />
@@ -533,7 +531,7 @@ function ReadMechanic() {
  */
 function Read() {
   return (
-    <section style={{ ...SECTION, borderTop: "1px solid var(--bl-rule)" }}>
+    <section style={{ ...SECTION,}}>
       <div className="bl-container" style={{ padding: 0 }}>
         <Anchor number="05" label="How it starts" />
         <h2 style={H2}>
@@ -584,7 +582,7 @@ function Read() {
 
 function Terms() {
   return (
-    <section style={{ ...SECTION, borderTop: "1px solid var(--bl-rule)" }}>
+    <section style={{ ...SECTION,}}>
       <div className="bl-container" style={{ padding: 0 }}>
         <Anchor number="06" label="The terms" />
         <h2 style={H2}>
@@ -614,9 +612,7 @@ function Close() {
   return (
     <section
       style={{
-        ...SECTION,
-        borderTop: "1px solid var(--bl-rule)",
-        textAlign: "center",
+        ...SECTION,textAlign: "center",
       }}
     >
       <div className="bl-container" style={{ padding: 0 }}>
@@ -674,7 +670,7 @@ function Close() {
 const SECTION: React.CSSProperties = {
   background: "var(--bl-section-veil)",
   color: "var(--bl-fg)",
-  padding: "clamp(90px, 12vw, 160px) var(--bl-page-pad)",
+  padding: "var(--bl-section-gap) var(--bl-page-pad)",
 };
 
 const H2: React.CSSProperties = {

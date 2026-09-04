@@ -25,9 +25,7 @@ export function OfficesList() {
       style={{
         background: "var(--bl-section-veil)",
         color: "var(--bl-fg)",
-        padding: "clamp(100px, 14vw, 180px) var(--bl-page-pad)",
-        borderTop: "1px solid var(--bl-rule)",
-      }}
+        padding: "var(--bl-section-gap) var(--bl-page-pad)",}}
     >
       <div className="bl-container" style={{ padding: 0 }}>
         <Anchor number="04" label="Offices" />

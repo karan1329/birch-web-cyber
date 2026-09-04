@@ -28,7 +28,7 @@ export default function ContactPage() {
         style={{
           background: "var(--bl-section-veil)",
           color: "var(--bl-fg)",
-          padding: "clamp(80px, 12vw, 140px) var(--bl-page-pad)",
+          padding: "var(--bl-section-gap) var(--bl-page-pad)",
         }}
       >
         <div className="bl-container" style={{ padding: 0 }}>

@@ -27,9 +27,7 @@ export function SeniorPartnerPromise() {
         position: "relative",
         background: "var(--bl-section-veil)",
         color: "var(--bl-fg)",
-        padding: "clamp(88px, 11vw, 140px) var(--bl-page-pad)",
-        borderTop: "1px solid var(--bl-rule)",
-        overflow: "hidden",
+        padding: "var(--bl-section-gap) var(--bl-page-pad)",overflow: "hidden",
       }}
     >
       <div

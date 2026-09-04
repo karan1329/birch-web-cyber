@@ -184,10 +184,12 @@ export function Hero() {
 
         {/* ---- visual · full bleed, hard cut ---------------------- */}
         <div
-          className="bl-hero-visual"
+          className="bl-hero-visual hidden min-[960px]:flex"
           style={{
             minWidth: 0,
             minHeight: 0,
+            width: "100%",
+            height: "100%",
           }}
         >
           <HeroVisual />

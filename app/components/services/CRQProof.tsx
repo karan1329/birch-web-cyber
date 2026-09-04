@@ -25,10 +25,8 @@ export function CRQProof() {
         position: "relative",
         background: "var(--bl-section-veil)",
         color: "var(--bl-fg)",
-        padding: "clamp(120px, 16vw, 200px) var(--bl-page-pad)",
-        overflow: "hidden",
-        borderTop: "1px solid var(--bl-rule)",
-      }}
+        padding: "var(--bl-section-gap) var(--bl-page-pad)",
+        overflow: "hidden",}}
     >
       <div
         aria-hidden="true"

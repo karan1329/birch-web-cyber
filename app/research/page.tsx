@@ -107,7 +107,7 @@ function Library() {
   const reservedCount = LIBRARY.length - entries.length;
 
   return (
-    <section style={{ ...SECTION, borderTop: "1px solid var(--bl-rule)" }}>
+    <section style={{ ...SECTION,}}>
       <div className="bl-container" style={{ padding: 0 }}>
         <Anchor number="01" label="The library" />
         <h2 style={H2}>
@@ -316,7 +316,7 @@ const HUMAN_WORK = [
 
 function Workbench() {
   return (
-    <section style={{ ...SECTION, borderTop: "1px solid var(--bl-rule)" }}>
+    <section style={{ ...SECTION,}}>
       <div className="bl-container" style={{ padding: 0 }}>
         <Anchor number="02" label="The workbench" />
         <p
@@ -469,7 +469,7 @@ function LayerRow({
 
 function MemoryLayer() {
   return (
-    <section style={{ ...SECTION, borderTop: "1px solid var(--bl-rule)" }}>
+    <section style={{ ...SECTION,}}>
       <div className="bl-container" style={{ padding: 0 }}>
         <Anchor number="03" label="What we are building" />
         <h2 style={H2}>
@@ -537,7 +537,7 @@ function MemoryLayer() {
 
 function Lab() {
   return (
-    <section style={{ ...SECTION, borderTop: "1px solid var(--bl-rule)" }}>
+    <section style={{ ...SECTION,}}>
       <div className="bl-container" style={{ padding: 0 }}>
         <Anchor number="04" label="The lab" />
         <h2 style={H2}>
@@ -610,7 +610,7 @@ function Lab() {
 const SECTION: React.CSSProperties = {
   background: "var(--bl-section-veil)",
   color: "var(--bl-fg)",
-  padding: "clamp(90px, 12vw, 160px) var(--bl-page-pad)",
+  padding: "var(--bl-section-gap) var(--bl-page-pad)",
 };
 
 const H2: React.CSSProperties = {

@@ -53,11 +53,11 @@ export function Footer() {
         // A shade deeper than the page. It was the same veil every section
         // uses, so the footer read as one more section rather than as the
         // end of the document. The mesh still shows through, just less.
-        background: "rgba(var(--bl-ink-rgb), 0.86)",
-        boxShadow: "inset 0 1px 0 var(--bl-rule2)",
-        color: "var(--bl-fg2)",
-        padding: "clamp(80px, 10vw, 120px) var(--bl-page-pad) 40px",
-        borderTop: "1px solid var(--bl-rule)",
+        background: "var(--bl-accent)",
+        boxShadow: "none",
+        color: "var(--bl-ink2)",
+        padding: "var(--bl-section-gap) var(--bl-page-pad) 40px",
+        borderTop: "none",
       }}
     >
       <div
@@ -78,15 +78,12 @@ export function Footer() {
           <div>
             <div
               style={{
-                fontFamily: "var(--font-mono)",
-                fontSize: 17,
-                letterSpacing: "0.12em",
-                textTransform: "uppercase",
-                color: "var(--bl-fg)",
+                display: "flex",
+                alignItems: "center",
                 marginBottom: 18,
               }}
             >
-              Birchlogic
+              <img src="/birchlogic_light.png" alt="Birchlogic" style={{ height: 40, width: "auto" }} />
             </div>
             <p
               style={{
@@ -95,7 +92,7 @@ export function Footer() {
                 lineHeight: 1.65,
                 maxWidth: 320,
                 margin: 0,
-                color: "var(--bl-fg2)",
+                color: "var(--bl-ink2)",
               }}
             >
               A senior cybersecurity strategic advisory boutique. Founded in
@@ -111,7 +108,7 @@ export function Footer() {
                 style={{
                   fontFamily: "var(--font-sans)",
                   fontSize: 14,
-                  color: "var(--bl-fg2)",
+                  color: "var(--bl-ink2)",
                   textDecoration: "none",
                   display: "block",
                   marginBottom: 10,
@@ -125,7 +122,7 @@ export function Footer() {
           <FooterColumn label="Offices">
             {OFFICES.map((o) => {
               const cityLabel = (
-                <span style={{ color: "var(--bl-fg)" }}>{o.city}</span>
+                <span style={{ color: "var(--bl-ink)" }}>{o.city}</span>
               );
               return (
                 <div
@@ -134,7 +131,7 @@ export function Footer() {
                     fontFamily: "var(--font-sans)",
                     fontSize: 14,
                     marginBottom: 18,
-                    color: "var(--bl-fg2)",
+                    color: "var(--bl-ink2)",
                   }}
                 >
                   {o.href ? (
@@ -153,7 +150,7 @@ export function Footer() {
                       marginTop: 4,
                       fontSize: 13,
                       lineHeight: 1.5,
-                      color: "var(--bl-fg3)",
+                      color: "rgba(241, 238, 231, 0.6)",
                       maxWidth: 260,
                     }}
                   >
@@ -174,7 +171,7 @@ export function Footer() {
                 style={{
                   fontFamily: "var(--font-sans)",
                   fontSize: 14,
-                  color: "var(--bl-fg2)",
+                  color: "var(--bl-ink2)",
                   textDecoration: "none",
                   display: "block",
                   marginBottom: 10,
@@ -188,7 +185,7 @@ export function Footer() {
               style={{
                 marginTop: 20,
                 display: "inline-block",
-                color: "var(--bl-fg3)",
+                color: "rgba(241, 238, 231, 0.6)",
                 fontFamily: "var(--font-mono)",
                 fontSize: 11,
                 letterSpacing: "0.04em",
@@ -204,7 +201,7 @@ export function Footer() {
             middle-dot separators. Sits above the copyright row. */}
         <div
           style={{
-            borderTop: "1px solid var(--bl-rule)",
+            borderTop: "1px solid rgba(241, 238, 231, 0.2)",
             paddingTop: 24,
             paddingBottom: 24,
             display: "flex",
@@ -213,14 +210,14 @@ export function Footer() {
             alignItems: "baseline",
           }}
         >
-          <span className="bl-label" style={{ color: "var(--bl-fg3)" }}>
+          <span className="bl-label" style={{ color: "rgba(241, 238, 231, 0.6)" }}>
             Fluent in
           </span>
           <span
             style={{
               fontFamily: "var(--font-sans)",
               fontSize: 14,
-              color: "var(--bl-fg2)",
+              color: "var(--bl-ink2)",
             }}
           >
             {FLUENT_IN.join(" · ")}
@@ -229,7 +226,7 @@ export function Footer() {
 
         <div
           style={{
-            borderTop: "1px solid var(--bl-rule)",
+            borderTop: "1px solid rgba(241, 238, 231, 0.2)",
             paddingTop: 24,
             display: "flex",
             justifyContent: "space-between",
@@ -241,7 +238,7 @@ export function Footer() {
             style={{
               fontFamily: "var(--font-mono)",
               fontSize: 11,
-              color: "var(--bl-fg3)",
+              color: "rgba(241, 238, 231, 0.6)",
               letterSpacing: "0.04em",
             }}
           >
@@ -252,7 +249,7 @@ export function Footer() {
               fontFamily: "var(--font-mono)",
               fontSize: 11,
               letterSpacing: "0.06em",
-              color: "var(--bl-neon)",
+              color: "var(--bl-paper)",
             }}
           >
             Cybersecurity, done seriously.
@@ -261,7 +258,7 @@ export function Footer() {
             style={{
               fontFamily: "var(--font-mono)",
               fontSize: 11,
-              color: "var(--bl-fg3)",
+              color: "rgba(241, 238, 231, 0.6)",
               letterSpacing: "0.04em",
             }}
           >
@@ -284,7 +281,7 @@ function FooterColumn({
     <div>
       <div
         className="bl-label"
-        style={{ color: "var(--bl-fg3)", marginBottom: 20 }}
+        style={{ color: "rgba(241, 238, 231, 0.6)", marginBottom: 20 }}
       >
         {label}
       </div>

@@ -44,7 +44,7 @@ export default function AboutPage() {
 
 function Founders() {
   return (
-    <section style={{ ...SECTION, borderTop: "1px solid var(--bl-rule)" }}>
+    <section style={{ ...SECTION,}}>
       <div className="bl-container" style={{ padding: 0 }}>
         <Anchor number="01" label="The founders" />
         <h2 style={H2}>
@@ -290,7 +290,7 @@ function RecordRow({ item, delay }: { item: RecordItem; delay: number }) {
       delay={delay}
       style={{
         display: "grid",
-        gridTemplateColumns: "minmax(64px, 92px) minmax(240px, 1fr)",
+        gridTemplateColumns: "minmax(64px, 92px) minmax(0, 1fr)",
         gap: "clamp(18px, 3vw, 44px)",
         padding: "clamp(18px, 2.2vw, 26px) 0",
         borderBottom: "1px solid var(--bl-rule)",
@@ -378,7 +378,7 @@ function Achievements() {
   }));
 
   return (
-    <section style={{ ...SECTION, borderTop: "1px solid var(--bl-rule)" }}>
+    <section style={{ ...SECTION,}}>
       <div className="bl-container" style={{ padding: 0 }}>
         <Anchor number="02" label="The record" />
         <h2 style={H2}>
@@ -407,9 +407,7 @@ function Close() {
   return (
     <section
       style={{
-        ...SECTION,
-        borderTop: "1px solid var(--bl-rule)",
-        textAlign: "center",
+        ...SECTION,textAlign: "center",
       }}
     >
       <div className="bl-container" style={{ padding: 0 }}>
@@ -440,7 +438,7 @@ function Close() {
 const SECTION: React.CSSProperties = {
   background: "var(--bl-section-veil)",
   color: "var(--bl-fg)",
-  padding: "clamp(90px, 12vw, 160px) var(--bl-page-pad)",
+  padding: "var(--bl-section-gap) var(--bl-page-pad)",
 };
 
 const H2: React.CSSProperties = {

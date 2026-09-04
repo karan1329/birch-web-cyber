@@ -40,8 +40,7 @@ export default async function ApplyPage({
         style={{
           background: "var(--bl-ink)",
           color: "var(--bl-fg)",
-          padding:
-            "clamp(60px, 9vw, 120px) var(--bl-page-pad) clamp(120px, 14vw, 180px)",
+          padding: "var(--bl-section-gap) var(--bl-page-pad) clamp(120px, 14vw, 180px)",
         }}
       >
         <div className="bl-container" style={{ padding: 0 }}>
@@ -67,7 +66,7 @@ function NoRolePicker() {
         style={{
           background: "var(--bl-ink)",
           color: "var(--bl-fg)",
-          padding: "clamp(60px, 9vw, 120px) var(--bl-page-pad) clamp(120px, 14vw, 180px)",
+          padding: "var(--bl-section-gap) var(--bl-page-pad) clamp(120px, 14vw, 180px)",
         }}
       >
         <div className="bl-container" style={{ padding: 0 }}>

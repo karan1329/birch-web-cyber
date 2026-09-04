@@ -216,7 +216,7 @@ const DELIVERABLES = [
 
 function WhatYouGet() {
   return (
-    <section style={{ ...SECTION, borderTop: "1px solid var(--bl-rule)" }}>
+    <section style={{ ...SECTION,}}>
       <div className="bl-container" style={{ padding: 0 }}>
         <Anchor number="01" label="What you get" />
         <h2 style={H2}>
@@ -241,10 +241,10 @@ function WhatYouGet() {
             <Rise
               key={d.lead}
               as="li"
-              delay={i * 0.05}
+              className="bl-stack-sm"
               style={{
                 display: "grid",
-                gridTemplateColumns: "minmax(48px, 76px) minmax(260px, 1fr)",
+                gridTemplateColumns: "minmax(48px, 76px) minmax(0, 1fr)",
                 gap: "clamp(18px, 3.5vw, 48px)",
                 padding: "clamp(22px, 2.8vw, 34px) 0",
                 borderBottom: "1px solid var(--bl-rule)",
@@ -399,7 +399,7 @@ const WEEKS = [
 
 function ThreeWeeks() {
   return (
-    <section style={{ ...SECTION, borderTop: "1px solid var(--bl-rule)" }}>
+    <section style={{ ...SECTION,}}>
       <div className="bl-container" style={{ padding: 0 }}>
         <Anchor number="02" label="How it runs" />
         <h2 style={H2}>
@@ -418,10 +418,11 @@ function ThreeWeeks() {
             <Rise
               key={w.when}
               as="li"
+              className="bl-stack-sm"
               delay={i * 0.05}
               style={{
                 display: "grid",
-                gridTemplateColumns: "minmax(140px, 220px) minmax(260px, 1fr)",
+                gridTemplateColumns: "minmax(140px, 220px) minmax(0, 1fr)",
                 gap: "clamp(18px, 3.5vw, 48px)",
                 padding: "clamp(22px, 2.8vw, 34px) 0",
                 borderBottom: "1px solid var(--bl-rule)",
@@ -497,7 +498,7 @@ const FIT: { situation: string; verdict: string; yes: boolean }[] = [
 
 function FitCheck() {
   return (
-    <section style={{ ...SECTION, borderTop: "1px solid var(--bl-rule)" }}>
+    <section style={{ ...SECTION,}}>
       <div className="bl-container" style={{ padding: 0 }}>
         <Anchor number="03" label="Is this for you" />
         <h2 style={H2}>
@@ -513,10 +514,11 @@ function FitCheck() {
           {FIT.map((f, i) => (
             <Rise
               key={f.situation}
+              className="bl-stack-sm"
               delay={i * 0.04}
               style={{
                 display: "grid",
-                gridTemplateColumns: "minmax(240px, 1fr) minmax(160px, 0.7fr)",
+                gridTemplateColumns: "minmax(0, 1fr) auto",
                 gap: "clamp(16px, 3vw, 40px)",
                 padding: "clamp(18px, 2.2vw, 26px) 0",
                 borderBottom: "1px solid var(--bl-rule)",
@@ -551,9 +553,7 @@ function Fee() {
       style={{
         ...SECTION,
         background: "var(--bl-bone)",
-        color: "var(--bl-bone-fg)",
-        borderTop: "1px solid var(--bl-rule)",
-      }}
+        color: "var(--bl-bone-fg)",}}
     >
       <div className="bl-container" style={{ padding: 0 }}>
         <Anchor number="04" label="The fee" inverted />
@@ -590,7 +590,7 @@ function Fee() {
 
 function After() {
   return (
-    <section style={{ ...SECTION, borderTop: "1px solid var(--bl-rule)" }}>
+    <section style={{ ...SECTION,}}>
       <div className="bl-container" style={{ padding: 0 }}>
         <Anchor number="05" label="What comes after" />
         <h2 style={H2}>
@@ -646,7 +646,7 @@ function After() {
 function Foreword() {
   const portraitLive = hasPublicFile(PORTRAIT);
   return (
-    <section style={{ ...SECTION, borderTop: "1px solid var(--bl-rule)" }}>
+    <section style={{ ...SECTION,}}>
       <div className="bl-container" style={{ padding: 0 }}>
         <Anchor number="06" label="Who does the reading" />
         <div style={{ maxWidth: "var(--bl-text-body)" }}>
@@ -733,7 +733,7 @@ function Foreword() {
 function Standing() {
   const ordered = [...PRESS].sort((a, b) => b.year.localeCompare(a.year));
   return (
-    <section style={{ ...SECTION, borderTop: "1px solid var(--bl-rule)" }}>
+    <section style={{ ...SECTION,}}>
       <div className="bl-container" style={{ padding: 0 }}>
         <Anchor number="07" label="Standing" />
         <ul
@@ -748,6 +748,7 @@ function Standing() {
             <Rise
               key={`${p.claim}-${p.year}`}
               as="li"
+              className="bl-stack-sm"
               style={{
                 display: "grid",
                 gridTemplateColumns: "minmax(56px, 84px) 1fr",
@@ -822,7 +823,7 @@ const QUESTIONS = [
  */
 function Questions() {
   return (
-    <section style={{ ...SECTION, borderTop: "1px solid var(--bl-rule)" }}>
+    <section style={{ ...SECTION,}}>
       <div className="bl-container" style={{ padding: 0 }}>
         <Anchor number="08" label="Questions" />
         <div style={{ borderTop: "1px solid var(--bl-rule)" }}>
@@ -874,9 +875,7 @@ function Close() {
   return (
     <section
       style={{
-        ...SECTION,
-        borderTop: "1px solid var(--bl-rule)",
-        textAlign: "center",
+        ...SECTION,textAlign: "center",
       }}
     >
       <div className="bl-container" style={{ padding: 0 }}>
@@ -943,7 +942,7 @@ function Close() {
 const SECTION: React.CSSProperties = {
   background: "var(--bl-section-veil)",
   color: "var(--bl-fg)",
-  padding: "clamp(88px, 11vw, 140px) var(--bl-page-pad)",
+  padding: "var(--bl-section-gap) var(--bl-page-pad)",
 };
 
 const H2: React.CSSProperties = {

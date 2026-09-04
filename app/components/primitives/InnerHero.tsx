@@ -41,7 +41,6 @@ export function InnerHero({ kicker, title, subtitle, action }: Props) {
         padding:
           "calc(var(--bl-top-offset) + clamp(80px, 12vw, 160px)) var(--bl-page-pad) clamp(80px, 10vw, 140px)",
         overflow: "hidden",
-        borderBottom: "1px solid var(--bl-rule)",
       }}
     >
       {/* Neon corner glow */}

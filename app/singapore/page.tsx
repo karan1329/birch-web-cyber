@@ -192,9 +192,7 @@ function WorkBehindTheDeadline() {
       style={{
         background: "var(--bl-section-veil)",
         color: "var(--bl-fg)",
-        padding: "clamp(100px, 14vw, 180px) var(--bl-page-pad)",
-        borderTop: "1px solid var(--bl-rule)",
-      }}
+        padding: "var(--bl-section-gap) var(--bl-page-pad)",}}
     >
       <div className="bl-container" style={{ padding: 0 }}>
         <Anchor number="01" label="The work behind the deadline" />
@@ -319,9 +317,7 @@ function RegulatoryMap() {
       style={{
         background: "var(--bl-section-veil)",
         color: "var(--bl-fg)",
-        padding: "clamp(100px, 14vw, 180px) var(--bl-page-pad)",
-        borderTop: "1px solid var(--bl-rule)",
-      }}
+        padding: "var(--bl-section-gap) var(--bl-page-pad)",}}
     >
       <div className="bl-container" style={{ padding: 0 }}>
         <Anchor number="02" label="Regulatory map" />
@@ -420,9 +416,7 @@ function RiskInDollars() {
       style={{
         background: "var(--bl-section-veil)",
         color: "var(--bl-fg)",
-        padding: "clamp(100px, 14vw, 180px) var(--bl-page-pad)",
-        borderTop: "1px solid var(--bl-rule)",
-        position: "relative",
+        padding: "var(--bl-section-gap) var(--bl-page-pad)",position: "relative",
         overflow: "hidden",
       }}
     >
@@ -525,9 +519,7 @@ function Engagements() {
       style={{
         background: "var(--bl-section-veil)",
         color: "var(--bl-fg)",
-        padding: "clamp(100px, 14vw, 180px) var(--bl-page-pad)",
-        borderTop: "1px solid var(--bl-rule)",
-      }}
+        padding: "var(--bl-section-gap) var(--bl-page-pad)",}}
     >
       <div className="bl-container" style={{ padding: 0 }}>
         <Anchor number="04" label="The Singapore engagements" />
@@ -719,9 +711,7 @@ function HowToEngage() {
       style={{
         background: "var(--bl-section-veil)",
         color: "var(--bl-fg)",
-        padding: "clamp(120px, 16vw, 200px) var(--bl-page-pad)",
-        borderTop: "1px solid var(--bl-rule)",
-      }}
+        padding: "var(--bl-section-gap) var(--bl-page-pad)",}}
     >
       <div className="bl-container" style={{ padding: 0 }}>
         <Anchor number="05" label="How to engage" />

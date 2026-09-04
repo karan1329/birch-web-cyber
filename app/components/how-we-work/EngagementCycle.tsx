@@ -44,9 +44,7 @@ export function EngagementCycle() {
         position: "relative",
         background: "var(--bl-section-veil)",
         color: "var(--bl-fg)",
-        padding: "clamp(120px, 16vw, 200px) var(--bl-page-pad)",
-        borderTop: "1px solid var(--bl-rule)",
-      }}
+        padding: "var(--bl-section-gap) var(--bl-page-pad)",}}
     >
       <div className="bl-container" style={{ padding: 0 }}>
         <Anchor number="03" label="How an engagement runs" />
@@ -80,7 +78,7 @@ export function EngagementCycle() {
               as="li"
               style={{
                 display: "grid",
-                gridTemplateColumns: "minmax(140px, 200px) minmax(260px, 1fr)",
+                gridTemplateColumns: "minmax(140px, 200px) minmax(0, 1fr)",
                 gap: "clamp(24px, 4vw, 64px)",
                 padding: "clamp(28px, 3.4vw, 44px) 0",
                 borderBottom: "1px solid var(--bl-rule)",
