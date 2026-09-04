@@ -7,7 +7,16 @@ import { useStickyProgress } from "../hooks/useStickyProgress";
 type Principle = {
   number: string;
   heading: string;
-  body: string[];
+  body: string;
+  bg: string;
+  metric?: {
+    value: string;
+    label: string;
+  };
+  chart?: {
+    label: string;
+    data: number[];
+  };
 };
 
 // Six meta principles from doc Page 2 (How We Work).
@@ -18,56 +27,62 @@ const PRINCIPLES: Principle[] = [
   {
     number: "01",
     heading: "We are a reliable long-term partner.",
-    body: [
-      // HP-3 · principle one, first paragraph rewritten.
-      "We did not invent the consulting model or the security-team-on-retainer model, and we are not pretending otherwise. What we did was take the discipline of the first and the practicality of the second and build one firm that actually does both.",
-      "Our engagements last years. We are month-to-month commercially because confident firms do not need lock-in. We are multi-year operationally because the work compounds and the senior partner stays on the engagement from kickoff through the third board cycle.",
-    ],
+    body: "We blend the discipline of consulting with the practicality of an in-house team. Month-to-month commercially, multi-year operationally.",
+    bg: "var(--bl-paper)",
+    metric: {
+      value: "3x",
+      label: "Longer average engagement vs industry standard",
+    },
   },
   {
     number: "02",
     heading: "We scale up and down with you.",
-    body: [
-      "We have started engagements with three-person companies and helped clients scale to hundreds of staff. We have also helped clients scale down: when a fundraise slipped, when an acquisition reshaped the business, when a cost cycle hit.",
-      "For early-stage clients, we right-size the engagement so the senior practitioner is multiplied by software and the team stays small. For late-stage clients, we layer in dedicated team density. The shape changes; the partner accountability does not.",
-    ],
+    body: "For early-stage clients, we right-size so the practitioner is multiplied by software. For late-stage clients, we layer in dedicated team density.",
+    bg: "var(--bl-ink)",
+    chart: {
+      label: "Flexible Team Scaling (Q1 to Q4)",
+      data: [30, 45, 80, 50],
+    },
   },
   {
     number: "03",
     heading: "The right intervention at the right time.",
-    body: [
-      // HP-2 · relocated from the homepage thesis, where it was crowding the
-      // orientation argument. It belongs here: the mechanics are the reason
-      // an annual assessment is the wrong instrument.
-      "The mechanics of failure have not changed in twenty years. Cloud configurations drift, identities accumulate permissions nobody audits, a vendor with too much access falls over and pulls you down with it, and a phish that should have failed lands on the one person who clicks.",
-      "A two-week annual security assessment is the wrong format for almost every company we work with. Embedded ongoing review is the right format.",
-      "Instead of a one-shot application security review at year-end, we participate in product design conversations when a feature is being scoped, review PRs as they happen, and run tightly scoped assessments when a feature is shipping. You get faster, cheaper, more relevant assessments.",
-    ],
+    body: "A two-week annual security assessment is the wrong format. Embedded ongoing review, participating in PRs and product design, is the right format.",
+    bg: "var(--bl-ink2)",
+    chart: {
+      label: "Continuous Coverage vs Annual Point-in-Time",
+      data: [20, 100, 20, 100],
+    },
   },
   {
     number: "04",
     heading: "We are not designed to be sticky.",
-    body: [
-      "We deploy single-tenant infrastructure. We use commercial systems when they are the best tool. We build internal tooling when we need to. We do not contractually trap our clients.",
-      "If you decide to bring security in-house, we hand the capability over and step back. We have done this before. We will do it again. We would rather be the firm clients come back to than the firm clients regret hiring.",
-    ],
+    body: "We deploy single-tenant infrastructure and do not contractually trap our clients. If you bring security in-house, we hand it over and step back.",
+    bg: "var(--bl-ink3)",
+    metric: {
+      value: "0",
+      label: "Months of contractual lock-in",
+    },
   },
   {
     number: "05",
     heading: "Security is a sales job, too.",
-    body: [
-      "A security program that says no to every customer request loses revenue. A security program that says yes to every request loses the company. Effective security is the third path: a program that the rest of the company sells with, not around.",
-      "We integrate where your team works. Slack. Notion. Jira. PR review. Sales calls when needed. We answer security questionnaires. We attend customer security reviews. We turn the security narrative into a competitive advantage in your deal cycle, not a friction point.",
-    ],
+    body: "We integrate where your team works. We answer questionnaires, attend customer reviews, and turn your security narrative into a competitive advantage.",
+    bg: "#D3CEBF",
+    metric: {
+      value: "85%",
+      label: "Reduction in vendor security review friction",
+    },
   },
   {
     number: "06",
     heading: "We own the program. We coordinate your specialists.",
-    body: [
-      // HP-3 · principle six rewritten.
-      "Some firms try to own everything in-house: pentest, MDR, IR, managed IT, vCISO, compliance, training, all of it. The maths does not work, because when one firm tries to own pentest and MDR and IR and managed IT all at once, quality and margin get squeezed at the same time and the good people leave first.",
-      "We made a different choice. We own the program. We coordinate best-in-class specialists for penetration testing, managed detection and response, incident response, and managed IT. One accountable partner across all of it.",
-    ],
+    body: "We own the program and coordinate best-in-class specialists for pentest, MDR, IR, and IT. One accountable partner across all of it.",
+    bg: "#CAC5B4",
+    metric: {
+      value: "1",
+      label: "Accountable partner for your entire security posture",
+    },
   },
 ];
 
@@ -75,8 +90,8 @@ export function StickyPrinciples() {
   const sectRef = useRef<HTMLElement | null>(null);
   const p = useStickyProgress(sectRef);
   const total = PRINCIPLES.length;
-  const activeF = Math.min(total - 0.001, p * total);
-  const activeI = Math.floor(activeF);
+  const activeF = p * (total - 1);
+  const activeI = Math.min(total - 1, Math.floor(activeF));
 
   return (
     <section
@@ -201,23 +216,12 @@ export function StickyPrinciples() {
                     display: "flex",
                     flexDirection: "column",
                     justifyContent: "space-between",
-                    transform: `translateY(${offset * 24}px) scale(${
-                      1 - abs * 0.06
-                    }) rotateX(${offset * 4}deg)`,
-                    opacity: isPast
-                      ? 0
-                      : visible
-                        ? Math.max(0, 1 - abs * 0.45)
-                        : 0,
+                    transform: `translateY(${offset < 0 ? offset * 120 + "%" : offset * 32 + "px"}) scale(${offset < 0 ? 1 : 1 - offset * 0.05})`,
+                    opacity: offset < -0.8 ? 0 : visible ? 1 : 0,
                     transformOrigin: "top center",
                     pointerEvents: i === activeI ? "auto" : "none",
-                    transition:
-                      "transform 0.25s cubic-bezier(0.2,0.7,0.2,1), opacity 0.25s linear, border-color 0.25s linear",
-                    zIndex: visible ? 100 - Math.round(abs * 10) : 0,
-                    boxShadow:
-                      i === activeI
-                        ? "0 24px 80px rgba(0,0,0,0.5), 0 0 0 1px var(--bl-rule)"
-                        : "none",
+                    transition: "border-color 0.25s linear",
+                    zIndex: 100 - i,
                     overflow: "auto",
                   }}
                 >
@@ -258,6 +262,40 @@ export function StickyPrinciples() {
                   </div>
 
                   <div style={{ marginTop: 20 }}>
+                    {pr.metric && (
+                      <div style={{ marginBottom: 24 }}>
+                        <div
+                          style={{
+                            fontFamily: "var(--font-sans)",
+                            fontWeight: 500,
+                            fontSize: "clamp(60px, 8vw, 96px)",
+                            lineHeight: 0.9,
+                            letterSpacing: "-0.04em",
+                            color: "var(--bl-neon)",
+                            marginBottom: 8,
+                          }}
+                        >
+                          {pr.metric.value}
+                        </div>
+                        <div
+                          style={{
+                            fontFamily: "var(--font-mono)",
+                            fontSize: 12,
+                            color: "var(--bl-fg3)",
+                            letterSpacing: "0.02em",
+                            borderTop: "1px solid var(--bl-rule)",
+                            paddingTop: 8,
+                          }}
+                        >
+                          {pr.metric.label}
+                        </div>
+                      </div>
+                    )}
+                    
+                    {pr.chart && (
+                      <MiniChart data={pr.chart.data} label={pr.chart.label} />
+                    )}
+
                     <h3
                       style={{
                         fontFamily: "var(--font-sans)",
@@ -266,27 +304,24 @@ export function StickyPrinciples() {
                         lineHeight: 1.15,
                         letterSpacing: "-0.015em",
                         color: "var(--bl-fg)",
-                        margin: "0 0 18px",
+                        margin: "0 0 16px",
                       }}
                     >
                       {pr.heading}
                     </h3>
-                    {pr.body.map((para, idx) => (
-                      <p
-                        key={idx}
-                        style={{
-                          fontFamily: "var(--font-sans)",
-                          fontWeight: 400,
-                          fontSize: "clamp(14px, 1.1vw, 16px)",
-                          lineHeight: 1.6,
-                          color: "var(--bl-fg2)",
-                          margin: idx === 0 ? "0 0 14px" : 0,
-                          maxWidth: "var(--bl-text-tight)",
-                        }}
-                      >
-                        {para}
-                      </p>
-                    ))}
+                    <p
+                      style={{
+                        fontFamily: "var(--font-sans)",
+                        fontWeight: 400,
+                        fontSize: "clamp(15px, 1.3vw, 17px)",
+                        lineHeight: 1.6,
+                        color: "var(--bl-fg2)",
+                        margin: 0,
+                        maxWidth: "var(--bl-text-tight)",
+                      }}
+                    >
+                      {pr.body}
+                    </p>
                   </div>
                 </div>
               );
@@ -295,5 +330,46 @@ export function StickyPrinciples() {
         </div>
       </div>
     </section>
+  );
+}
+
+function MiniChart({ data, label }: { data: number[]; label: string }) {
+  return (
+    <div style={{ marginBottom: 24 }}>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "flex-end",
+          gap: 6,
+          height: 60,
+          marginBottom: 8,
+        }}
+      >
+        {data.map((val, i) => (
+          <div
+            key={i}
+            style={{
+              flex: 1,
+              height: `${val}%`,
+              background: "var(--bl-neon)",
+              opacity: val === 100 ? 1 : 0.4,
+              borderRadius: "4px 4px 0 0",
+            }}
+          />
+        ))}
+      </div>
+      <div
+        style={{
+          fontFamily: "var(--font-mono)",
+          fontSize: 11,
+          color: "var(--bl-fg3)",
+          letterSpacing: "0.04em",
+          borderTop: "1px solid var(--bl-rule)",
+          paddingTop: 8,
+        }}
+      >
+        {label}
+      </div>
+    </div>
   );
 }
