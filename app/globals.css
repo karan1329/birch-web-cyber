@@ -436,6 +436,7 @@ select {
      right padding. That padding is symmetric here, so the pull goes. */
   .bl-hero-strip {
     margin-right: 0 !important;
+    margin-top: clamp(40px, 8vw, 64px) !important;
   }
 }
 

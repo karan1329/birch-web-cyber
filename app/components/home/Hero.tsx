@@ -170,7 +170,7 @@ export function Hero() {
                 // padding is 0, so the last logo row IS the bottom edge and
                 // the cranberry panel beside it ends on the same line.
                 marginTop: "auto",
-                paddingTop: "clamp(20px, 2.4vw, 32px)",
+                paddingTop: "clamp(40px, 5vw, 64px)",
                 // Zero: the last logo row IS the bottom edge, so the
                 // cranberry panel beside it ends on exactly that line.
                 paddingBottom: 0,

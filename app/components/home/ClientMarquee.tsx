@@ -35,7 +35,7 @@ export function ClientMarquee({ variant = "inline" }: Props) {
 
   return (
     <div
-      style={{ display: "flex", flexDirection: "column", gap: hero ? 16 : 12 }}
+      style={{ display: "flex", flexDirection: "column", gap: hero ? 22 : 20 }}
     >
       {hero && (
         <span
@@ -88,9 +88,8 @@ function LogoRow({
           transform: "translate3d(0,0,0)",
           // Both rows share one keyframe pair; `reverse` sends the second
           // row the other way.
-          animation: `bl-ticker-move ${seconds}s linear infinite${
-            direction === "right" ? " reverse" : ""
-          }`,
+          animation: `bl-ticker-move ${seconds}s linear infinite${direction === "right" ? " reverse" : ""
+            }`,
         }}
       >
         {loop.map((c, i) => (
