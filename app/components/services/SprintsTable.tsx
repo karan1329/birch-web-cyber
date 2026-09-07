@@ -239,14 +239,18 @@ function SprintRow({
         {sprint.entryPoint && (
           <span
             style={{
-              display: "block",
-              marginTop: 6,
+              display: "inline-block",
+              marginTop: 10,
+              padding: "4px 8px",
+              background: "rgba(var(--bl-accent-rgb), 0.08)",
+              border: "1px solid rgba(var(--bl-accent-rgb), 0.2)",
+              borderRadius: "6px",
               fontFamily: "var(--font-mono)",
               fontSize: 9.5,
-              letterSpacing: "0.14em",
+              letterSpacing: "0.1em",
               textTransform: "uppercase",
               color: "var(--bl-accent)",
-              fontWeight: 500,
+              fontWeight: 600,
             }}
           >
             Where most engagements begin

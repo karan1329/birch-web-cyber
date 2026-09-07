@@ -139,10 +139,11 @@ function PracticeCell({
   return (
     <li
       style={{
-        background: open ? "var(--bl-ink3)" : "var(--bl-ink2)",
-        transition: "background 0.25s ease",
+        background: open ? "var(--bl-paper)" : "var(--bl-ink2)",
+        transition: "background 0.45s cubic-bezier(0.4, 0, 0.2, 1)",
         display: "flex",
         minWidth: 0,
+        boxShadow: open ? "inset 3px 0 0 var(--bl-accent)" : "inset 3px 0 0 transparent",
       }}
       // Desktop reveals on hover; the button below carries tap and keyboard.
       onPointerEnter={(e) => {
@@ -175,7 +176,10 @@ function PracticeCell({
             lineHeight: 0.9,
             letterSpacing: "-0.045em",
             color: open ? "var(--bl-accent)" : "var(--bl-fg3)",
-            transition: "color 0.25s ease",
+            transform: open ? "scale(1.08) translateY(-2px)" : "scale(1) translateY(0)",
+            transformOrigin: "left center",
+            display: "inline-block",
+            transition: "color 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)",
           }}
         >
           {numeral}
@@ -183,12 +187,13 @@ function PracticeCell({
         <h3
           style={{
             fontFamily: "var(--font-sans)",
-            fontWeight: 500,
+            fontWeight: open ? 600 : 500,
             fontSize: "clamp(15px, 1.25vw, 19px)",
             lineHeight: 1.2,
             letterSpacing: "-0.015em",
-            color: "var(--bl-fg)",
+            color: open ? "var(--bl-fg)" : "var(--bl-fg2)",
             margin: 0,
+            transition: "color 0.4s ease, font-weight 0.4s ease",
           }}
         >
           {heading}
@@ -200,7 +205,7 @@ function PracticeCell({
           style={{
             display: "grid",
             gridTemplateRows: open ? "1fr" : "0fr",
-            transition: "grid-template-rows 0.32s cubic-bezier(0.2,0.7,0.2,1)",
+            transition: "grid-template-rows 0.5s cubic-bezier(0.4, 0, 0.2, 1)",
           }}
         >
           <span style={{ overflow: "hidden", minHeight: 0 }}>
@@ -212,6 +217,11 @@ function PracticeCell({
                 lineHeight: 1.6,
                 color: "var(--bl-fg2)",
                 paddingTop: 4,
+                opacity: open ? 1 : 0,
+                transform: open ? "translateY(0)" : "translateY(8px)",
+                transition: open
+                  ? "opacity 0.4s ease 0.12s, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s"
+                  : "opacity 0.15s ease, transform 0.15s ease",
               }}
             >
               {body}
