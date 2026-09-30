@@ -88,36 +88,28 @@ function Founders() {
           </Rise>
 
           <Rise delay={0.08}>
-            <FounderPanel name="Jaskaran Singh" role="Co-founder">
-              {/* GATED · Phase 6.3. Copy pending Karan's brief — his AI
-                  history, his build record, his side of the firm. The panel
-                  ships at final layout with the slot visibly empty rather
-                  than filled with invented biography. */}
-              <div
-                style={{
-                  border: "1px dashed var(--bl-rule2)",
-                  padding: "clamp(20px, 2.6vw, 30px)",
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: 10,
-                }}
-              >
-                <span
-                  style={{
-                    fontFamily: "var(--font-mono)",
-                    fontSize: 9.5,
-                    letterSpacing: "0.16em",
-                    textTransform: "uppercase",
-                    color: "var(--bl-fg3)",
-                  }}
-                >
-                  Copy to follow
-                </span>
-                <p style={{ ...BODY, color: "var(--bl-fg3)" }}>
-                  Jaskaran&rsquo;s note is being written in his own words. It
-                  will sit here when it is ready.
-                </p>
-              </div>
+            <FounderPanel name="Jaskaran Singh" role="Co-founder" portrait="/jaskaran-avatar.png">
+              <p style={BODY}>
+                Jaskaran has spent the better part of a decade as an enterprise
+                AI architect, accumulating field exposure across something on
+                the order of fifteen large enterprise deployments in financial
+                services, healthcare, and industrial domains.
+              </p>
+              <p style={BODY}>
+                Earlier in his career, he built and deployed explainable and
+                responsible AI systems as the Enterprise Architect for the
+                insurance sector across the United States and Canada, and he
+                consulted the Dutch government on responsible and explainable AI
+                policy in 2021, which is the precise category of
+                regulator-grade explainability the EU AI Act is now mandating
+                across the European market.
+              </p>
+              <p style={BODY}>
+                Watching enterprise AI deployments fail at the same point, in
+                the same way, across enough institutions to remove any
+                reasonable doubt that the problem was the runtime layer rather
+                than the model, is what made the category visible.
+              </p>
             </FounderPanel>
           </Rise>
         </div>
@@ -264,6 +256,22 @@ const CREDENTIALS: RecordItem[] = [
     claim: "Offensive and defensive security practice begins",
     note: "CEH at fifteen, one of the youngest in India at the time",
   },
+  {
+    claim:
+      "Enterprise Architect for the insurance sector across the United States and Canada",
+    note: "Founder credential, prior role",
+  },
+  {
+    year: "2021",
+    claim:
+      "Dutch government advisory on responsible and explainable AI policy",
+    note: "Founder credential, prior role",
+  },
+  {
+    claim:
+      "Fifteen large enterprise AI deployments across financial services, healthcare, and industrial domains",
+    note: "Founder credential, prior role",
+  },
 ];
 
 const FIRM: RecordItem[] = [
@@ -283,89 +291,149 @@ const FIRM: RecordItem[] = [
   },
 ];
 
-function RecordRow({ item, delay }: { item: RecordItem; delay: number }) {
+/** A group label node that interrupts the timeline spine. */
+function TimelineGroupLabel({ label }: { label: string }) {
+  return (
+    <div
+      style={{
+        position: "relative",
+        display: "flex",
+        alignItems: "center",
+        gap: 16,
+        paddingLeft: "clamp(40px, 5vw, 64px)",
+        marginBottom: "clamp(20px, 2.8vw, 32px)",
+        marginTop: "clamp(40px, 5vw, 60px)",
+      }}
+    >
+      {/* Diamond node on the spine */}
+      <div
+        aria-hidden="true"
+        style={{
+          position: "absolute",
+          left: "calc(clamp(40px, 5vw, 64px) / 2 - 7px)",
+          width: 14,
+          height: 14,
+          background: "var(--bl-neon)",
+          transform: "rotate(45deg)",
+          flexShrink: 0,
+          boxShadow: "0 0 10px rgba(var(--bl-neon-rgb), 0.5)",
+        }}
+      />
+      <span
+        style={{
+          fontFamily: "var(--font-mono)",
+          fontSize: 10,
+          letterSpacing: "0.22em",
+          textTransform: "uppercase",
+          color: "var(--bl-neon)",
+          whiteSpace: "nowrap",
+        }}
+      >
+        {label}
+      </span>
+      <span
+        aria-hidden="true"
+        style={{ flex: 1, height: 1, background: "var(--bl-rule2)" }}
+      />
+    </div>
+  );
+}
+
+/** A single entry on the timeline. */
+function TimelineEntry({
+  item,
+  delay,
+  isLast,
+}: {
+  item: RecordItem;
+  delay: number;
+  isLast: boolean;
+}) {
   return (
     <Rise
       as="li"
       delay={delay}
       style={{
+        position: "relative",
         display: "grid",
-        gridTemplateColumns: "minmax(64px, 92px) minmax(0, 1fr)",
-        gap: "clamp(18px, 3vw, 44px)",
-        padding: "clamp(18px, 2.2vw, 26px) 0",
-        borderBottom: "1px solid var(--bl-rule)",
-        alignItems: "baseline",
+        gridTemplateColumns: "clamp(40px, 5vw, 64px) minmax(0, 1fr)",
+        paddingBottom: isLast ? 0 : "clamp(22px, 3vw, 36px)",
       }}
     >
-      <span className="bl-label" style={{ color: "var(--bl-fg3)" }}>
-        {item.year ?? ""}
-      </span>
-      <span style={{ ...BODY, color: "var(--bl-fg)" }}>
-        {item.href ? (
-          <a
-            href={item.href}
-            target="_blank"
-            rel="noreferrer"
-            className="bl-email-link"
+      {/* Dot on the spine */}
+      <div style={{ display: "flex", justifyContent: "center", paddingTop: 5 }}>
+        <div
+          aria-hidden="true"
+          style={{
+            width: 8,
+            height: 8,
+            borderRadius: "50%",
+            background: item.year ? "var(--bl-neon)" : "var(--bl-fg3)",
+            boxShadow: item.year
+              ? "0 0 8px rgba(var(--bl-neon-rgb), 0.55)"
+              : "none",
+            flexShrink: 0,
+          }}
+        />
+      </div>
+
+      {/* Content */}
+      <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
+        {item.year && (
+          <span
             style={{
-              color: "var(--bl-fg)",
-              textDecoration: "none",
-              borderBottom: "1px solid var(--bl-accent)",
+              fontFamily: "var(--font-mono)",
+              fontSize: 10,
+              letterSpacing: "0.14em",
+              color: "var(--bl-neon)",
+              fontWeight: 500,
             }}
           >
-            {item.claim}
-          </a>
-        ) : (
-          item.claim
+            {item.year}
+          </span>
         )}
+        <span
+          style={{
+            fontFamily: "var(--font-sans)",
+            fontSize: "clamp(14px, 1.15vw, 16px)",
+            lineHeight: 1.5,
+            color: "var(--bl-fg)",
+            fontWeight: 400,
+          }}
+        >
+          {item.href ? (
+            <a
+              href={item.href}
+              target="_blank"
+              rel="noreferrer"
+              className="bl-email-link"
+              style={{
+                color: "var(--bl-fg)",
+                textDecoration: "none",
+                borderBottom: "1px solid var(--bl-rule2)",
+              }}
+            >
+              {item.claim}
+            </a>
+          ) : (
+            item.claim
+          )}
+        </span>
         {item.note && (
-          <span style={{ display: "block", color: "var(--bl-fg3)", marginTop: 4 }}>
+          <span
+            style={{
+              fontFamily: "var(--font-mono)",
+              fontSize: 10,
+              letterSpacing: "0.06em",
+              color: "var(--bl-fg3)",
+              lineHeight: 1.5,
+            }}
+          >
             {item.note}
           </span>
         )}
-      </span>
-    </Rise>
-  );
-}
-
-function RecordGroup({
-  label,
-  items,
-}: {
-  label: string;
-  items: RecordItem[];
-}) {
-  return (
-    <div style={{ marginTop: "clamp(40px, 5vw, 64px)" }}>
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: 14,
-          marginBottom: "clamp(14px, 1.6vw, 20px)",
-        }}
-      >
-        <span className="bl-label" style={{ color: "var(--bl-fg2)", whiteSpace: "nowrap" }}>
-          {label}
-        </span>
-        <span
-          aria-hidden="true"
-          style={{ flex: 1, height: 1, background: "var(--bl-rule)" }}
-        />
       </div>
-      <ol
-        style={{
-          listStyle: "none",
-          padding: 0,
-          margin: 0,
-          borderTop: "1px solid var(--bl-rule)",
-        }}
-      >
-        {items.map((it, i) => (
-          <RecordRow key={it.claim} item={it} delay={i * 0.04} />
-        ))}
-      </ol>
-    </div>
+    </Rise>
   );
 }
 
@@ -377,8 +445,16 @@ function Achievements() {
     href: p.href,
   }));
 
+  const groups: { label: string; items: RecordItem[] }[] = [
+    { label: "Recognition", items: recognition },
+    { label: "Founder credentials", items: CREDENTIALS },
+    { label: "Built by the firm", items: FIRM },
+  ];
+
+  let delayCounter = 0.1;
+
   return (
-    <section style={{ ...SECTION,}}>
+    <section style={{ ...SECTION }}>
       <div className="bl-container" style={{ padding: 0 }}>
         <Anchor number="02" label="The record" />
         <h2 style={H2}>
@@ -393,9 +469,47 @@ function Achievements() {
           </p>
         </Rise>
 
-        <RecordGroup label="Recognition" items={recognition} />
-        <RecordGroup label="Founder credentials" items={CREDENTIALS} />
-        <RecordGroup label="Built by the firm" items={FIRM} />
+        {/* Timeline wrapper — the vertical neon spine runs the full height */}
+        <div
+          style={{
+            position: "relative",
+            marginTop: "clamp(36px, 5vw, 56px)",
+          }}
+        >
+          {/* Spine */}
+          <div
+            aria-hidden="true"
+            style={{
+              position: "absolute",
+              left: "calc(clamp(40px, 5vw, 64px) / 2 - 1px)",
+              top: 0,
+              bottom: 0,
+              width: 2,
+              background:
+                "linear-gradient(to bottom, var(--bl-neon) 0%, rgba(var(--bl-neon-rgb), 0.15) 100%)",
+            }}
+          />
+
+          {groups.map((g) => (
+            <div key={g.label}>
+              <TimelineGroupLabel label={g.label} />
+              <ol style={{ listStyle: "none", padding: 0, margin: 0 }}>
+                {g.items.map((item, i) => {
+                  const d = delayCounter;
+                  delayCounter += 0.04;
+                  return (
+                    <TimelineEntry
+                      key={item.claim}
+                      item={item}
+                      delay={d}
+                      isLast={i === g.items.length - 1}
+                    />
+                  );
+                })}
+              </ol>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );

@@ -81,7 +81,7 @@ export function Hero() {
             style={{
               fontFamily: "var(--font-sans)",
               fontWeight: 600,
-              fontSize: "max(clamp(42px, 5.4vw, 96px), min(3vw, 120px))",
+              fontSize: "clamp(32px, 5.4vw, 96px)",
               lineHeight: 0.98,
               letterSpacing: "-0.038em",
               margin: "clamp(18px, 2vw, 26px) 0 0",
@@ -100,7 +100,7 @@ export function Hero() {
               perChar={0.018}
               style={{
                 fontWeight: 200,
-                fontSize: "max(clamp(44px, 5.7vw, 101px), min(3.16vw, 126px))",
+                fontSize: "clamp(34px, 5.7vw, 101px)",
                 color: "var(--bl-accent)",
               }}
             />

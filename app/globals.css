@@ -202,6 +202,12 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+  overflow-wrap: break-word;
+}
+
+h1, h2, h3 {
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 ::selection {
@@ -507,5 +513,38 @@ select {
     padding: 14px 20px !important;
     font-size: 13px !important;
     gap: 8px !important;
+  }
+}
+
+/* Contact form submit button: full-width on phones for easier tapping. */
+@media (max-width: 720px) {
+  .bl-form-submit {
+    justify-content: stretch;
+  }
+
+  .bl-form-submit button {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* Offices list: swap border direction when cards stack to single column. */
+@media (max-width: 568px) {
+  .bl-offices-card {
+    border-right: none !important;
+    border-bottom: 1px solid var(--bl-rule);
+  }
+
+  .bl-offices-card:last-child {
+    border-bottom: none;
+  }
+}
+
+/* Footer copyright row: center-align items when they wrap on very small phones. */
+@media (max-width: 480px) {
+  .bl-footer-bottom {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
   }
 }

@@ -44,6 +44,7 @@ const FLUENT_IN = [
 // presence on those channels — better to omit than to link to dead handles.
 const SOCIAL = [
   ["LinkedIn", "https://www.linkedin.com/company/birchlogic/"],
+  ["Instagram", "https://www.instagram.com/birchlogichq/"],
 ] as const;
 
 export function Footer() {
@@ -225,6 +226,7 @@ export function Footer() {
         </div>
 
         <div
+          className="bl-footer-bottom"
           style={{
             borderTop: "1px solid rgba(241, 238, 231, 0.2)",
             paddingTop: 24,

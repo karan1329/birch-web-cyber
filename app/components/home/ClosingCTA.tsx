@@ -48,7 +48,7 @@ export function ClosingCTA() {
           style={{
             fontFamily: "var(--font-sans)",
             fontWeight: 500,
-            fontSize: "max(clamp(48px, 8.5vw, 144px), min(4.5vw, 180px))",
+            fontSize: "clamp(34px, 8.5vw, 144px)",
             lineHeight: 0.94,
             letterSpacing: "-0.045em",
             margin: "0 0 clamp(36px, 5vw, 56px)",
@@ -89,7 +89,7 @@ export function ClosingCTA() {
               fontWeight: 500,
               color: "var(--bl-fg)",
               maxWidth: "var(--bl-text-body)",
-              margin: "-24px auto 48px",
+              margin: "0 auto 48px",
               lineHeight: 1.65,
             }}
           >

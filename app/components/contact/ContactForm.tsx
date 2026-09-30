@@ -184,10 +184,11 @@ export function ContactForm() {
       )}
 
       <div
+        className="bl-form-submit"
         style={{
           display: "flex",
           alignItems: "center",
-          justifyContent: "flex-end",
+          justifyContent: "center",
           gap: 16,
           marginTop: 8,
           flexWrap: "wrap",

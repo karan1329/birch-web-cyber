@@ -94,7 +94,7 @@ export function InnerHero({ kicker, title, subtitle, action }: Props) {
               // grow on QHD / 4K. No `maxWidth` here — letting the title
               // breathe to the right is the whole point of the
               // left-anchor refactor.
-              fontSize: "clamp(44px, 8vw, 200px)",
+              fontSize: "clamp(32px, 8vw, 200px)",
               lineHeight: 0.92,
               letterSpacing: "-0.04em",
               margin: "0 0 32px",

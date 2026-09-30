@@ -60,6 +60,7 @@ export function OfficesList() {
           {OFFICES.map((o, i) => (
             <Rise key={i} delay={i * 0.04}>
               <div
+                className="bl-offices-card"
                 style={{
                   padding: "clamp(28px, 3.4vw, 44px)",
                   borderRight:
@@ -75,8 +76,8 @@ export function OfficesList() {
                   style={{
                     display: "flex",
                     alignItems: "baseline",
-                    justifyContent: "space-between",
-                    gap: 12,
+                    flexWrap: "wrap",
+                    gap: "8px 12px",
                   }}
                 >
                   <span
