@@ -84,7 +84,7 @@ export function Footer() {
                 marginBottom: 18,
               }}
             >
-              <img src="/birchlogic_light.webp" alt="Birchlogic" style={{ height: 40, width: "auto" }} />
+              <img src="/birchlogic_light.webp" width={960} height={178} alt="Birchlogic" style={{ height: 40, width: "auto" }} />
             </div>
             <p
               style={{

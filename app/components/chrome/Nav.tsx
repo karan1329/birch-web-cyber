@@ -98,7 +98,7 @@ export function Nav() {
             textDecoration: "none",
           }}
         >
-          <img src="/birchlogicicon.webp" alt="Birchlogic" style={{ height: 32, width: "auto" }} />
+          <img src="/birchlogicicon.webp" width={960} height={178} alt="Birchlogic" style={{ height: 32, width: "auto" }} />
         </Link>
 
         {!isMobile && (
@@ -270,7 +270,7 @@ function MobileMenu({
             alignItems: "center",
           }}
         >
-          <img src="/birchlogicicon.webp" alt="Birchlogic" style={{ height: 28, width: "auto" }} />
+          <img src="/birchlogicicon.webp" width={960} height={178} alt="Birchlogic" style={{ height: 28, width: "auto" }} />
         </span>
         <button
           onClick={onClose}
