@@ -282,77 +282,6 @@ const useTimeline = () => React.useContext(TimelineContext);
 // marked stream that dies mid-play decays the latch promptly.
 var SS_EXT_PLAY_MS = 400;
 
-// ── Font inlining ───────────────────────────────────────────────────────────
-// Copy every @font-face rule from the page into a <style> inside the svg's
-// foreignObject, with font URLs rewritten to data: URLs. Makes the svg
-// self-describing so serializing it alone (video export fast path) still
-// renders with the right fonts. Sets data-om-fonts-inlined on the svg when
-// done so the exporter can wait for it.
-
-function useInlineFontsInto(svgRef) {
-  React.useEffect(() => {
-    const svg = svgRef.current;
-    const host = svg && svg.querySelector('foreignObject > div');
-    if (!svg || !host) return;
-    let cancelled = false;
-    (async () => {
-      const rules = [];
-      for (const ss of document.styleSheets) {
-        let cssRules;
-        try { cssRules = ss.cssRules; } catch {
-          // Cross-origin sheet without crossorigin attr (e.g. the standard
-          // fonts.googleapis.com <link>) — fetch the CSS text directly and
-          // regex-extract the @font-face blocks.
-          if (ss.href) {
-            try {
-              const txt = await fetch(ss.href).then(r => { if (!r.ok) throw 0; return r.text(); });
-              for (const ff of (txt.match(/@font-face\s*{[^}]*}/g) || []))
-                rules.push({ css: ff, base: ss.href });
-            } catch {}
-          }
-          continue;
-        }
-        if (!cssRules) continue;
-        for (const r of cssRules) {
-          if (r.type === CSSRule.FONT_FACE_RULE) {
-            rules.push({ css: r.cssText, base: ss.href || location.href });
-          }
-        }
-      }
-      const toDataURL = (url) => fetch(url)
-        .then(r => { if (!r.ok) throw 0; return r.blob(); })
-        .then(b => new Promise(res => {
-          const fr = new FileReader();
-          fr.onload = () => res(fr.result);
-          fr.onerror = () => res(url);
-          fr.readAsDataURL(b);
-        }))
-        .catch(() => url);
-      const parts = await Promise.all(rules.map(async ({ css, base }) => {
-        const re = /url\((['"]?)([^'")]+)\1\)/g;
-        let out = css, m;
-        while ((m = re.exec(css))) {
-          const u = m[2];
-          if (u.startsWith('data:')) continue;
-          let abs; try { abs = new URL(u, base).href; } catch { continue; }
-          out = out.split(m[0]).join(`url("${await toDataURL(abs)}")`);
-        }
-        return out;
-      }));
-      if (cancelled || !parts.length) {
-        svg.setAttribute('data-om-fonts-inlined', 'true');
-        return;
-      }
-      const style = document.createElement('style');
-      style.textContent = parts.join('\n');
-      host.insertBefore(style, host.firstChild);
-      svg.setAttribute('data-om-fonts-inlined', 'true');
-    })();
-    return () => { cancelled = true; };
-  }, []);
-}
-
-
 function Stage({
   width = 1280,
   height = 720,
@@ -581,10 +510,8 @@ function Stage({
     };
   }, [duration]);
 
-  // Inline @font-face rules into the svg's foreignObject so the svg is
-  // self-describing — serializing it alone (for video export) then renders
-  // with the right fonts. Sets data-om-fonts-inlined once done.
-  useInlineFontsInto(canvasRef);
+  // (Font inlining for the video-export fast path was removed: it fetched
+  // every @font-face file on the page (~50 requests) on each visit.)
 
   const displayTime = hoverTime != null ? hoverTime : time;
 
