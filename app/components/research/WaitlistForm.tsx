@@ -98,7 +98,12 @@ export function WaitlistForm({ tag }: { tag: string }) {
         />
         <button
           type="submit"
-          disabled={status === "sending"}
+          disabled={status === "sending" || token === ""}
+          title={
+            token === "" && status !== "sending"
+              ? "Complete the verification to continue"
+              : undefined
+          }
           style={{
             padding: "13px 22px",
             background: "var(--bl-accent)",
@@ -107,8 +112,13 @@ export function WaitlistForm({ tag }: { tag: string }) {
             fontFamily: "var(--font-sans)",
             fontSize: 14,
             fontWeight: 500,
-            cursor: status === "sending" ? "wait" : "pointer",
-            opacity: status === "sending" ? 0.6 : 1,
+            cursor:
+              status === "sending"
+                ? "wait"
+                : token === ""
+                  ? "not-allowed"
+                  : "pointer",
+            opacity: status === "sending" || token === "" ? 0.6 : 1,
             whiteSpace: "nowrap",
           }}
         >
