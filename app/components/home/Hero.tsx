@@ -88,7 +88,12 @@ export function Hero() {
               color: "var(--bl-fg)",
             }}
           >
-            <SplitText text="Cybersecurity," delay={0.15} perChar={0.018} />
+            <SplitText
+              text="Cybersecurity,"
+              delay={0.15}
+              perChar={0.018}
+              eager
+            />
             <br />
             {/* Thin weight at a hair larger size so the light glyphs hit the
                 same horizontal extent as the heavy line above. */}
@@ -98,6 +103,7 @@ export function Hero() {
               text="done seriously."
               delay={0.45}
               perChar={0.018}
+              eager
               style={{
                 fontWeight: 200,
                 fontSize: "clamp(34px, 5.7vw, 101px)",
@@ -106,7 +112,7 @@ export function Hero() {
             />
           </h1>
 
-          <Rise delay={0.8} y={16}>
+          <Rise eager delay={0.8} y={16}>
             <p
               style={{
                 fontFamily: "var(--font-sans)",
@@ -124,7 +130,7 @@ export function Hero() {
             </p>
           </Rise>
 
-          <Rise delay={0.95} y={16}>
+          <Rise eager delay={0.95} y={16}>
             <div
               style={{
                 display: "flex",
@@ -158,7 +164,7 @@ export function Hero() {
 
           {/* The strip sits at the FOOT of the panel, separated from the
               CTA by real space, so the headline keeps the centre. */}
-          <Rise delay={1.1} y={12} style={{ marginTop: "auto" }}>
+          <Rise eager delay={1.1} y={12} style={{ marginTop: "auto" }}>
             <div
               className="bl-hero-strip"
               style={{

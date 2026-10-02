@@ -28,6 +28,11 @@ import { useEffect, useRef } from "react";
  *     Used by the reduced-motion path so the surface still shows but
  *     does not animate.
  */
+type Pt = { x: number; y: number; z: number; depth: number; fall: number };
+
+/** Alpha buckets for the batched wireframe strokes. */
+const EDGE_LEVELS = 12;
+
 export function MeshCanvas2D({
   staticFrame = false,
 }: { staticFrame?: boolean } = {}) {
@@ -86,7 +91,19 @@ export function MeshCanvas2D({
     const readVar = (name: string, fallback: string) =>
       rootStyle.getPropertyValue(name).trim() || fallback;
 
-    const draw = () => {
+    // Touch devices have no cursor to drive the light, so 30fps reads the
+    // same and halves the main-thread cost on the weakest hardware. Motion
+    // is time-based so the drift speed is identical at either rate.
+    const minFrameMs = window.matchMedia("(pointer: coarse)").matches ? 32 : 0;
+    let last = 0;
+
+    const draw = (now = performance.now()) => {
+      if (!staticFrame && now - last < minFrameMs) {
+        raf = requestAnimationFrame(draw);
+        return;
+      }
+      const dtScale = last ? Math.min(3, (now - last) / (1000 / 60)) : 1;
+      last = now;
       const w = cv.clientWidth;
       const h = cv.clientHeight;
       mouse.x += (mouse.tx - mouse.x) * 0.04;
@@ -107,15 +124,14 @@ export function MeshCanvas2D({
       const tiltX = -0.62 + (mouse.y - 0.5) * 0.12;
       const tiltY = (mouse.x - 0.5) * 0.18;
 
-      t += 0.0065;
+      t += 0.0065 * dtScale;
 
       const rgb = readVar("--bl-accent-rgb", "212,64,90");
       // One hue family: the wireframe is cranberry too, just at a much
       // lower alpha than the cursor highlight. No second chroma anywhere.
       const mesh = rgb;
 
-      const pts: { x: number; y: number; z: number; depth: number; fall: number }[] =
-        new Array(cols * rows);
+      const pts: Pt[] = new Array(cols * rows);
 
       for (let yi = 0; yi < rows; yi++) {
         for (let xi = 0; xi < cols; xi++) {
@@ -153,39 +169,36 @@ export function MeshCanvas2D({
         }
       }
 
-      // Horizontal edges
+      // Edges are batched into alpha buckets: one path + one stroke per
+      // bucket instead of one per edge (~3,500 strokes/frame before). The
+      // alpha is quantised to EDGE_LEVELS steps, which is invisible at
+      // 0.20 max opacity. Tuned against the 0.90 `--bl-section-veil` that
+      // sits over the mesh below the hero; if the texture ever needs to
+      // read louder, the veil is the better dial than this alpha.
+      const buckets: Path2D[] = Array.from(
+        { length: EDGE_LEVELS },
+        () => new Path2D(),
+      );
+      const addEdge = (a: Pt, b: Pt) => {
+        if (a.fall < 0.04 || b.fall < 0.04) return;
+        const lvl = Math.min(EDGE_LEVELS - 1, Math.floor(a.fall * EDGE_LEVELS));
+        buckets[lvl].moveTo(a.x, a.y);
+        buckets[lvl].lineTo(b.x, b.y);
+      };
       for (let yi = 0; yi < rows; yi++) {
         for (let xi = 0; xi < cols - 1; xi++) {
-          const a = pts[yi * cols + xi];
-          const b = pts[yi * cols + xi + 1];
-          if (a.fall < 0.04 || b.fall < 0.04) continue;
-          // Tuned against the 0.90 `--bl-section-veil` that sits over the
-          // mesh below the hero. If the texture ever needs to read louder,
-          // the veil is the better dial than this alpha.
-          ctx.strokeStyle = `rgba(${mesh},${a.fall * 0.20})`;
-          ctx.lineWidth = 0.9;
-          ctx.beginPath();
-          ctx.moveTo(a.x, a.y);
-          ctx.lineTo(b.x, b.y);
-          ctx.stroke();
+          addEdge(pts[yi * cols + xi], pts[yi * cols + xi + 1]);
         }
       }
-      // Vertical edges
       for (let yi = 0; yi < rows - 1; yi++) {
         for (let xi = 0; xi < cols; xi++) {
-          const a = pts[yi * cols + xi];
-          const b = pts[(yi + 1) * cols + xi];
-          if (a.fall < 0.04 || b.fall < 0.04) continue;
-          // Tuned against the 0.90 `--bl-section-veil` that sits over the
-          // mesh below the hero. If the texture ever needs to read louder,
-          // the veil is the better dial than this alpha.
-          ctx.strokeStyle = `rgba(${mesh},${a.fall * 0.20})`;
-          ctx.lineWidth = 0.9;
-          ctx.beginPath();
-          ctx.moveTo(a.x, a.y);
-          ctx.lineTo(b.x, b.y);
-          ctx.stroke();
+          addEdge(pts[yi * cols + xi], pts[(yi + 1) * cols + xi]);
         }
+      }
+      ctx.lineWidth = 0.9;
+      for (let lvl = 0; lvl < EDGE_LEVELS; lvl++) {
+        ctx.strokeStyle = `rgba(${mesh},${((lvl + 0.5) / EDGE_LEVELS) * 0.2})`;
+        ctx.stroke(buckets[lvl]);
       }
 
       // Cursor-driven neon highlights.
@@ -232,9 +245,31 @@ export function MeshCanvas2D({
       raf = requestAnimationFrame(draw);
     };
 
-    raf = requestAnimationFrame(draw);
+    // Start on idle, not on mount: the first frames of this canvas would
+    // otherwise compete with hydration and the headline's first paint. The
+    // canvas fades in once it has something to show.
+    let idle = 0;
+    let started = false;
+    const begin = () => {
+      started = true;
+      cv.style.opacity = "1";
+      raf = requestAnimationFrame(draw);
+    };
+    // Safari has no requestIdleCallback; fall back to a short timeout.
+    const ric = window.requestIdleCallback as
+      | typeof window.requestIdleCallback
+      | undefined;
+    const cic = window.cancelIdleCallback as
+      | typeof window.cancelIdleCallback
+      | undefined;
+    if (ric) idle = ric(begin, { timeout: 1200 });
+    else idle = window.setTimeout(begin, 300);
 
     return () => {
+      if (!started) {
+        if (ric && cic) cic(idle);
+        else clearTimeout(idle);
+      }
       cancelAnimationFrame(raf);
       window.removeEventListener("resize", resize);
       window.removeEventListener("pointermove", onMove);
@@ -252,6 +287,8 @@ export function MeshCanvas2D({
         height: "100%",
         display: "block",
         pointerEvents: "none",
+        opacity: 0,
+        transition: "opacity 0.8s cubic-bezier(0.2,0.7,0.2,1)",
       }}
     />
   );

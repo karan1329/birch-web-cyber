@@ -1,8 +1,20 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useCallback, useEffect, useState } from "react";
 import { MeshCanvas2D } from "./MeshCanvas2D";
-import { MeshCanvasGL } from "./MeshCanvasGL";
+
+/**
+ * three.js (~130 KB gzipped) lives behind this boundary so it is only
+ * fetched when the picker actually chooses the GL backend. The picker runs
+ * after mount, so mobile, reduced-motion and no-WebGL visitors never
+ * download it, and desktop gets it off the critical path (the canvas
+ * placeholder below holds the space meanwhile).
+ */
+const MeshCanvasGL = dynamic(
+  () => import("./MeshCanvasGL").then((m) => m.MeshCanvasGL),
+  { ssr: false },
+);
 
 type Backend = "gl" | "2d" | "static";
 

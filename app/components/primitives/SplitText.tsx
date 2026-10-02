@@ -22,6 +22,13 @@ type Props = {
    * its own line in Who We Work With. One instance wraps word by word.
    */
   accentFrom?: number;
+  /**
+   * Above-the-fold headlines: reveal with CSS keyframes that start at first
+   * paint instead of waiting for hydration + IntersectionObserver. Without
+   * this the headline is `opacity: 0` in the server HTML until React has
+   * hydrated, which on a phone-class CPU is several seconds of nothing.
+   */
+  eager?: boolean;
 };
 
 /**
@@ -45,6 +52,7 @@ export function SplitText({
   dim = false,
   threshold = 0.2,
   accentFrom,
+  eager = false,
 }: Props) {
   const [ref, inView] = useInView<HTMLSpanElement>(threshold);
   const lines = String(text).split("\n");
@@ -128,19 +136,31 @@ export function SplitText({
                       <span
                         key={ci}
                         aria-hidden="true"
-                        style={{
-                          display: "inline-block",
-                          transform: inView
-                            ? "translateY(0)"
-                            : "translateY(110%)",
-                          opacity: inView ? 1 : 0,
-                          transition: `transform 0.9s cubic-bezier(0.2,0.7,0.2,1) ${
-                            delay + localIdx * perChar
-                          }s, opacity 0.4s ease ${
-                            delay + localIdx * perChar
-                          }s`,
-                          whiteSpace: "pre",
-                        }}
+                        style={
+                          eager
+                            ? {
+                                display: "inline-block",
+                                animation: `bl-char-rise 0.9s cubic-bezier(0.2,0.7,0.2,1) ${
+                                  delay + localIdx * perChar
+                                }s both, bl-char-fade 0.4s ease ${
+                                  delay + localIdx * perChar
+                                }s both`,
+                                whiteSpace: "pre",
+                              }
+                            : {
+                                display: "inline-block",
+                                transform: inView
+                                  ? "translateY(0)"
+                                  : "translateY(110%)",
+                                opacity: inView ? 1 : 0,
+                                transition: `transform 0.9s cubic-bezier(0.2,0.7,0.2,1) ${
+                                  delay + localIdx * perChar
+                                }s, opacity 0.4s ease ${
+                                  delay + localIdx * perChar
+                                }s`,
+                                whiteSpace: "pre",
+                              }
+                        }
                       >
                         {ch}
                       </span>
