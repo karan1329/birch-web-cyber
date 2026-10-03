@@ -324,6 +324,41 @@ select {
   }
 }
 
+/* Eager reveals (above-the-fold SplitText / Rise). Pure CSS so the first
+   paint of the headline never waits on hydration. `both` holds the hidden
+   `from` state through the delay. */
+@keyframes bl-char-rise {
+  from {
+    transform: translateY(110%);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes bl-char-fade {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes bl-rise {
+  from {
+    opacity: 0;
+    transform: translateY(var(--bl-rise-y, 24px));
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @keyframes bl-fade-up {
   from {
     opacity: 0;

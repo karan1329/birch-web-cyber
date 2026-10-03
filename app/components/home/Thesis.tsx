@@ -14,7 +14,7 @@ import { Anchor } from "../primitives/Anchor";
  *
  * Cropped from `design/source-assets/karan-bhandari-original.jpg`.
  */
-const PORTRAIT_SRC = "/karan-bhandari-avatar.jpg";
+const PORTRAIT_SRC = "/karan-bhandari-avatar.webp";
 
 import { Rise } from "../primitives/Rise";
 import { SplitText } from "../primitives/SplitText";

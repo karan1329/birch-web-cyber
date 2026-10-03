@@ -68,7 +68,7 @@ function PosterFallback() {
     <div style={{ position: "absolute", inset: 0, background: FILM_GROUND }}>
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        src="/drawer-cyber-poster.jpg"
+        src="/drawer-cyber-poster.webp"
         alt=""
         aria-hidden="true"
         style={{

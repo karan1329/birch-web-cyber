@@ -64,7 +64,7 @@ function Founders() {
             <FounderPanel
               name="Karan Bhandari"
               role="Co-founder"
-              portrait="/karan-bhandari-avatar.jpg"
+              portrait="/karan-bhandari-avatar.webp"
             >
               <p style={BODY}>
                 CEH at fifteen, one of the youngest in India at the time. That
@@ -88,7 +88,7 @@ function Founders() {
           </Rise>
 
           <Rise delay={0.08}>
-            <FounderPanel name="Jaskaran Singh" role="Co-founder" portrait="/jaskaran-avatar.png">
+            <FounderPanel name="Jaskaran Singh" role="Co-founder" portrait="/jaskaran-avatar.webp">
               <p style={BODY}>
                 Jaskaran has spent the better part of a decade as an enterprise
                 AI architect, accumulating field exposure across something on

@@ -194,18 +194,29 @@ export function ContactForm() {
           flexWrap: "wrap",
         }}
       >
-        <SubmitButton status={status} />
+        <SubmitButton status={status} verified={token !== ""} />
       </div>
     </form>
   );
 }
 
-function SubmitButton({ status }: { status: Status }) {
-  const disabled = status === "submitting";
+function SubmitButton({
+  status,
+  verified,
+}: {
+  status: Status;
+  verified: boolean;
+}) {
+  // The server rejects an empty Turnstile token, and the challenge loads
+  // lazily, so hold the button until a token exists rather than letting an
+  // early submit fail with a confusing error.
+  const submitting = status === "submitting";
+  const disabled = submitting || !verified;
   return (
     <button
       type="submit"
       disabled={disabled}
+      title={!verified && !submitting ? "Complete the verification to continue" : undefined}
       style={{
         display: "inline-flex",
         alignItems: "center",
@@ -219,7 +230,7 @@ function SubmitButton({ status }: { status: Status }) {
         fontSize: 14,
         fontWeight: 500,
         letterSpacing: "-0.005em",
-        cursor: disabled ? "wait" : "pointer",
+        cursor: submitting ? "wait" : disabled ? "not-allowed" : "pointer",
         opacity: disabled ? 0.6 : 1,
         boxShadow:
           "0 0 0 1px var(--bl-neon), 0 12px 36px rgba(var(--bl-neon-rgb), 0.22)",

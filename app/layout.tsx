@@ -9,13 +9,13 @@ import "./globals.css";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  // No `weight`: Geist is a variable font, so one declaration covers 100-900
+  // instead of nine identical @font-face rules per subset.
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
-  weight: ["400", "500"],
 });
 
 /**
@@ -33,7 +33,8 @@ const geistMono = Geist_Mono({
 const archivo = Archivo({
   variable: "--font-archivo",
   subsets: ["latin"],
-  weight: ["600", "700"],
+  // Variable font (wght axis): one file covers every weight, and Turbopack's
+  // font loader rejects the static ["600", "700"] list for this family.
 });
 
 const ROOT_DESCRIPTION =

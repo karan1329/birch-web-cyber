@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 /**
  * Cloudflare Turnstile widget — privacy-respecting CAPTCHA alternative.
@@ -74,8 +74,33 @@ function ensureScript(): Promise<void> {
 export function TurnstileWidget({ sitekey, onToken, theme }: Props) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const widgetIdRef = useRef<string | null>(null);
+  // Cloudflare's challenge is ~700 KB across six requests. The token is only
+  // needed at submit, so nothing loads until the widget is near the viewport
+  // (focusing a field scrolls it there too). Visitors who never reach the
+  // form never download it; on a phone the form is below the fold, so the
+  // download no longer competes with first paint.
+  const [armed, setArmed] = useState(false);
 
   useEffect(() => {
+    const el = containerRef.current;
+    if (!el || armed) return;
+    if (typeof IntersectionObserver === "undefined") {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setArmed(true);
+      return;
+    }
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) setArmed(true);
+      },
+      { rootMargin: "200px 0px" },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [armed]);
+
+  useEffect(() => {
+    if (!armed) return;
     let cancelled = false;
 
     // The site palette is locked to the beige/cranberry light ground, so
@@ -108,7 +133,7 @@ export function TurnstileWidget({ sitekey, onToken, theme }: Props) {
         widgetIdRef.current = null;
       }
     };
-  }, [sitekey, onToken, theme]);
+  }, [armed, sitekey, onToken, theme]);
 
   return <div ref={containerRef} style={{ minHeight: 65 }} />;
 }

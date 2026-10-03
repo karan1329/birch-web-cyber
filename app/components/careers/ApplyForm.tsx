@@ -226,7 +226,12 @@ export function ApplyForm({ role }: { role: Role }) {
           </p>
           <button
             type="submit"
-            disabled={status === "submitting"}
+            disabled={status === "submitting" || token === ""}
+            title={
+              token === "" && status !== "submitting"
+                ? "Complete the verification to continue"
+                : undefined
+            }
             className="bl-mag-button"
             style={{
               display: "inline-flex",
@@ -241,8 +246,13 @@ export function ApplyForm({ role }: { role: Role }) {
               fontSize: 14,
               fontWeight: 500,
               letterSpacing: "-0.005em",
-              cursor: status === "submitting" ? "wait" : "pointer",
-              opacity: status === "submitting" ? 0.6 : 1,
+              cursor:
+                status === "submitting"
+                  ? "wait"
+                  : token === ""
+                    ? "not-allowed"
+                    : "pointer",
+              opacity: status === "submitting" || token === "" ? 0.6 : 1,
               boxShadow:
                 "0 0 0 1px var(--bl-neon), 0 12px 36px rgba(var(--bl-neon-rgb), 0.22)",
               transition: "opacity 0.2s ease",

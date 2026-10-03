@@ -53,7 +53,7 @@ function hasPublicFile(rel: string): boolean {
   }
 }
 
-const PORTRAIT = "karan-bhandari.jpg";
+const PORTRAIT = "karan-bhandari.webp";
 const SAMPLE_READ = "security-read-sample-redacted.pdf";
 
 export default function SecurityReadPage() {

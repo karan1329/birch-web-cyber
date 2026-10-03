@@ -21,6 +21,11 @@ type Props = {
   style?: CSSProperties;
   /** Anchor target, e.g. for the research library's A–Z rail. */
   id?: string;
+  /**
+   * Above-the-fold blocks: reveal with a CSS keyframe from first paint
+   * rather than after hydration. See `SplitText`'s `eager`.
+   */
+  eager?: boolean;
 };
 
 /**
@@ -38,6 +43,7 @@ export function Rise({
   as: Tag = "div",
   style,
   id,
+  eager = false,
 }: Props) {
   const [ref, inView] = useInView<HTMLDivElement>(threshold);
   return (
@@ -45,13 +51,21 @@ export function Rise({
       ref={ref}
       id={id}
       className={className}
-      style={{
-        opacity: inView ? 1 : 0,
-        transform: inView ? "translateY(0)" : `translateY(${y}px)`,
-        transition: `opacity ${duration}s cubic-bezier(0.2,0.7,0.2,1) ${delay}s, transform ${duration}s cubic-bezier(0.2,0.7,0.2,1) ${delay}s`,
-        willChange: "transform, opacity",
-        ...style,
-      }}
+      style={
+        eager
+          ? ({
+              "--bl-rise-y": `${y}px`,
+              animation: `bl-rise ${duration}s cubic-bezier(0.2,0.7,0.2,1) ${delay}s both`,
+              ...style,
+            } as CSSProperties)
+          : {
+              opacity: inView ? 1 : 0,
+              transform: inView ? "translateY(0)" : `translateY(${y}px)`,
+              transition: `opacity ${duration}s cubic-bezier(0.2,0.7,0.2,1) ${delay}s, transform ${duration}s cubic-bezier(0.2,0.7,0.2,1) ${delay}s`,
+              willChange: "transform, opacity",
+              ...style,
+            }
+      }
     >
       {children}
     </Tag>

@@ -100,7 +100,7 @@ export function InnerHero({ kicker, title, subtitle, action }: Props) {
               margin: "0 0 32px",
             }}
           >
-            <SplitText text={title} perChar={0.014} />
+            <SplitText text={title} perChar={0.014} eager />
           </h1>
           {subtitle && (
             <p
